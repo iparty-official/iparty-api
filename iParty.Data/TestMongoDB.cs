@@ -9,7 +9,7 @@ namespace iParty.Data
     {
         public async Task TestAsync()
         {
-            var settings = MongoClientSettings.FromConnectionString("mongodb+srv://iparty:<password>@iparty.mdem9.mongodb.net/iParty?retryWrites=true&w=majority");
+            var settings = MongoClientSettings.FromConnectionString("mongodb+srv://iparty:admin@iparty.mdem9.mongodb.net/iParty?retryWrites=true&w=majority");
             var client = new MongoClient(settings);
             var database = client.GetDatabase("iParty");
 
@@ -17,7 +17,7 @@ namespace iParty.Data
 
             var document = new BsonDocument
             {
-                { "name", "MongoDB" },
+                { "name", "HaitiDB" },
                 { "type", "Database" },
                 { "count", 1 },
                 { "info", new BsonDocument
