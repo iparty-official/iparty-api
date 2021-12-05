@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace iParty.Business.Models.People
 {
-    public class Phone: Entity
+    public class Customer
     {
-        public Person Person { get; set; }
-        public string Prefix { get; set; }
-        public string Number { get; set; }
-
+        public DateTime BirthDate { get; set; }
     }
 }

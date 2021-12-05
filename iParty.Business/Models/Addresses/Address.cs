@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParty.Business.Models.People;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace iParty.Business.Models.Addresses
 {
     public class Address: Entity
     {
+        public Person Person { get; set; }
         public string ZipCode { get; set; }
         public string Street { get; set; }
         public string District { get; set; }

@@ -1,7 +1,8 @@
 ﻿namespace iParty.Business.Models.PaymentPlans
 {
-    public class PaymentPlanInstalments: Entity
+    public class PaymentPlanInstalment: Entity
     {
+        public PaymentPlan PaymentPlan { get; set; }
         public int Quantity { get; set; }
         public decimal Fee { get; set; }
     }
