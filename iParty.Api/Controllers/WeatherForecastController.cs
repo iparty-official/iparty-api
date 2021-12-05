@@ -46,11 +46,11 @@ namespace iParty.Api.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync()
+        public void PostAsync()
         {
             var testMongoDB = new TestMongoDB();
 
-            await testMongoDB.TestAsync();
+            testMongoDB.Test();
         }
     }
 }
