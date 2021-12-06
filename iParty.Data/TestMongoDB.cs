@@ -8,13 +8,7 @@ namespace iParty.Data
     {
         public void Test()
         {                                  
-            new CityRepository<City>().Create(
-                new City()
-                {
-                    IbgeNumber = 1234567,
-                    Name = "Criciúma"
-                }
-            );
+            new Repository<City>(new DatabaseConfig() { ConnectionString = "", DatabaseAlias = "iParty"}).Create(new City(){IbgeNumber = 1234567, Name = "Criciúma"});
         }
     }
 }
