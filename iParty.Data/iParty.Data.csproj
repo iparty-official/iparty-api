@@ -9,8 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappings\" />
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\iParty.Business\iParty.Business.csproj" />
   </ItemGroup>
 
 </Project>
