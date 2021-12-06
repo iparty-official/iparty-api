@@ -43,14 +43,6 @@ namespace iParty.Api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
-
-        [HttpPost]
-        public async Task PostAsync()
-        {
-            var testMongoDB = new TestMongoDB();
-
-            await testMongoDB.TestAsync();
-        }
+        }        
     }
 }
