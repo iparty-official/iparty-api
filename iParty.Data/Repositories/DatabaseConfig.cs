@@ -1,8 +1,15 @@
-﻿namespace iParty.Data.Repositories
+﻿using System;
+
+namespace iParty.Data.Repositories
 {
     public class DatabaseConfig
     {
-        public string ConnectionString { get; set; }
-        public string DatabaseAlias { get; set; }
+        public DatabaseConfig()
+        {
+            ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            DatabaseAlias = Environment.GetEnvironmentVariable("DATABASE_ALIAS");
+        }
+        public string ConnectionString { get; }
+        public string DatabaseAlias { get; }
     }
 }

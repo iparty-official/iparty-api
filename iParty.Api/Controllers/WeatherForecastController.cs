@@ -1,4 +1,6 @@
-﻿using iParty.Data;
+﻿using iParty.Business.Models.Addresses;
+using iParty.Data;
+using iParty.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,9 +27,11 @@ namespace iParty.Api.Controllers
         // The Web API will only accept tokens 1) for users, and 2) having the "access_as_user" scope for this API
         static readonly string[] scopeRequiredByApi = new string[] { "access_as_user" };
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IRepository<City> _repCity;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<City> repCity)
         {
             _logger = logger;
+            _repCity = repCity;
         }
 
         [HttpGet]
@@ -43,6 +47,18 @@ namespace iParty.Api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }        
+        }      
+
+        [HttpPost]
+        public void Create()
+        {
+            var city = new City
+            {
+                Name =  "Teste123",
+                IbgeNumber = 123                
+            };
+            _repCity.Create(city);
+        }
+        
     }
 }
