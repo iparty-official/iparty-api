@@ -1,6 +1,7 @@
 ﻿using iParty.Business.Models;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Data.Repositories
 {
@@ -25,23 +26,31 @@ namespace iParty.Data.Repositories
         }
 
         public void Update(TEntity entity)
-        {          
-            _collection.UpdateOne(null, null);
+        {
+            var filter = Builders<TEntity>.Filter.Eq("_id", entity.Id);
+            
+            _collection.ReplaceOne(filter, entity);
         }
 
-        public void Delete(TEntity entity)
+        public void Delete(Guid id)
         {
-            _collection.DeleteOne(null);
+            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+
+            _collection.DeleteOne(filter);
         }
 
-        public void Recover(TEntity entity)
+        public ICollection<TEntity> Recover()
         {
-            _collection.Find(null);
+            var filter = Builders<TEntity>.Filter.Empty;
+            
+            return _collection.Find(filter).ToList();
         }
 
-        public void RecoverById(TEntity entity)
+        public TEntity RecoverById(Guid id)
         {
-            _collection.Find(null);
+            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+
+            return _collection.Find(filter).First<TEntity>();
         }
     }
 }

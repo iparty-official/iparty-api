@@ -1,5 +1,6 @@
 ﻿using iParty.Business.Models;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Data.Repositories
 {
@@ -9,10 +10,10 @@ namespace iParty.Data.Repositories
 
         public void Update(TEntity entity);
 
-        public void Delete(TEntity entity);
+        public void Delete(Guid id);
 
-        public void Recover(TEntity entity);
+        public ICollection<TEntity> Recover();
 
-        public void RecoverById(TEntity entity);
+        public TEntity RecoverById(Guid id);
     }
 }
