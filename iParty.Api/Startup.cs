@@ -31,6 +31,7 @@ namespace iParty.Api
                                       .AsImplementedInterfaces()
                                       .WithScopedLifetime());
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<DatabaseConfig>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
