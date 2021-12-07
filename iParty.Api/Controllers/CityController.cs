@@ -28,6 +28,8 @@ namespace iParty.Api.Controllers
         [HttpPut]
         public NewView Update([FromRoute] Guid id, [FromBody] CityDto dto)
         {
+            //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
+
             var view = _serviceCity.Update(id, dto);
             return view;
         }
