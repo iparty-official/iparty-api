@@ -47,19 +47,7 @@ namespace iParty.Api.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }      
-
-        [HttpPost]
-        public void Create()
-        {
-            var city = new City
-            {
-                Name = "Içara",
-                IbgeNumber = 456789
-            };
-
-            _repCity.Create(city);
-        }
+        }             
         
     }
 }
