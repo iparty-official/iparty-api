@@ -50,10 +50,15 @@ namespace iParty.Api.Controllers
         }      
 
         [HttpPost]
-        public string Create()
+        public void Create()
         {
+            var city = new City
+            {
+                Name = "Içara",
+                IbgeNumber = 456789
+            };
 
-            return Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            _repCity.Create(city);
         }
         
     }
