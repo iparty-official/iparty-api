@@ -8,6 +8,10 @@ namespace iParty.Business.Models.Addresses
 {
     public class City: Entity
     {
+        public City()
+        {
+        }
+
         public City(string name, int ibgeNumber)
         {
             Name = name;

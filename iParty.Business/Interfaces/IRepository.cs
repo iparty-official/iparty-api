@@ -10,9 +10,9 @@ namespace iParty.Data.Repositories
 
         public void Update(TEntity entity);
 
-        public void Delete(Guid id);
+        void Delete(Guid id);
 
-        public ICollection<TEntity> Recover();
+        public List<TEntity> Recover();
 
         public TEntity RecoverById(Guid id);
     }

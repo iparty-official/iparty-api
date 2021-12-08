@@ -36,10 +36,12 @@ namespace iParty.Data.Repositories
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
 
-            _collection.DeleteOne(filter);
+            var update = Builders<TEntity>.Update.Set("Removed", true);
+
+            _collection.UpdateOne(filter, update);
         }
 
-        public ICollection<TEntity> Recover()
+        public List<TEntity> Recover()
         {
             var filter = Builders<TEntity>.Filter.Empty;
             

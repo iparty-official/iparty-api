@@ -6,34 +6,27 @@ using System;
 
 namespace iParty.Business.Services.Citys
 {
-    public class ServiceCity : IServiceCity
+    public class ServiceCity : Service<City, IRepository<City>>, IServiceCity
     {
-        private readonly IRepository<City> _rep;
-        public ServiceCity(IRepository<City> rep)
+        public ServiceCity(IRepository<City> rep) : base(rep)
         {
-            _rep = rep;
         }
 
         public NewView Create(CityDto dto) 
         {
             var city = City.Create(dto.Name, dto.IbgeNumber);
-            _rep.Create(city);
+            Rep.Create(city);
             return new NewView(city.Id);
         }
 
         public NewView Update(Guid id, CityDto dto)
         {
-            var city = _rep.RecoverById(id);
+            var city = Rep.RecoverById(id);
             if (city == null)
                 return null; //Verificar como tratar erros 
             city.Update(dto.Name, dto.IbgeNumber);
-            _rep.Update(city);
+            Rep.Update(city);
             return new NewView(city.Id);
-        }
-
-        public void Delete(Guid id)
-        {            
-            _rep.Delete(id);
-        }
+        }      
     }
 }

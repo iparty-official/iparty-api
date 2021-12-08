@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using iParty.Api.View;
+using iParty.Business.Models.Addresses;
 
 namespace iParty.Api.AutoMapper
 {
-    public class AutoMapperConfiguration
+    public class AutoMapperConfiguration : Profile
     {
         public AutoMapperConfiguration()
         {
-            //CreateMap<Supplier, SupplierViewModel>().ReverseMap();
+            CreateMap<City, CityView>().ReverseMap();            
         }
     }
 }

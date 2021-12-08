@@ -8,15 +8,20 @@ namespace iParty.Business.Models
 {
     public abstract class Entity
     {
-        public Guid Id { get; set; }
-
-        public bool Removed { get; set; }
-
         protected Entity()
         {
             Id = Guid.NewGuid();
-            
+
             Removed = false;
+        }
+
+        public Guid Id { get; set; }
+
+        public bool Removed { get; set; }
+       
+        public void Remove()
+        {
+            Removed = true;
         }
     }
 }
