@@ -1,6 +1,7 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Services.Citys.Dtos;
+using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
 
@@ -13,9 +14,16 @@ namespace iParty.Business.Services.Citys
         }
 
         public NewView Create(CityDto dto) 
-        {
+        {            
             var city = City.Create(dto.Name, dto.IbgeNumber);
+
+            var result = ExecuteValidation(new CityValidation(), city);
+
+            if (!result.IsValid)
+                return new NewView(result);
+
             Rep.Create(city);
+
             return new NewView(city.Id);
         }
 

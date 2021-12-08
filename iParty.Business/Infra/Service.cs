@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 using iParty.Business.Models;
 using iParty.Data.Repositories;
 using System;
@@ -6,16 +8,14 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Infra
 {
-    public class Service<TEntity, TRepository> : IService<TEntity>
+    public class Service<TEntity, TRepository> : BaseService<TEntity, TRepository>, IService<TEntity>
         where TEntity : Entity, new()
         where TRepository : IRepository<TEntity>
     {
-        protected TRepository Rep { get; private set; }
-
-        public Service(TRepository rep)
+        public Service(TRepository rep) : base(rep)
         {
-            Rep = rep;
         }
+
         public virtual void Delete(Guid id)
         {
             Rep.Delete(id);
