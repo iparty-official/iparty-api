@@ -52,7 +52,7 @@ namespace iParty.Data.Repositories
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
 
-            return _collection.Find(filter).First<TEntity>();
+            return _collection.Find(filter).FirstOrDefault<TEntity>();
         }
     }
 }

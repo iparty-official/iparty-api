@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using iParty.Api.View;
+using iParty.Api.Dtos;
+using iParty.Api.Views;
 using iParty.Business.Infra;
+using iParty.Business.Interfaces;
 using iParty.Business.Models.Addresses;
-using iParty.Business.Services.Citys;
-using iParty.Business.Services.Citys.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace iParty.Api.Controllers
     public class CityController : ControllerBase
     {
         private readonly IServiceCity _serviceCity;
+
         private readonly IMapper _mapper;
 
         public CityController(IServiceCity serviceCity, IMapper mapper)
@@ -27,7 +28,12 @@ namespace iParty.Api.Controllers
         [HttpPost]
         public NewView Create([FromBody] CityDto dto)
         {
-            var view = _serviceCity.Create(dto);
+            var city = _mapper.Map<City>(dto);
+            
+            var result = _serviceCity.Create(city);
+
+            var view = _mapper.Map<NewView>(result.Entity);
+            
             return view;
         }
 
@@ -37,7 +43,14 @@ namespace iParty.Api.Controllers
         {
             //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
 
-            var view = _serviceCity.Update(id, dto);
+            var city = _mapper.Map<City>(dto);
+
+            city.Id = id;
+
+            var result = _serviceCity.Update(city);
+
+            var view = _mapper.Map<NewView>(result.Entity);
+
             return view;
         }
 
@@ -53,6 +66,7 @@ namespace iParty.Api.Controllers
         public CityView Get([FromRoute] Guid id)
         {
             var entity = _serviceCity.Get(id);
+
             return _mapper.Map<CityView>(entity);
         }
         
@@ -60,6 +74,7 @@ namespace iParty.Api.Controllers
         public List<CityView> Get()
         {
             var entitys = _serviceCity.Get();
+
             return _mapper.Map<List<CityView>>(entitys);
         }
       
