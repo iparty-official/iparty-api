@@ -13,7 +13,7 @@ namespace iParty.Business.Services.Citys
         {
         }
 
-        public ServiceResult<City> Create(City city) 
+        public ServiceResult<City> Create(City city)
         {                       
             var result = ExecuteValidation(new CityValidation(), city);
 

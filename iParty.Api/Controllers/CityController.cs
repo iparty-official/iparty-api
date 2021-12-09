@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos;
 using iParty.Api.Views;
-using iParty.Business.Infra;
 using iParty.Business.Interfaces;
 using iParty.Business.Models.Addresses;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers
-{ 
+{
     //[Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -26,32 +25,34 @@ namespace iParty.Api.Controllers
         }
 
         [HttpPost]
-        public NewView Create([FromBody] CityDto dto)
+        public IActionResult Create([FromBody] CityDto dto)
         {
             var city = _mapper.Map<City>(dto);
             
             var result = _serviceCity.Create(city);
 
-            var view = _mapper.Map<NewView>(result.Entity);
-            
-            return view;
+            if (!result.Success) return BadRequest(result.Errors);
+
+            var view = _mapper.Map<CityView>(result.Entity);
+
+            return Ok(view);
         }
 
         [Route("{id}")]
         [HttpPut]
-        public NewView Update([FromRoute] Guid id, [FromBody] CityDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromBody] CityDto dto)
         {
             //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
 
             var city = _mapper.Map<City>(dto);
 
-            city.Id = id;
-
             var result = _serviceCity.Update(city);
 
-            var view = _mapper.Map<NewView>(result.Entity);
+            if (!result.Success) return BadRequest(result.Errors);
 
-            return view;
+            var view = _mapper.Map<CityView>(result.Entity);
+
+            return Ok(view);
         }
 
         [Route("{id}")]

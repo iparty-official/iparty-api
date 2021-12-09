@@ -5,13 +5,8 @@ using System.Threading.Tasks;
 
 namespace iParty.Api.Views
 {
-    public class NewView
+    public class View
     {
-        public NewView(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
     }
 }
