@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using iParty.Api.View;
+using iParty.Api.Dtos;
+using iParty.Api.Views;
+using iParty.Business.Infra;
 using iParty.Business.Models.Addresses;
 
 namespace iParty.Api.AutoMapper
@@ -8,7 +10,8 @@ namespace iParty.Api.AutoMapper
     {
         public AutoMapperConfiguration()
         {
-            CreateMap<City, CityView>().ReverseMap();            
+            CreateMap<City, CityView>().ReverseMap();
+            CreateMap<City, CityDto>().ReverseMap();            
         }
     }
 }

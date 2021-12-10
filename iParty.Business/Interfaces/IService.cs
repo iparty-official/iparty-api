@@ -1,12 +1,13 @@
-﻿using iParty.Business.Models;
+﻿using iParty.Business.Infra;
+using iParty.Business.Models;
 using System;
 using System.Collections.Generic;
 
-namespace iParty.Business.Infra
+namespace iParty.Business.Interfaces
 {
     public interface IService<TEntity> where TEntity : Entity
     {
-        void Delete(Guid id);
+        ServiceResult<TEntity> Delete(Guid id);
         TEntity Get(Guid id);
         List<TEntity> Get();
     }

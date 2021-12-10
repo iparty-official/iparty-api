@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace iParty.Api.View
+namespace iParty.Api.Views
 {
-    public class CityView
-    {
-        public Guid Id { get; set; }
+    public class CityView : View
+    {       
         public int IbgeNumber { get; set; }
         public string Name { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using iParty.Business.Interfaces;
 using iParty.Business.Models;
 using iParty.Data.Repositories;
 using System;
@@ -16,9 +17,11 @@ namespace iParty.Business.Infra
         {
         }
 
-        public virtual void Delete(Guid id)
+        public virtual ServiceResult<TEntity> Delete(Guid id)
         {
             Rep.Delete(id);
+
+            return GetSuccessResult(null);
         }
 
         public TEntity Get(Guid id)

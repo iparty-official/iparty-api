@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace iParty.Business.Services.Citys.Dtos
+namespace iParty.Api.Dtos
 {
     public class CityDto
     {
