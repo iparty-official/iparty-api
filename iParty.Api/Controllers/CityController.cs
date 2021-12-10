@@ -27,15 +27,22 @@ namespace iParty.Api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CityDto dto)
         {
-            var city = _mapper.Map<City>(dto);
-            
-            var result = _serviceCity.Create(city);
+            try
+            {
+                var city = _mapper.Map<City>(dto);
 
-            if (!result.Success) return BadRequest(result.Errors);
+                var result = _serviceCity.Create(city);
 
-            var view = _mapper.Map<CityView>(result.Entity);
+                if (!result.Success) return BadRequest(result.Errors);
 
-            return Ok(view);
+                var view = _mapper.Map<CityView>(result.Entity);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [Route("{id}")]
@@ -43,40 +50,76 @@ namespace iParty.Api.Controllers
         public IActionResult Update([FromRoute] Guid id, [FromBody] CityDto dto)
         {
             //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
+            try
+            {
+                var city = _mapper.Map<City>(dto);
 
-            var city = _mapper.Map<City>(dto);
+                var result = _serviceCity.Update(city);
 
-            var result = _serviceCity.Update(city);
+                if (!result.Success) return BadRequest(result.Errors);
 
-            if (!result.Success) return BadRequest(result.Errors);
+                var view = _mapper.Map<CityView>(result.Entity);
 
-            var view = _mapper.Map<CityView>(result.Entity);
-
-            return Ok(view);
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [Route("{id}")]
         [HttpDelete]
-        public void Delete([FromRoute] Guid id)
+        public IActionResult Delete([FromRoute] Guid id)
         {
-            _serviceCity.Delete(id);            
+            try
+            {
+                var result = _serviceCity.Delete(id);
+
+                if (!result.Success) return BadRequest(result.Errors);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+            
         }
 
         [Route("{id}")]
         [HttpGet]
-        public CityView Get([FromRoute] Guid id)
+        public IActionResult Get([FromRoute] Guid id)
         {
-            var entity = _serviceCity.Get(id);
+            try
+            {
+                var entity = _serviceCity.Get(id);
 
-            return _mapper.Map<CityView>(entity);
+                var view  = _mapper.Map<CityView>(entity);
+
+                return Ok(view); 
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);  
+            }
         }
         
         [HttpGet]
-        public List<CityView> Get()
+        public IActionResult Get()
         {
-            var entitys = _serviceCity.Get();
+            try
+            {
+                var entitys = _serviceCity.Get();
 
-            return _mapper.Map<List<CityView>>(entitys);
+                var view = _mapper.Map<List<CityView>>(entitys);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);                
+            }
         }
       
     }
