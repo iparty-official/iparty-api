@@ -6,11 +6,11 @@ namespace iParty.Api.Views
 {
     public class MessageView : View
     {
-        public Guid FromId { get; set; }
-        public Guid ToId { get; set; }
+        public Person From { get; set; }
+        public Person To { get; set; }
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
-        public Guid OrderId { get; set; }
+        public Order Order { get; set; }
     }
 }

@@ -6,12 +6,12 @@ using System.Collections.Generic;
 namespace iParty.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
-    {                       
+    {
         private IMongoCollection<TEntity> _collection { get; set; }
 
         public Repository(DatabaseConfig databaseConfig)
         {
-            var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017/iParty");
+            var settings = MongoClientSettings.FromConnectionString(databaseConfig.ConnectionString);
 
             var client = new MongoClient(settings);
 
@@ -28,7 +28,7 @@ namespace iParty.Data.Repositories
         public void Update(TEntity entity)
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", entity.Id);
-            
+
             _collection.ReplaceOne(filter, entity);
         }
 
@@ -43,14 +43,16 @@ namespace iParty.Data.Repositories
 
         public List<TEntity> Recover()
         {
-            var filter = Builders<TEntity>.Filter.Empty;
-            
+            var filter = Builders<TEntity>.Filter.Eq("Removed", false);
+
             return _collection.Find(filter).ToList();
         }
 
         public TEntity RecoverById(Guid id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+            var builder = Builders<TEntity>.Filter;
+
+            var filter = builder.And(builder.Eq("_id", id), builder.Eq("Removed", false));
 
             return _collection.Find(filter).FirstOrDefault<TEntity>();
         }
