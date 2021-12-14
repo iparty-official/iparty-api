@@ -14,11 +14,11 @@ namespace iParty.Api.Controllers
     [Route("[controller]")]
     public class CityController : ControllerBase
     {
-        private readonly IServiceCity _serviceCity;
+        private readonly ICityService _serviceCity;
 
         private readonly IMapper _mapper;
 
-        public CityController(IServiceCity serviceCity, IMapper mapper)
+        public CityController(ICityService serviceCity, IMapper mapper)
         {
             _serviceCity = serviceCity;
             _mapper = mapper;

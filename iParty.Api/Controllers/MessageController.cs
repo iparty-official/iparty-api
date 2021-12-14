@@ -15,13 +15,13 @@ namespace iParty.Api.Controllers
     [Route("[controller]")]
     public class MessageController : ControllerBase
     {
-        private readonly IServiceMessage _serviceMessage;
+        private readonly IMessageService _serviceMessage;
 
         private readonly IMapper _autoMapper;
 
         private readonly IMessageMapper _messageMapper;
 
-        public MessageController(IServiceMessage serviceMessage, IMapper autoMapper, IMessageMapper messageMapper)
+        public MessageController(IMessageService serviceMessage, IMapper autoMapper, IMessageMapper messageMapper)
         {
             _serviceMessage = serviceMessage;
             _autoMapper = autoMapper;

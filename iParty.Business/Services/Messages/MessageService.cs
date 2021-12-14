@@ -8,9 +8,9 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Services.Cities
 {
-    public class ServiceMessage : Service<Message, IRepository<Message>>, IServiceMessage
+    public class MessageService : Service<Message, IRepository<Message>>, IMessageService
     {
-        public ServiceMessage(IRepository<Message> rep) : base(rep)
+        public MessageService(IRepository<Message> rep) : base(rep)
         {
         }
 

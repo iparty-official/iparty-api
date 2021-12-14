@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace iParty.Business.Interfaces
 {
-    public interface IServiceCity : IService<City>
+    public interface ICityService : IService<City>
     {
         public ServiceResult<City> Create(City city);
 

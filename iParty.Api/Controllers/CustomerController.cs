@@ -13,10 +13,10 @@ namespace iParty.Api.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        private readonly IServicePerson _servicePerson;
+        private readonly IPersonService _servicePerson;
         private readonly IMapper _mapper;
 
-        public CustomerController(IServicePerson servicePerson, IMapper mapper)
+        public CustomerController(IPersonService servicePerson, IMapper mapper)
         {
             _servicePerson = servicePerson;
             _mapper = mapper;

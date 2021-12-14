@@ -3,7 +3,7 @@ using iParty.Business.Validations;
 
 namespace iParty.Business.Interfaces
 {
-    public interface IServicePerson : IService<Person>
+    public interface IPersonService : IService<Person>
     {
     }
 }
