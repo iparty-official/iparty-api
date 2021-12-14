@@ -26,7 +26,7 @@ namespace iParty.Api.Controllers
         public IActionResult Create([FromBody] CustomerDto dto)
         {
             try
-            {
+            {                
                 var customer = _mapper.Map<Person>(dto);
                 customer.SupplierOrCustomer = SupplierOrCustomer.Customer;
                 customer.CustomerInfo = new Customer

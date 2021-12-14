@@ -8,7 +8,7 @@ namespace iParty.Business.Validations
         public PersonValidation()
         {
             RuleFor(p => p.Name).NotEmpty().WithMessage("Nome não foi informado.");
-            RuleFor(p => p.Document).NotEmpty().WithMessage("Documento não informado.");            
+            RuleFor(p => p.Document).NotEmpty().WithMessage("Documento não informado.");                    
         }
     }
 }
