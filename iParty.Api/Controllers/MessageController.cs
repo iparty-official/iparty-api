@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos;
+using iParty.Api.Interfaces;
 using iParty.Api.Views;
 using iParty.Business.Interfaces;
 using iParty.Business.Models.Messages;
@@ -16,12 +17,15 @@ namespace iParty.Api.Controllers
     {
         private readonly IServiceMessage _serviceMessage;
 
-        private readonly IMapper _mapper;
+        private readonly IMapper _autoMapper;
 
-        public MessageController(IServiceMessage serviceMessage, IMapper mapper)
+        private readonly IMessageMapper _messageMapper;
+
+        public MessageController(IServiceMessage serviceMessage, IMapper autoMapper, IMessageMapper messageMapper)
         {
             _serviceMessage = serviceMessage;
-            _mapper = mapper;
+            _autoMapper = autoMapper;
+            _messageMapper = messageMapper;
         }
 
         [HttpPost]
@@ -29,13 +33,13 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var message = _mapper.Map<Message>(dto);
+                var message = _messageMapper.Map(dto);
 
                 var result = _serviceMessage.Create(message);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _mapper.Map<MessageView>(result.Entity);
+                var view = _autoMapper.Map<MessageView>(result.Entity);
 
                 return Ok(view);
             }
@@ -51,7 +55,7 @@ namespace iParty.Api.Controllers
         {            
             try
             {
-                var message = _mapper.Map<Message>(dto);
+                var message = _messageMapper.Map(dto);
 
                 message.Id = id;
 
@@ -59,7 +63,7 @@ namespace iParty.Api.Controllers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _mapper.Map<MessageView>(result.Entity);
+                var view = _autoMapper.Map<MessageView>(result.Entity);
 
                 return Ok(view);
             }
@@ -96,7 +100,7 @@ namespace iParty.Api.Controllers
             {
                 var entity = _serviceMessage.Get(id);
 
-                var view = _mapper.Map<MessageView>(entity);
+                var view = _autoMapper.Map<MessageView>(entity);
 
                 return Ok(view);
             }
@@ -113,7 +117,7 @@ namespace iParty.Api.Controllers
             {
                 var entitys = _serviceMessage.Get();
 
-                var view = _mapper.Map<List<MessageView>>(entitys);
+                var view = _autoMapper.Map<List<MessageView>>(entitys);
 
                 return Ok(view);
             }
