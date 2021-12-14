@@ -25,9 +25,11 @@ namespace iParty.Data.Repositories
             _collection.InsertOne(entity);
         }
 
-        public void Update(TEntity entity)
+        public void Update(Guid id, TEntity entity)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", entity.Id);
+            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+
+            entity.Id = id;
 
             _collection.ReplaceOne(filter, entity);
         }

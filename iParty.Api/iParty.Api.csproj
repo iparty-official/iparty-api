@@ -21,4 +21,8 @@
     <ProjectReference Include="..\iParty.Data\iParty.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>
