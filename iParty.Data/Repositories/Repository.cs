@@ -10,8 +10,8 @@ namespace iParty.Data.Repositories
         private IMongoCollection<TEntity> _collection { get; set; }
 
         public Repository(DatabaseConfig databaseConfig)
-        {            
-            var settings = MongoClientSettings.FromConnectionString(databaseConfig.ConnectionString);
+        {
+            var settings = MongoClientSettings.FromConnectionString("mongodb://localhost:27017/iParty");
 
             var client = new MongoClient(settings);
 

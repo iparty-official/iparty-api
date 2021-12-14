@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace iParty.Business.Models.People
+namespace iParty.Api.Dtos
 {
-    public class Customer
+    public class CustomerDto : PersonDto
     {
         public DateTime BirthDate { get; set; }
-    }
+    }   
 }

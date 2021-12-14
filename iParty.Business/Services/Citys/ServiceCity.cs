@@ -3,7 +3,7 @@ using iParty.Business.Interfaces;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Validations;
 using iParty.Data.Repositories;
-using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Citys
 {
@@ -27,6 +27,16 @@ namespace iParty.Business.Services.Citys
 
         public ServiceResult<City> Update(City city)
         {
+            var currentCity = Get(city.Id);
+
+            if (currentCity == null)
+                return new ServiceResult<City>
+                {
+                    Success = false,
+                    Entity = null,
+                    Errors = new List<string> { "Não foi possível localizar a cidade informada." }
+                };
+
             var result = ExecuteValidation(new CityValidation(), city);
 
             if (!result.IsValid)

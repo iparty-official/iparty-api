@@ -51,8 +51,9 @@ namespace iParty.Api.Controllers
         {
             //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
             try
-            {
+            {               
                 var city = _mapper.Map<City>(dto);
+                city.Id = id;
 
                 var result = _serviceCity.Update(city);
 

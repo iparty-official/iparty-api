@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace iParty.Business.Models.People
+namespace iParty.Api.Views
 {
-    public class Customer
+    public class CustomerView: PersonView
     {
         public DateTime BirthDate { get; set; }
     }
