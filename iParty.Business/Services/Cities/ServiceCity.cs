@@ -5,7 +5,7 @@ using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
 
-namespace iParty.Business.Services.Citys
+namespace iParty.Business.Services.Cities
 {
     public class ServiceCity : Service<City, IRepository<City>>, IServiceCity
     {
