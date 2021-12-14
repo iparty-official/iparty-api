@@ -3,6 +3,7 @@ using iParty.Api.Dtos;
 using iParty.Api.Views;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
+using iParty.Business.Models.Messages;
 
 namespace iParty.Api.AutoMapper
 {
@@ -14,6 +15,8 @@ namespace iParty.Api.AutoMapper
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<Person, PersonDto>().ReverseMap();
             CreateMap<Person, CustomerView>().ReverseMap();            
+            CreateMap<Message, MessageView>().ReverseMap();
+            CreateMap<Message, MessageDto>().ReverseMap();
         }
     }
 }
