@@ -13,6 +13,6 @@ namespace iParty.Business.Interfaces
     {
         public ServiceResult<City> Create(City city);
 
-        public ServiceResult<City> Update(City city);
+        public ServiceResult<City> Update(Guid id, City city);
     }
 }

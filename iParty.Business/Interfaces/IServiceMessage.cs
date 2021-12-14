@@ -13,6 +13,6 @@ namespace iParty.Business.Interfaces
     {
         public ServiceResult<Message> Create(Message message);
 
-        public ServiceResult<Message> Update(Message message);
+        public ServiceResult<Message> Update(Guid id, Message message);
     }
 }

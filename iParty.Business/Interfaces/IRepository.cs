@@ -8,7 +8,7 @@ namespace iParty.Data.Repositories
     {
         public void Create(TEntity entity);
 
-        public void Update(TEntity entity);
+        public void Update(Guid id, TEntity entity);
 
         void Delete(Guid id);
 

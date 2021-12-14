@@ -55,7 +55,7 @@ namespace iParty.Api.Controllers
 
                 message.Id = id;
 
-                var result = _serviceMessage.Update(message);
+                var result = _serviceMessage.Update(id, message);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

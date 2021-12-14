@@ -55,7 +55,7 @@ namespace iParty.Api.Controllers
                 var city = _mapper.Map<City>(dto);
                 city.Id = id;
 
-                var result = _serviceCity.Update(city);
+                var result = _serviceCity.Update(id, city);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
