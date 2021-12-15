@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParty.Business.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace iParty.Business.Models
 {
-    public abstract class Entity
+    public abstract class Entity: IEntity
     {
         protected Entity()
         {
@@ -17,11 +18,6 @@ namespace iParty.Business.Models
 
         public Guid Id { get; set; }
 
-        public bool Removed { get; set; }
-       
-        public void Remove()
-        {
-            Removed = true;
-        }
+        public bool Removed { get; set; }              
     }
 }

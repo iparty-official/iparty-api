@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using iParty.Business.Models;
+using iParty.Business.Interfaces;
 using iParty.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Linq;
 namespace iParty.Business.Infra
 {
     public abstract class BaseService<TEntity, TRepository> 
-        where TEntity : Entity, new()
+        where TEntity : IEntity, new()
         where TRepository : IRepository<TEntity>
     {
         protected BaseService(TRepository rep)
@@ -38,8 +38,16 @@ namespace iParty.Business.Infra
             return new ServiceResult<TEntity>()
             {
                 Success = false,
-                Errors = validationResult.Errors.Select(p => p.ErrorMessage).ToList(),
-                Entity = null
+                Errors = validationResult.Errors.Select(p => p.ErrorMessage).ToList(),                
+            };
+        }
+
+        protected ServiceResult<TEntity> GetFailureResult(string errorMessage)
+        {
+            return new ServiceResult<TEntity>()
+            {
+                Success = false,
+                Errors = new List<string>() { errorMessage },
             };
         }
     }

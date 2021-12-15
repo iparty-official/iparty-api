@@ -1,13 +1,9 @@
-﻿using iParty.Business.Models;
-using System;
+﻿using iParty.Business.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iParty.Business.Infra
 {
-    public class ServiceResult<TEntity> where TEntity : Entity
+    public class ServiceResult<TEntity> where TEntity : IEntity
     {
         public bool Success { get; set; }
         public List<string> Errors { get; set; }

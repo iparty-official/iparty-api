@@ -1,11 +1,12 @@
-﻿using iParty.Business.Models;
+﻿using iParty.Business.Interfaces;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : IEntity
     {
         private IMongoCollection<TEntity> _collection { get; set; }
 
@@ -43,9 +44,16 @@ namespace iParty.Data.Repositories
             _collection.UpdateOne(filter, update);
         }
 
+        public List<TEntity> Recover(Expression<Func<TEntity, bool>> field)
+        {
+            var filter = Builders<TEntity>.Filter.Eq(field, false);
+
+            return _collection.Find(filter).ToList();
+        }
+
         public List<TEntity> Recover()
         {
-            var filter = Builders<TEntity>.Filter.Eq("Removed", false);
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Removed, false);
 
             return _collection.Find(filter).ToList();
         }

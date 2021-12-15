@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using iParty.Business.Interfaces;
-using iParty.Business.Models;
+﻿using iParty.Business.Interfaces;
 using iParty.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -8,7 +6,7 @@ using System.Collections.Generic;
 namespace iParty.Business.Infra
 {
     public class Service<TEntity, TRepository> : BaseService<TEntity, TRepository>, IService<TEntity>
-        where TEntity : Entity, new()
+        where TEntity : IEntity, new()
         where TRepository : IRepository<TEntity>        
     {
         public Service(TRepository rep) : base(rep)
@@ -17,17 +15,13 @@ namespace iParty.Business.Infra
         public virtual ServiceResult<TEntity> Delete(Guid id)
         {
             var entity = Get(id);
+
             if (entity == null)
-                return new ServiceResult<TEntity>
-                {
-                    Success = false,
-                    Entity = null,
-                    Errors = new List<string> { "Não foi possível localizar o registro informado." }
-                };
+                return GetFailureResult("Não foi possível localizar o registro informado.");                
 
             Rep.Delete(id);
 
-            return GetSuccessResult(null);
+            return GetSuccessResult(entity);
         }
 
         public TEntity Get(Guid id)
@@ -37,7 +31,7 @@ namespace iParty.Business.Infra
 
         public List<TEntity> Get()
         {
-            return Rep.Recover();
+            return Rep.Recover(x => x.Removed);
         }
     }
 }
