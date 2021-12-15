@@ -3,7 +3,6 @@ using iParty.Api.Dtos;
 using iParty.Api.Interfaces;
 using iParty.Api.Views;
 using iParty.Business.Interfaces;
-using iParty.Business.Models.Messages;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

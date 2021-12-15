@@ -1,3 +1,4 @@
+using iParty.Api.Infra;
 using iParty.Business.Infra;
 using iParty.Data.Infra;
 using iParty.Data.Repositories;
@@ -26,7 +27,7 @@ namespace iParty.Api
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
-            services.Scan(scan => scan.FromAssembliesOf(typeof(BusinessInjection), typeof(DataInjection))
+            services.Scan(scan => scan.FromAssembliesOf(typeof(BusinessInjection), typeof(DataInjection), typeof(ApiInjection))
                                       .AddClasses()
                                       .AsImplementedInterfaces()
                                       .WithScopedLifetime());

@@ -35,12 +35,11 @@ namespace iParty.Api.Infra
         {           
             return new Message()
             {
-                Date = dto.Date,
+                DateTime = dto.DateTime,
                 From = getPerson(dto.FromId, "O remetente da mensagem não existe."),
-                Order = null,
+                To = getPerson(dto.FromId, "O destinatário da mensagem não existe."),
                 Text = dto.Text,
-                Time = dto.Time,
-                To = getPerson(dto.FromId, "O destinatário da mensagem não existe.")
+                Order = null
             };
         }
     }
