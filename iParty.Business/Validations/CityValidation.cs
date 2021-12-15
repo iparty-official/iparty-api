@@ -16,7 +16,9 @@ namespace iParty.Business.Validations
 
             RuleFor(p => p.IbgeNumber).GreaterThan(1000000).WithMessage("O código IBGE precisa ter examente sete dígitos.");
 
-            RuleFor(p => p.IbgeNumber).LessThan(9999999).WithMessage("O código IBGE precisa ter examente sete dígitos.");            
+            RuleFor(p => p.IbgeNumber).LessThan(9999999).WithMessage("O código IBGE precisa ter examente sete dígitos.");
+
+            RuleFor(p => p.State).IsInEnum().WithMessage("O estado da cidade é inválido");
         }
     }
 }
