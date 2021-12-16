@@ -1,7 +1,6 @@
 ﻿using iParty.Business.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
@@ -13,11 +12,9 @@ namespace iParty.Data.Repositories
 
         void Delete(Guid id);
 
-        public List<TEntity> Recover();
+        public List<TEntity> Recover();        
 
         public List<TEntity> Recover(IFilterBuilder<TEntity> filterBuilder);
-
-        public List<TEntity> Recover(IFilter<TEntity> filter);        
 
         public TEntity RecoverById(Guid id);
     }

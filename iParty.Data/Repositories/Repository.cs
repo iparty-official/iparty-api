@@ -10,36 +10,34 @@ namespace iParty.Data.Repositories
     {
         private IMongoCollection<TEntity> _collection { get; set; }
 
-        private FilterDefinition<TEntity> translateToMongoFilter(IFilterBuilder<TEntity> filterBuilder)
+        private FilterDefinition<TEntity> translateToFilterDefinition(List<IFilter<TEntity>> filters)
         {
-            var rawFilters = filterBuilder.Build();
-
             var mongoBuilder = Builders<TEntity>.Filter;
 
-            var filter = mongoBuilder.Empty;          
+            var filterDefinition = mongoBuilder.Empty;
 
-            foreach (var item in rawFilters)
+            foreach (var item in filters)
             {
                 switch (item.Operator)
                 {
                     case FilterOperatorEnum.Equal:
-                        filter &= mongoBuilder.Eq(x => item.Field.ToString(), item.Value);
+                        filterDefinition &= mongoBuilder.Eq(item.GetFieldName(item.Field), item.Value);
                         break;
                     case FilterOperatorEnum.Unequal:
-                        filter &= mongoBuilder.Not(mongoBuilder.Eq(x => item.Field.ToString(), item.Value));
+                        filterDefinition &= mongoBuilder.Not(mongoBuilder.Eq(item.GetFieldName(item.Field), item.Value));
                         break;
                     case FilterOperatorEnum.GreaterThan:
-                        filter &= mongoBuilder.Gt(x => item.Field.ToString(), item.Value);
+                        filterDefinition &= mongoBuilder.Gt(item.GetFieldName(item.Field), item.Value);
                         break;
                     case FilterOperatorEnum.LessThan:
-                        filter &= mongoBuilder.Lt(x => item.Field.ToString(), item.Value);
+                        filterDefinition &= mongoBuilder.Lt(item.GetFieldName(item.Field), item.Value);
                         break;
-                    default:                        
+                    default:
                         break;
                 }
             }
 
-            return filter;
+            return filterDefinition;
         }
 
         public Repository(DatabaseConfig databaseConfig)
@@ -60,44 +58,29 @@ namespace iParty.Data.Repositories
 
         public void Update(Guid id, TEntity entity)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id);
-
             entity.Id = id;
 
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
+           
             _collection.ReplaceOne(filter, entity);
         }
 
         public void Delete(Guid id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
-            var update = Builders<TEntity>.Update.Set("Removed", true);
+            var update = Builders<TEntity>.Update.Set(x => x.Removed, true);
 
             _collection.UpdateOne(filter, update);
-        }        
+        }
 
         public List<TEntity> Recover(IFilterBuilder<TEntity> filterBuilder)
         {
-            var filter = Builders<TEntity>.Filter.Eq(x => x.Removed, false);
+            var filters = filterBuilder.Build();
 
-            filter &= translateToMongoFilter(filterBuilder);
-           
-            return _collection.Find(filter).ToList();
-        }       
+            var filterDefinition = translateToFilterDefinition(filters);
 
-        public List<TEntity> Recover(IFilter<TEntity> filter)
-        {
-            MemberExpression body = filter.Field.Body as MemberExpression;
-
-            if (body == null)
-            {
-                UnaryExpression ubody = (UnaryExpression)filter.Field.Body;
-                body = ubody.Operand as MemberExpression;
-            }            
-
-            string fieldName = body.Member.Name;
-
-            var filterDefinition = Builders<TEntity>.Filter.Eq(fieldName, filter.Value);
+            filterDefinition &= Builders<TEntity>.Filter.Eq(x => x.Removed, false);
 
             return _collection.Find(filterDefinition).ToList();
         }
@@ -113,7 +96,7 @@ namespace iParty.Data.Repositories
         {
             var builder = Builders<TEntity>.Filter;
 
-            var filter = builder.And(builder.Eq("_id", id), builder.Eq("Removed", false));
+            var filter = builder.And(builder.Eq(x => x.Id, id), builder.Eq(x => x.Removed, false));
 
             return _collection.Find(filter).FirstOrDefault<TEntity>();
         }    

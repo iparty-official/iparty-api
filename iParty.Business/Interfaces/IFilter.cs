@@ -8,5 +8,7 @@ namespace iParty.Business.Interfaces
         public Expression<Func<TEntity, object>> Field { get; set; }
         public object Value { get; set; }
         public FilterOperatorEnum Operator { get; set; }
+
+        public string GetFieldName(Expression<Func<TEntity, object>> field);
     }
 }

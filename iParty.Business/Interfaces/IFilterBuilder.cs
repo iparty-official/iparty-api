@@ -11,6 +11,8 @@ namespace iParty.Business.Interfaces
     {
         public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value);
 
+        public IFilterBuilder<TEntity> Unequal(Expression<Func<TEntity, object>> field, object value);
+
         public IFilterBuilder<TEntity> GreaterThan(Expression<Func<TEntity, object>> field, object value);
 
         public IFilterBuilder<TEntity> LessThan(Expression<Func<TEntity, object>> field, object value);
