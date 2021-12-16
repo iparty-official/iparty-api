@@ -10,7 +10,7 @@ namespace iParty.Data.Repositories
         private IMongoCollection<TEntity> _collection { get; set; }
 
         public Repository(DatabaseConfig databaseConfig)
-        {
+        {            
             var settings = MongoClientSettings.FromConnectionString(databaseConfig.ConnectionString);
 
             var client = new MongoClient(settings);
@@ -57,6 +57,6 @@ namespace iParty.Data.Repositories
             var filter = builder.And(builder.Eq("_id", id), builder.Eq("Removed", false));
 
             return _collection.Find(filter).FirstOrDefault<TEntity>();
-        }
+        }    
     }
 }

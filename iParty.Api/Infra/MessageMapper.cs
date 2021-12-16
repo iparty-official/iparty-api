@@ -1,12 +1,9 @@
 ﻿using iParty.Api.Dtos;
 using iParty.Api.Interfaces;
-using iParty.Business.Models.People;
 using iParty.Business.Models.Messages;
+using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iParty.Api.Infra
 {
@@ -37,7 +34,7 @@ namespace iParty.Api.Infra
             {
                 DateTime = dto.DateTime,
                 From = getPerson(dto.FromId, "O remetente da mensagem não existe."),
-                To = getPerson(dto.FromId, "O destinatário da mensagem não existe."),
+                To = getPerson(dto.ToId, "O destinatário da mensagem não existe."),
                 Text = dto.Text,
                 Order = null
             };
