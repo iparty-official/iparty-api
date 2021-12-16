@@ -31,12 +31,7 @@ namespace iParty.Business.Services.Cities
             var currentCity = Get(city.Id);
 
             if (currentCity == null)
-                return new ServiceResult<City>
-                {
-                    Success = false,
-                    Entity = null,
-                    Errors = new List<string> { "Não foi possível localizar a cidade informada." }
-                };
+                return GetFailureResult("Não foi possível localizar a cidade informada.");            
 
             var result = ExecuteValidation(new CityValidation(), city);
 
