@@ -35,7 +35,7 @@ namespace iParty.Business.Services.Cities
                 {
                     Success = false,
                     Entity = null,
-                    Errors = new List<string> { "Não foi possível localizar a cidade informada." }
+                    Errors = new List<string> { "Não foi possível localizar a mensagem informada." }
                 };
 
             var result = ExecuteValidation(new MessageValidation(), message);
