@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace iParty.Business.Interfaces
 {
     public interface IFilter
     {
-        public string Field { get; set; }
-
+        public static IFilter CreateFilter(object field, FilterOperatorEnum filterOperator, object value) => null;
+        public object Field { get; set; }
+        public object Value { get; set; }
         public FilterOperatorEnum Operator { get; set; }
-
-        public TPrimitiveType GetValue<TPrimitiveType>();
-
-        public void SetValue<TPrimitiveType>(TPrimitiveType value);
     }
 }

@@ -31,7 +31,7 @@ namespace iParty.Business.Infra
 
         public List<TEntity> Get()
         {
-            return Rep.Recover(x => x.Removed);
+            return Rep.Recover();
         }
     }
 }

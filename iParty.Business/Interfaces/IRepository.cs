@@ -1,7 +1,6 @@
 ﻿using iParty.Business.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
@@ -15,7 +14,7 @@ namespace iParty.Data.Repositories
 
         public List<TEntity> Recover();
 
-        public List<TEntity> Recover(Expression<Func<TEntity, bool>> field);
+        public List<TEntity> Recover(IFilterBuilder filterBuilder);
 
         public TEntity RecoverById(Guid id);
     }

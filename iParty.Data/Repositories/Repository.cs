@@ -2,13 +2,28 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : IEntity
     {
         private IMongoCollection<TEntity> _collection { get; set; }
+
+        private FilterDefinition<TEntity> translateToMongoFilter(IFilterBuilder filterBuilder)
+        {
+            var rawFilters = filterBuilder.Build();
+
+            var mongoBuilder = Builders<TEntity>.Filter;
+
+            var filter = mongoBuilder.Empty;          
+
+            foreach (var item in rawFilters)
+            {
+                filter &= mongoBuilder.Eq(x => item.Field, item.Value);
+            }
+
+            return filter;
+        }
 
         public Repository(DatabaseConfig databaseConfig)
         {
@@ -42,12 +57,14 @@ namespace iParty.Data.Repositories
             var update = Builders<TEntity>.Update.Set("Removed", true);
 
             _collection.UpdateOne(filter, update);
-        }
+        }        
 
-        public List<TEntity> Recover(Expression<Func<TEntity, bool>> field)
+        public List<TEntity> Recover(IFilterBuilder filterBuilder)
         {
-            var filter = Builders<TEntity>.Filter.Eq(field, false);
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Removed, false);
 
+            filter &= translateToMongoFilter(filterBuilder);
+           
             return _collection.Find(filter).ToList();
         }
 
