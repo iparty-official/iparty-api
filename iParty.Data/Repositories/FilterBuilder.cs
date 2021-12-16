@@ -18,7 +18,14 @@ namespace iParty.Data.Repositories
 
         public IFilterBuilder Equal(object field, object value)
         {
-            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.Equals, Value = value });
+            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.Equal, Value = value });
+
+            return this;
+        }
+
+        public IFilterBuilder Unequal(object field, object value)
+        {
+            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.Unequal, Value = value });
 
             return this;
         }

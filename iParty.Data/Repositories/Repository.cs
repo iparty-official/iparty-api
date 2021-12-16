@@ -19,7 +19,23 @@ namespace iParty.Data.Repositories
 
             foreach (var item in rawFilters)
             {
-                filter &= mongoBuilder.Eq(x => item.Field, item.Value);
+                switch (item.Operator)
+                {
+                    case FilterOperatorEnum.Equal:
+                        filter &= mongoBuilder.Eq(x => item.Field.ToString(), item.Value);
+                        break;
+                    case FilterOperatorEnum.Unequal:
+                        filter &= mongoBuilder.Not(mongoBuilder.Eq(x => item.Field.ToString(), item.Value));
+                        break;
+                    case FilterOperatorEnum.GreaterThan:
+                        filter &= mongoBuilder.Gt(x => item.Field.ToString(), item.Value);
+                        break;
+                    case FilterOperatorEnum.LessThan:
+                        filter &= mongoBuilder.Lt(x => item.Field.ToString(), item.Value);
+                        break;
+                    default:                        
+                        break;
+                }
             }
 
             return filter;
