@@ -15,9 +15,9 @@ namespace iParty.Data.Repositories
 
         public List<TEntity> Recover();
 
-        public List<TEntity> Recover(IFilterBuilder filterBuilder);
+        public List<TEntity> Recover(IFilterBuilder<TEntity> filterBuilder);
 
-        public List<TEntity> Recover(Expression<Func<TEntity, object>> field, object value);
+        public List<TEntity> Recover(IFilter<TEntity> filter);        
 
         public TEntity RecoverById(Guid id);
     }

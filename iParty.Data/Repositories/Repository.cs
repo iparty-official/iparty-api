@@ -10,7 +10,7 @@ namespace iParty.Data.Repositories
     {
         private IMongoCollection<TEntity> _collection { get; set; }
 
-        private FilterDefinition<TEntity> translateToMongoFilter(IFilterBuilder filterBuilder)
+        private FilterDefinition<TEntity> translateToMongoFilter(IFilterBuilder<TEntity> filterBuilder)
         {
             var rawFilters = filterBuilder.Build();
 
@@ -76,7 +76,7 @@ namespace iParty.Data.Repositories
             _collection.UpdateOne(filter, update);
         }        
 
-        public List<TEntity> Recover(IFilterBuilder filterBuilder)
+        public List<TEntity> Recover(IFilterBuilder<TEntity> filterBuilder)
         {
             var filter = Builders<TEntity>.Filter.Eq(x => x.Removed, false);
 
@@ -85,21 +85,21 @@ namespace iParty.Data.Repositories
             return _collection.Find(filter).ToList();
         }       
 
-        public List<TEntity> Recover(Expression<Func<TEntity, object>> field, object value)
+        public List<TEntity> Recover(IFilter<TEntity> filter)
         {
-            MemberExpression body = field.Body as MemberExpression;
+            MemberExpression body = filter.Field.Body as MemberExpression;
 
             if (body == null)
             {
-                UnaryExpression ubody = (UnaryExpression)field.Body;
+                UnaryExpression ubody = (UnaryExpression)filter.Field.Body;
                 body = ubody.Operand as MemberExpression;
             }            
 
             string fieldName = body.Member.Name;
 
-            var filter = Builders<TEntity>.Filter.Eq(fieldName, value);
+            var filterDefinition = Builders<TEntity>.Filter.Eq(fieldName, filter.Value);
 
-            return _collection.Find(filter).ToList();
+            return _collection.Find(filterDefinition).ToList();
         }
 
         public List<TEntity> Recover()

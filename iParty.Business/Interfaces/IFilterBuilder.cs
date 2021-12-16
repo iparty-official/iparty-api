@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace iParty.Business.Interfaces
 {
-    public interface IFilterBuilder
+    public interface IFilterBuilder<TEntity> where TEntity : IEntity
     {
-        public IFilterBuilder Equal(object field, object value);
+        public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value);
 
-        public IFilterBuilder GreaterThan(object field, object value);
+        public IFilterBuilder<TEntity> GreaterThan(Expression<Func<TEntity, object>> field, object value);
 
-        public IFilterBuilder LessThan(object field, object value);
+        public IFilterBuilder<TEntity> LessThan(Expression<Func<TEntity, object>> field, object value);
 
-        public List<IFilter> Build();        
+        public List<IFilter<TEntity>> Build();        
     }
 }

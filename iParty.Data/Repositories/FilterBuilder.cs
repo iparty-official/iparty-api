@@ -2,49 +2,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace iParty.Data.Repositories
 {
-    public class FilterBuilder : IFilterBuilder
+    public class FilterBuilder<TEntity> : IFilterBuilder<TEntity> where TEntity : IEntity
     {
-        private List<IFilter> _filters;
+        private List<IFilter<TEntity>> _filters;
 
         public FilterBuilder()
         {
-            _filters = new List<IFilter>();
+            _filters = new List<IFilter<TEntity>>();
         }
 
-        public IFilterBuilder Equal(object field, object value)
+        public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.Equal, Value = value });
+            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.Equal, Value = value });
 
             return this;
         }
 
-        public IFilterBuilder Unequal(object field, object value)
+        public IFilterBuilder<TEntity> Unequal(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.Unequal, Value = value });
+            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.Unequal, Value = value });
 
             return this;
         }
 
-        public IFilterBuilder GreaterThan(object field, object value)
+        public IFilterBuilder<TEntity> GreaterThan(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.GreaterThan, Value = value });
+            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.GreaterThan, Value = value });
 
             return this;
         }
 
-        public IFilterBuilder LessThan(object field, object value)
+        public IFilterBuilder<TEntity> LessThan(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter() { Field = field, Operator = FilterOperatorEnum.LessThan, Value = value });
+            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.LessThan, Value = value });
 
             return this;
         }
 
-        public List<IFilter> Build()
+        public List<IFilter<TEntity>> Build()
         {
             return _filters;
         }

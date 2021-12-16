@@ -10,16 +10,19 @@ namespace iParty.Business.Services.Cities
 {
     public class CityService : Service<City, IRepository<City>>, ICityService
     {
-        private IFilterBuilder _filterBuilder;
+        private IFilterBuilder<City> _filterBuilder;
 
-        public CityService(IRepository<City> rep, IFilterBuilder filterBuilder) : base(rep)
+        private IFilter<City> _filter;
+
+        public CityService(IRepository<City> rep, IFilterBuilder<City> filterBuilder, IFilter<City> filter) : base(rep)
         {
             _filterBuilder = filterBuilder;
+            _filter = filter;
         }
 
         public ServiceResult<City> Create(City city)
         {                       
-            var result = ExecuteValidation(new CityValidation(Rep, _filterBuilder), city);
+            var result = ExecuteValidation(new CityValidation(Rep, _filterBuilder, _filter), city);
 
             if (!result.IsValid)
                 return GetFailureResult(result);           
@@ -36,7 +39,7 @@ namespace iParty.Business.Services.Cities
             if (currentCity == null)
                 return GetFailureResult("Não foi possível localizar a cidade informada.");            
 
-            var result = ExecuteValidation(new CityValidation(Rep, _filterBuilder), city);
+            var result = ExecuteValidation(new CityValidation(Rep, _filterBuilder, _filter), city);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
