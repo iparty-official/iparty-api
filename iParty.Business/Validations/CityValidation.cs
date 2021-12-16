@@ -26,13 +26,8 @@ namespace iParty.Business.Validations
         }
 
         private bool IbgeNumberAlreadyExists(IRepository<City> rep, IFilterBuilder filterBuilder, City city)
-        {
-            filterBuilder
-                .Equal(city.IbgeNumber.GetType(), city.IbgeNumber)
-                
-                ;
-
-            return rep.Recover(filterBuilder).Count > 0;
+        {            
+            return rep.Recover(x => x.IbgeNumber, city.IbgeNumber).Count > 0;
         }
     }
 }

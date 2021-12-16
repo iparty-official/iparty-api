@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
@@ -81,6 +82,23 @@ namespace iParty.Data.Repositories
 
             filter &= translateToMongoFilter(filterBuilder);
            
+            return _collection.Find(filter).ToList();
+        }       
+
+        public List<TEntity> Recover(Expression<Func<TEntity, object>> field, object value)
+        {
+            MemberExpression body = field.Body as MemberExpression;
+
+            if (body == null)
+            {
+                UnaryExpression ubody = (UnaryExpression)field.Body;
+                body = ubody.Operand as MemberExpression;
+            }            
+
+            string fieldName = body.Member.Name;
+
+            var filter = Builders<TEntity>.Filter.Eq(fieldName, value);
+
             return _collection.Find(filter).ToList();
         }
 
