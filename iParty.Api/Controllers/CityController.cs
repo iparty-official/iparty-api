@@ -48,8 +48,7 @@ namespace iParty.Api.Controllers
         [Route("{id}")]
         [HttpPut]
         public IActionResult Update([FromRoute] Guid id, [FromBody] CityDto dto)
-        {
-            //HttpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
+        {            
             try
             {               
                 var city = _mapper.Map<City>(dto);
