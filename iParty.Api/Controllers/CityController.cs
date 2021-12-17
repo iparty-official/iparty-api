@@ -8,19 +8,18 @@ using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers
-{
-    //[Authorize]
+{    
     [ApiController]
     [Route("[controller]")]
     public class CityController : ControllerBase
     {
-        private readonly ICityService _serviceCity;
+        private readonly ICityService _cityService;
 
         private readonly IMapper _mapper;
 
         public CityController(ICityService serviceCity, IMapper mapper)
         {
-            _serviceCity = serviceCity;
+            _cityService = serviceCity;
             _mapper = mapper;
         }
 
@@ -31,7 +30,7 @@ namespace iParty.Api.Controllers
             {
                 var city = _mapper.Map<City>(dto);
 
-                var result = _serviceCity.Create(city);
+                var result = _cityService.Create(city);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -54,7 +53,7 @@ namespace iParty.Api.Controllers
                 var city = _mapper.Map<City>(dto);
                 city.Id = id;
 
-                var result = _serviceCity.Update(id, city);
+                var result = _cityService.Update(id, city);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -74,7 +73,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _serviceCity.Delete(id);
+                var result = _cityService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -93,7 +92,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entity = _serviceCity.Get(id);
+                var entity = _cityService.Get(id);
 
                 var view  = _mapper.Map<CityView>(entity);
 
@@ -110,7 +109,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entitys = _serviceCity.Get();
+                var entitys = _cityService.Get();
 
                 var view = _mapper.Map<List<CityView>>(entitys);
 
