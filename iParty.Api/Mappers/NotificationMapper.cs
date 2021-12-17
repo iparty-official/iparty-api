@@ -9,7 +9,7 @@ using System;
 
 namespace iParty.Api.Mappers
 {
-    public class NotificationMapper : INotificationMapper
+    public class NotificationMapper : BaseMapper<Notification>, INotificationMapper
     {
         private IRepository<Person> _personRepository;
 
@@ -19,22 +19,21 @@ namespace iParty.Api.Mappers
         }
 
         public MapperResult<Notification> Map(NotificationDto dto)
-        {
-            var result  = new MapperResult<Notification>();
-            var person = _personRepository.RecoverById(dto.DestinationId).IfNull(() => result.Errors.Add("O destinatário da notificação não existe."));
+        {            
+            var person = _personRepository.RecoverById(dto.DestinationId).IfNull(() => AddError("O destinatário da notificação não existe."));
 
-            if (!result.Success) 
-                return result;
+            if (!ResultIsValid()) 
+                return GetResult();
 
-            result.Entity = new Notification
+            SetEntity(new Notification
             {
                 Date = dto.Date,
                 Time = dto.Time,
                 Text = dto.Text,
                 Destination = person
-            };
+            });
 
-            return result;
+            return GetResult();
         }        
     }
 }
