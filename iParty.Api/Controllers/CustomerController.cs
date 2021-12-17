@@ -13,35 +13,30 @@ namespace iParty.Api.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        private readonly IPersonService _servicePerson;
-        private readonly IMapper _mapper;
+        private readonly IPersonService _personService;
 
-        public CustomerController(IPersonService servicePerson, IMapper mapper)
+        private readonly IMapper _autoMapper;
+
+        public CustomerController(IPersonService personService, IMapper autoMapper)
         {
-            _servicePerson = servicePerson;
-            _mapper = mapper;
+            _personService = personService;
+            _autoMapper = autoMapper;
         }
 
         [HttpPost]
         public IActionResult Create([FromBody] CustomerDto dto)
         {
             try
-            {                
-                var customer = _mapper.Map<Person>(dto);
-                customer.SupplierOrCustomer = SupplierOrCustomer.Customer;
-                customer.CustomerInfo = new Customer
-                {
-                    BirthDate = dto.BirthDate
-                };
-                
-                //var result = _servicePerson.Create(customer);
+            {
+                var customer = _autoMapper.Map<Person>(dto);
 
-                //if (!result.Success) return BadRequest(result.Errors);
+                var result = _personService.Create(customer);
 
-                //var view = _mapper.Map<CustomerView>(result.Entity);
-                //view.BirthDate = result.Entity.CustomerInfo.BirthDate;
+                if (!result.Success) return BadRequest(result.Errors);
 
-                return Ok();
+                var view = _autoMapper.Map<CustomerView>(result.Entity);
+
+                return Ok(view);
             }
             catch (Exception e)
             {
@@ -52,27 +47,20 @@ namespace iParty.Api.Controllers
         [Route("{id}")]
         [HttpPut]
         public IActionResult Update([FromRoute] Guid id, [FromBody] CustomerDto dto)
-        {         
+        {
             try
             {
-                var customer = _servicePerson.Get(id);
-                if (customer == null) return BadRequest(new List<string> { "Não foi possível localizar o cliente informado." });
+                var customer = _autoMapper.Map<Person>(dto);
+                
+                customer.Id = id;
 
-                customer = _mapper.Map<Person>(dto);
-                customer.SupplierOrCustomer = SupplierOrCustomer.Customer;
-                customer.CustomerInfo = new Customer
-                {
-                    BirthDate = dto.BirthDate
-                };
+                var result = _personService.Update(id, customer);
 
-                //var result = _servicePerson.Update(customer);
+                if (!result.Success) return BadRequest(result.Errors);
 
-                //if (!result.Success) return BadRequest(result.Errors);
+                var view = _autoMapper.Map<CustomerView>(result.Entity);
 
-                //var view = _mapper.Map<CustomerView>(result.Entity);
-                //view.BirthDate = result.Entity.CustomerInfo.BirthDate;
-
-                return Ok();
+                return Ok(view);
             }
             catch (Exception e)
             {
@@ -86,7 +74,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _servicePerson.Delete(id);
+                var result = _personService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -105,9 +93,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entity = _servicePerson.Get(id);
+                var entity = _personService.Get(id);
 
-                var view = _mapper.Map<CustomerView>(entity);
+                var view = _autoMapper.Map<CustomerView>(entity);
 
                 return Ok(view);
             }
@@ -122,9 +110,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entitys = _servicePerson.Get();
+                var entitys = _personService.Get();
 
-                var view = _mapper.Map<List<CustomerView>>(entitys);
+                var view = _autoMapper.Map<List<CustomerView>>(entitys);
 
                 return Ok(view);
             }
@@ -133,5 +121,6 @@ namespace iParty.Api.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
     }
 }

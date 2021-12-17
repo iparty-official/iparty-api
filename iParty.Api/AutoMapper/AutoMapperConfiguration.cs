@@ -15,6 +15,7 @@ namespace iParty.Api.AutoMapper
             CreateMap<City, CityView>().ReverseMap();
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<Person, PersonDto>().ReverseMap();
+            CreateMap<Person, CustomerDto>().ReverseMap();
             CreateMap<Person, CustomerView>().ReverseMap();
             CreateMap<Person, PersonView>().ReverseMap();
             CreateMap<Person, PersonSummarizedView>().ReverseMap();            

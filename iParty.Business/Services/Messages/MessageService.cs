@@ -31,12 +31,7 @@ namespace iParty.Business.Services.Cities
             var currentMessage = Get(id);
 
             if (currentMessage == null)
-                return new ServiceResult<Message>
-                {
-                    Success = false,
-                    Entity = null,
-                    Errors = new List<string> { "Não foi possível localizar a mensagem informada." }
-                };
+                return GetFailureResult("Não foi possível localizar a mensagem informada.");
 
             var result = ExecuteValidation(new MessageValidation(), message);
 

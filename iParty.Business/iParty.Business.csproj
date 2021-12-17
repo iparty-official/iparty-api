@@ -9,8 +9,4 @@
     <PackageReference Include="FluentValidation" Version="10.3.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\People\" />
-  </ItemGroup>
-
 </Project>

@@ -10,9 +10,7 @@ namespace iParty.Business.Services.Cities
 {
     public class CityService : Service<City, IRepository<City>>, ICityService
     {
-        private IFilterBuilder<City> _filterBuilder;
-
-        private IFilter<City> _filter;
+        private IFilterBuilder<City> _filterBuilder;   
 
         public CityService(IRepository<City> rep, IFilterBuilder<City> filterBuilder) : base(rep)
         {
