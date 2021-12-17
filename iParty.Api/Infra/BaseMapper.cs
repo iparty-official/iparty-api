@@ -25,7 +25,7 @@ namespace iParty.Api.Infra
             _mapperResult.Errors.Add(error);
         }
 
-        protected bool ResultIsValid()
+        protected bool SuccessResult()
         {
             return _mapperResult.Success;
         }

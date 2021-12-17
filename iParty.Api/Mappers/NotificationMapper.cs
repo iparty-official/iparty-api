@@ -22,7 +22,7 @@ namespace iParty.Api.Mappers
         {            
             var person = _personRepository.RecoverById(dto.DestinationId).IfNull(() => AddError("O destinatário da notificação não existe."));
 
-            if (!ResultIsValid()) 
+            if (!SuccessResult()) 
                 return GetResult();
 
             SetEntity(new Notification
