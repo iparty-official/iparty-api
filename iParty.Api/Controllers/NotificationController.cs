@@ -30,9 +30,11 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var notification = _notificationMapper.Map(dto);
+                var mapperResult = _notificationMapper.Map(dto);
 
-                var result = _serviceNotification.Create(notification);
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+
+                var result = _serviceNotification.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -52,11 +54,13 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var notification = _notificationMapper.Map(dto);
+                var mapperResult = _notificationMapper.Map(dto);
 
-                notification.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _serviceNotification.Update(id, notification);
+                mapperResult.Entity.Id = id;
+
+                var result = _serviceNotification.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
