@@ -21,6 +21,9 @@ namespace iParty.Api.AutoMapper
             CreateMap<Person, PersonSummarizedView>().ReverseMap();            
             CreateMap<Message, MessageView>().ReverseMap();            
             CreateMap<Notification, NotificationView>().ReverseMap();
+            CreateMap<Phone, PhoneDto>().ReverseMap();
+            CreateMap<Phone, PhoneView>().ReverseMap();
+            CreateMap<Address, AddressView>().ReverseMap();
         }
     }
 }

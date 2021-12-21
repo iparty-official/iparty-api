@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos;
+using iParty.Api.Interfaces;
 using iParty.Api.Views;
 using iParty.Business.Interfaces;
-using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,10 +17,13 @@ namespace iParty.Api.Controllers
 
         private readonly IMapper _autoMapper;
 
-        public CustomerController(IPersonService personService, IMapper autoMapper)
+        private readonly ICustomerMapper _customerMapper;
+
+        public CustomerController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
         {
             _personService = personService;
             _autoMapper = autoMapper;
+            _customerMapper = customerMapper;
         }
 
         [HttpPost]
@@ -28,13 +31,13 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var customer = _autoMapper.Map<Person>(dto);
+                var customer = _customerMapper.Map(dto);
 
                 var result = _personService.Create(customer);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<CustomerView>(result.Entity);
+                var view = _customerMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -50,15 +53,15 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var customer = _autoMapper.Map<Person>(dto);
-                
+                var customer = _customerMapper.Map(dto);
+
                 customer.Id = id;
 
                 var result = _personService.Update(id, customer);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<CustomerView>(result.Entity);
+                var view = _customerMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -95,7 +98,7 @@ namespace iParty.Api.Controllers
             {
                 var entity = _personService.Get(id);
 
-                var view = _autoMapper.Map<CustomerView>(entity);
+                var view = _customerMapper.Map(entity);
 
                 return Ok(view);
             }
@@ -110,9 +113,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entitys = _personService.Get();
+                var entities = _personService.Get();
 
-                var view = _autoMapper.Map<List<CustomerView>>(entitys);
+                var view = _customerMapper.Map(entities);
 
                 return Ok(view);
             }
