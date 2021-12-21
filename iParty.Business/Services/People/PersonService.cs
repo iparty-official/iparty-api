@@ -46,6 +46,38 @@ namespace iParty.Business.Services.Cities
 
             return GetSuccessResult(person);
         }
+        
+        private ServiceResult<Person> replaceAddress(Person person, Guid addressId, Address newAddress)
+        {
+            var currentAddress = person.Addresses.Find(x => x.Id == addressId);
+
+            if (currentAddress == null)
+                return GetFailureResult("Não foi possível localizar o endereço informado");
+
+            var index = person.Addresses.IndexOf(currentAddress);
+
+            person.Addresses.Remove(currentAddress);
+
+            newAddress.Id = addressId;
+
+            person.Addresses.Insert(index, newAddress);
+
+            return GetSuccessResult(person);
+        }
+
+        private ServiceResult<Person> removeAddress(Person person, Guid addressId)
+        {
+            var currentAddress = person.Addresses.Find(x => x.Id == addressId);
+
+            if (currentAddress == null)
+                return GetFailureResult("Não foi possível localizar o endereço informado");
+
+            var index = person.Addresses.IndexOf(currentAddress);
+
+            person.Addresses.Remove(currentAddress);
+
+            return GetSuccessResult(person);
+        }        
 
         public PersonService(IRepository<Person> rep, IRepository<City> cityRepository, IFilterBuilder<Person> personFilterBuilder) : base(rep)
         {
@@ -137,5 +169,61 @@ namespace iParty.Business.Services.Cities
 
             return GetSuccessResult(person);
         }        
+
+        public ServiceResult<Person> AddAddress(Guid personId, Address address)
+        {
+            var person = Get(personId);
+
+            if (person == null)
+                return GetFailureResult("Não foi possível localizar a pessoa informada.");
+
+            var result = new AddressValidation(_cityRepository).Validate(address);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
+            person.Addresses.Add(address);
+
+            Rep.Update(personId, person);
+
+            return GetSuccessResult(person);
+        }
+
+        public ServiceResult<Person> ReplaceAddress(Guid personId, Guid addressId, Address address)
+        {
+            var person = Get(personId);
+
+            if (person == null)
+                return GetFailureResult("Não foi possível localizar a pessoa informada.");
+
+            var result = new AddressValidation(_cityRepository).Validate(address);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
+            var replaceResult = replaceAddress(person, addressId, address);
+
+            if (!replaceResult.Success) return replaceResult;
+
+            Rep.Update(personId, person);
+
+            return GetSuccessResult(person);
+        }
+
+        public ServiceResult<Person> RemoveAddress(Guid personId, Guid addressId)
+        {
+            var person = Get(personId);
+
+            if (person == null)
+                return GetFailureResult("Não foi possível localizar a pessoa informada.");
+
+            var removeResult = removeAddress(person, addressId);
+
+            if (!removeResult.Success) return removeResult;
+
+            Rep.Update(personId, person);
+
+            return GetSuccessResult(person);
+        }
     }
 }
