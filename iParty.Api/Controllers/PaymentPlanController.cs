@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.Notifications;
-using iParty.Api.Interfaces.Notifications;
-using iParty.Api.Views.Notifications;
-using iParty.Business.Interfaces.Notifications;
+using iParty.Api.Dtos;
+using iParty.Api.Views;
+using iParty.Business.Interfaces;
+using iParty.Business.Models.PaymentPlans;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,34 +11,29 @@ namespace iParty.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class NotificationController : ControllerBase
+    public class PaymentPlanController : ControllerBase
     {
-        private readonly INotificationService _notificationService;
         private readonly IMapper _autoMapper;
-        private readonly INotificationMapper _notificationMapper;
-        public NotificationController(INotificationService serviceNotification,
-                                      IMapper autoMapper, 
-                                      INotificationMapper notificationMapper)
+
+        private readonly IPaymentPlanService _paymentPlanService;
+        public PaymentPlanController(IPaymentPlanService paymentPlanService, IMapper autoMapper)
         {
-            _notificationService = serviceNotification;
+            _paymentPlanService = paymentPlanService;
             _autoMapper = autoMapper;
-            _notificationMapper = notificationMapper;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] NotificationDto dto)
+        public IActionResult Create([FromBody] PaymentPlanDto dto)
         {
             try
             {
-                var mapperResult = _notificationMapper.Map(dto);
+                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                var result = _notificationService.Create(mapperResult.Entity);
+                var result = _paymentPlanService.Create(paymentPlan);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<NotificationView>(result.Entity);
+                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
 
                 return Ok(view);
             }
@@ -50,21 +45,19 @@ namespace iParty.Api.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] NotificationDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromBody] PaymentPlanDto dto)
         {
             try
             {
-                var mapperResult = _notificationMapper.Map(dto);
+                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+                paymentPlan.Id = id;
 
-                mapperResult.Entity.Id = id;
-
-                var result = _notificationService.Update(id, mapperResult.Entity);
+                var result = _paymentPlanService.Update(id, paymentPlan);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<NotificationView>(result.Entity);
+                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
 
                 return Ok(view);
             }
@@ -80,7 +73,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _notificationService.Delete(id);
+                var result = _paymentPlanService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -99,9 +92,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entity = _notificationService.Get(id);
+                var entity = _paymentPlanService.Get(id);
 
-                var view = _autoMapper.Map<NotificationView>(entity);
+                var view = _autoMapper.Map<PaymentPlanView>(entity);
 
                 return Ok(view);
             }
@@ -116,9 +109,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entitys = _notificationService.Get();
+                var entitys = _paymentPlanService.Get();
 
-                var view = _autoMapper.Map<List<NotificationView>>(entitys);
+                var view = _autoMapper.Map<List<PaymentPlanView>>(entitys);
 
                 return Ok(view);
             }

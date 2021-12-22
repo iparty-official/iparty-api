@@ -10,6 +10,7 @@ using iParty.Api.Views.People;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.Notications;
+using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
 
 namespace iParty.Api.AutoMapper
@@ -30,6 +31,11 @@ namespace iParty.Api.AutoMapper
             CreateMap<Phone, PhoneDto>().ReverseMap();
             CreateMap<Phone, PhoneView>().ReverseMap();
             CreateMap<Address, AddressView>().ReverseMap();
+            CreateMap<PaymentPlan, PaymentPlanDto>().ReverseMap();
+            CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentDto>().ReverseMap();
+            CreateMap<PaymentPlan, PaymentPlanView>().ReverseMap();
+            CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentView>().ReverseMap();
+
         }
     }
 }
