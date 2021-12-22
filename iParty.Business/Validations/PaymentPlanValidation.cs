@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.PaymentPlans;
 
 namespace iParty.Business.Validations
 {
-    public class PaymentPlanValidation : AbstractValidator<PaymentPlan>
+    public class PaymentPlanValidation : AbstractValidator<PaymentPlan>, IPaymentPlanValidation
     {
 
         public PaymentPlanValidation()

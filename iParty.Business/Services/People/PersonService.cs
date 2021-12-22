@@ -1,9 +1,9 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
-using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
 
@@ -14,6 +14,12 @@ namespace iParty.Business.Services.Cities
         private IRepository<City> _cityRepository;
 
         private IFilterBuilder<Person> _personFilterBuilder;
+        
+        private IPersonValidation _personValidation;
+        
+        private IPhoneValidation _phoneValidation;
+
+        private IAddressValidation _addressValidation;
 
         private ServiceResult<Person> replacePhone(Person person, Guid phoneId, Phone newPhone)
         {
@@ -79,15 +85,23 @@ namespace iParty.Business.Services.Cities
             return GetSuccessResult(person);
         }        
 
-        public PersonService(IRepository<Person> rep, IRepository<City> cityRepository, IFilterBuilder<Person> personFilterBuilder) : base(rep)
+        public PersonService(IRepository<Person> rep, 
+                             IRepository<City> cityRepository, 
+                             IFilterBuilder<Person> personFilterBuilder, 
+                             IPersonValidation personValidation,
+                             IPhoneValidation phoneValidation,
+                             IAddressValidation addressValidation) : base(rep)
         {
             _cityRepository = cityRepository;
             _personFilterBuilder = personFilterBuilder;
+            _personValidation = personValidation;
+            _phoneValidation = phoneValidation;
+            _addressValidation = addressValidation;
         }
 
         public ServiceResult<Person> Create(Person person)
         {
-            var result = ExecuteValidation(new PersonValidation(_cityRepository, Rep, _personFilterBuilder), person);
+            var result = ExecuteValidation(_personValidation, person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -104,7 +118,7 @@ namespace iParty.Business.Services.Cities
             if (currentPerson == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = ExecuteValidation(new PersonValidation(_cityRepository, Rep, _personFilterBuilder), person);
+            var result = ExecuteValidation(_personValidation, person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -121,7 +135,7 @@ namespace iParty.Business.Services.Cities
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = new PhoneValidation().Validate(phone);
+            var result = _phoneValidation.Validate(phone);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -140,7 +154,7 @@ namespace iParty.Business.Services.Cities
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = new PhoneValidation().Validate(phone);
+            var result = _phoneValidation.Validate(phone);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -177,7 +191,7 @@ namespace iParty.Business.Services.Cities
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = new AddressValidation(_cityRepository).Validate(address);
+            var result = _addressValidation.Validate(address);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -196,7 +210,7 @@ namespace iParty.Business.Services.Cities
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = new AddressValidation(_cityRepository).Validate(address);
+            var result = _addressValidation.Validate(address);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

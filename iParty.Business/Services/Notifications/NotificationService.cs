@@ -1,7 +1,7 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
-using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
 
@@ -9,13 +9,16 @@ namespace iParty.Business.Services.Notifications
 {
     public class NotificationService : Service<Notification, IRepository<Notification>>, INotificationService
     {
-        public NotificationService(IRepository<Notification> rep) : base(rep)
+        private INotificationValidation _notificationValidation;
+
+        public NotificationService(IRepository<Notification> rep, INotificationValidation notificationValidation) : base(rep)
         {
+            _notificationValidation = notificationValidation;
         }
 
         public ServiceResult<Notification> Create(Notification notification)
         {
-            var result = ExecuteValidation(new NotificationValidation(), notification);
+            var result = ExecuteValidation(_notificationValidation, notification);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -32,7 +35,7 @@ namespace iParty.Business.Services.Notifications
             if (currentMessage == null)
                 return GetFailureResult("Não foi possível localizar a notificação informada.");
 
-            var result = ExecuteValidation(new NotificationValidation(), notification);
+            var result = ExecuteValidation(_notificationValidation, notification);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

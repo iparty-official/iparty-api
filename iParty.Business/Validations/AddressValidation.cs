@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace iParty.Business.Validations
 {
-    public class AddressValidation : AbstractValidator<Address>
+    public class AddressValidation : AbstractValidator<Address>, IAddressValidation
     {
         private bool cityExists(Guid id, IRepository<City> cityRepository)
         {

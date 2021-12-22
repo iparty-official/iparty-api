@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
 
 namespace iParty.Business.Validations
 {
-    public class NotificationValidation : AbstractValidator<Notification>
+    public class NotificationValidation : AbstractValidator<Notification>, INotificationValidation
     {
         public NotificationValidation()
         {

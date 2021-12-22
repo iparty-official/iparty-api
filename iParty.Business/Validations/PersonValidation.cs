@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using iParty.Business.Interfaces.Filters;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace iParty.Business.Validations
 {
-    public class PersonValidation : AbstractValidator<Person>
+    public class PersonValidation : AbstractValidator<Person>, IPersonValidation
     {        
         private bool isCPF(string document)
         {
