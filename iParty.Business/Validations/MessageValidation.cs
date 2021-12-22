@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Messages;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace iParty.Business.Validations
 {
-    public class MessageValidation : AbstractValidator<Message>
+    public class MessageValidation : AbstractValidator<Message>, IMessageValidation
     {        
         public MessageValidation()
         {
