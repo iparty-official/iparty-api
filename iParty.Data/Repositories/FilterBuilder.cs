@@ -1,5 +1,5 @@
 ﻿using iParty.Business.Interfaces;
-using iParty.Business.Models.Addresses;
+using iParty.Business.Interfaces.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

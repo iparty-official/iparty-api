@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos;
-using iParty.Api.Interfaces;
-using iParty.Api.Views;
-using iParty.Business.Interfaces;
+using iParty.Api.Dtos.Notifications;
+using iParty.Api.Interfaces.Notifications;
+using iParty.Api.Views.Notifications;
+using iParty.Business.Interfaces.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

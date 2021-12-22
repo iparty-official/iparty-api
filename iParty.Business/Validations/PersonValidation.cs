@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using iParty.Business.Interfaces;
+using iParty.Business.Interfaces.Filters;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;

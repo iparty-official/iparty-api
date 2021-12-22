@@ -1,10 +1,10 @@
 ﻿using iParty.Business.Infra;
-using iParty.Business.Interfaces;
+using iParty.Business.Interfaces.Addresses;
+using iParty.Business.Interfaces.Filters;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
-using System.Collections.Generic;
 
 namespace iParty.Business.Services.Cities
 {

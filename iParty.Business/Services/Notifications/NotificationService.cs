@@ -1,5 +1,5 @@
 ﻿using iParty.Business.Infra;
-using iParty.Business.Interfaces;
+using iParty.Business.Interfaces.Notifications;
 using iParty.Business.Models.Notications;
 using iParty.Business.Validations;
 using iParty.Data.Repositories;

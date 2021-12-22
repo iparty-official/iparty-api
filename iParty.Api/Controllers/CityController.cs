@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos;
-using iParty.Api.Views;
-using iParty.Business.Interfaces;
+using iParty.Api.Dtos.Addresses;
+using iParty.Api.Views.Addresses;
+using iParty.Business.Interfaces.Addresses;
 using iParty.Business.Models.Addresses;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers
-{    
+{
     [ApiController]
     [Route("[controller]")]
     public class CityController : ControllerBase
