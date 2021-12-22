@@ -21,8 +21,7 @@ namespace iParty.Api.Mappers.Notifications
         {            
             var person = _personRepository.RecoverById(dto.DestinationId).IfNull(() => AddError("O destinatário da notificação não existe."));
 
-            if (!SuccessResult()) 
-                return GetResult();
+            if (!SuccessResult()) return GetResult();
 
             SetEntity(new Notification
             {

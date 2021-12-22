@@ -33,9 +33,11 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var address = _addressMapper.Map(dto);
+                var mapperResult = _addressMapper.Map(dto);
 
-                var result = _personService.AddAddress(customerId, address);
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+
+                var result = _personService.AddAddress(customerId, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -55,11 +57,13 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var address = _addressMapper.Map(dto);
+                var mapperResult = _addressMapper.Map(dto);
 
-                address.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.ReplaceAddress(customerId, id, address);
+                mapperResult.Entity.Id = id;
+
+                var result = _personService.ReplaceAddress(customerId, id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

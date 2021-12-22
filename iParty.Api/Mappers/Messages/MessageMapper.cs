@@ -1,5 +1,6 @@
 ﻿using iParty.Api.Dtos.Messages;
 using iParty.Api.Interfaces.Messages;
+using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
@@ -7,7 +8,7 @@ using System;
 
 namespace iParty.Api.Infra.Messages
 {
-    public class MessageMapper : IMessageMapper
+    public class MessageMapper : BaseMapper<Message>, IMessageMapper
     {
         private IRepository<Person> _personRepository;
 
@@ -28,16 +29,24 @@ namespace iParty.Api.Infra.Messages
             return person;
         }
 
-        public Message Map(MessageDto dto)
-        {           
-            return new Message()
+        public MapperResult<Message> Map(MessageDto dto)
+        {
+            var from = _personRepository.RecoverById(dto.FromId).IfNull(() => { AddError("O remetente da mensagem não existe."); });
+            
+            var to = _personRepository.RecoverById(dto.ToId).IfNull(() => { AddError("O destinatário da mensagem não existe."); });
+
+            if (!SuccessResult()) return GetResult();            
+
+            SetEntity (new Message()
             {
                 DateTime = dto.DateTime,
-                From = getPerson(dto.FromId, "O remetente da mensagem não existe."),
-                To = getPerson(dto.ToId, "O destinatário da mensagem não existe."),
+                From = from,
+                To = to,
                 Text = dto.Text,
                 Order = null
-            };
+            });
+
+            return GetResult();
         }        
     }
 }

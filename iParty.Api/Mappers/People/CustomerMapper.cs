@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.People;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Addresses;
 using iParty.Api.Interfaces.People;
 using iParty.Api.Views.Addresses;
@@ -13,7 +14,7 @@ using System.Linq;
 
 namespace iParty.Api.Mappers.People
 {
-    public class CustomerMapper : ICustomerMapper
+    public class CustomerMapper : BaseMapper<Person>, ICustomerMapper
     {
         private IRepository<Person> _personRepository;
 
@@ -40,7 +41,7 @@ namespace iParty.Api.Mappers.People
             return person;
         }
 
-        public Person Map(CustomerDto dto)
+        public MapperResult<Person> Map(CustomerDto dto)
         {
             var person = new Person()
             {                
@@ -54,11 +55,23 @@ namespace iParty.Api.Mappers.People
                 Phones = new List<Phone>()
             };
 
-            person.Addresses.AddRange(dto.Addresses.Select(x => _addressMapper.Map(x)));
-
             person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));
 
-            return person;
+            person.Addresses.AddRange(dto.Addresses.Select(x => 
+            { 
+                var mapperResult = _addressMapper.Map(x);
+
+                if (!mapperResult.Success)                 
+                    foreach (var erro in mapperResult.Errors) AddError(erro);
+               
+                return mapperResult.Entity;
+            }));
+
+            if (!SuccessResult()) return GetResult();           
+
+            SetEntity(person);
+
+            return GetResult();
         }
 
         public CustomerView Map(Person person)

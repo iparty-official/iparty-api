@@ -29,9 +29,11 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var customer = _customerMapper.Map(dto);
+                var mapperResult = _customerMapper.Map(dto);
 
-                var result = _personService.Create(customer);
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+
+                var result = _personService.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -51,11 +53,13 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var customer = _customerMapper.Map(dto);
+                var mapperResult = _customerMapper.Map(dto);
 
-                customer.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.Update(id, customer);
+                mapperResult.Entity.Id = id;
+
+                var result = _personService.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

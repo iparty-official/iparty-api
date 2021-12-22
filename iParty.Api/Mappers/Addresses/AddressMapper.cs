@@ -1,41 +1,37 @@
 ﻿using iParty.Api.Dtos.Addresses;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Addresses;
+using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Data.Repositories;
 using System;
 
 namespace iParty.Api.Mappers.Addresses
 {
-    public class AddressMapper : IAddressMapper
+    public class AddressMapper : BaseMapper<Address>, IAddressMapper
     {
         private IRepository<City> _cityRepository;
 
         public AddressMapper(IRepository<City> cityRepository)
         {
             _cityRepository = cityRepository;
-        }
+        }        
 
-        private City getCity(Guid id, string notFoundMessage)
+        public MapperResult<Address> Map(AddressDto dto)
         {
-            var city = _cityRepository.RecoverById(id);
+            var city = _cityRepository.RecoverById(dto.CityId).IfNull(() => AddError("A cidade do endereço não foi encontrada"));
 
-            if (city == null)
-            {
-                throw new Exception(notFoundMessage);
-            }
+            if (!SuccessResult()) return GetResult();
 
-            return city;
-        }
-
-        public Address Map(AddressDto dto)
-        {
-            return new Address()
+            SetEntity(new Address()
             {
                 ZipCode = dto.ZipCode,
                 Street = dto.Street,
                 District = dto.District,
-                City = getCity(dto.CityId, "A cidade do endereço não foi encontrada")
-            };
-        }
+                City = city
+            });
+
+            return GetResult();
+        }        
     }
 }

@@ -32,9 +32,11 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var message = _messageMapper.Map(dto);
+                var mapperResult = _messageMapper.Map(dto);
 
-                var result = _serviceMessage.Create(message);
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+
+                var result = _serviceMessage.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -54,11 +56,13 @@ namespace iParty.Api.Controllers
         {            
             try
             {
-                var message = _messageMapper.Map(dto);
+                var mapperResult = _messageMapper.Map(dto);
 
-                message.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _serviceMessage.Update(id, message);
+                mapperResult.Entity.Id = id;
+
+                var result = _serviceMessage.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
