@@ -11,16 +11,14 @@ namespace iParty.Api.Controllers.Customers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        private readonly IPersonService _personService;
-
-        private readonly IMapper _autoMapper;
+        //TODO: Esse controller está retornando tantos clientes quanto fornecedores. Isso está errado.
+        private readonly IPersonService _personService;        
 
         private readonly ICustomerMapper _customerMapper;
 
-        public CustomerController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
+        public CustomerController(IPersonService personService, ICustomerMapper customerMapper)
         {
-            _personService = personService;
-            _autoMapper = autoMapper;
+            _personService = personService;            
             _customerMapper = customerMapper;
         }
 

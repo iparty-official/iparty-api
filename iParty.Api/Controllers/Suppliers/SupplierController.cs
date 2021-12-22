@@ -11,6 +11,8 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("[controller]")]
     public class SupplierController : ControllerBase
     {
+        //TODO: Esse controller está retornando tantos clientes quanto fornecedores. Isso está errado.
+
         private readonly IPersonService _personService;
 
         private readonly IMapper _autoMapper;
