@@ -42,7 +42,7 @@ namespace iParty.Business.Services.PaymentPlans
 
             Rep.Update(id, paymentPlan);
 
-            return GetSuccessResult(currentPaymentPlan);
+            return GetSuccessResult(paymentPlan);
         }
     }
 }
