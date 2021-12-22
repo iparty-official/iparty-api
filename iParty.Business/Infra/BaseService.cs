@@ -18,7 +18,7 @@ namespace iParty.Business.Infra
 
         protected TRepository Rep { get; private set; }
 
-        protected ValidationResult ExecuteValidation<TValidator>(TValidator validator, TEntity entity) where TValidator : AbstractValidator<TEntity>
+        protected ValidationResult ExecuteValidation<TValidator>(TValidator validator, TEntity entity) where TValidator : IValidator<TEntity>
         {
             return validator.Validate(entity);
         }

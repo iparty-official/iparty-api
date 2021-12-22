@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 using iParty.Business.Interfaces.Filters;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Data.Repositories;
 
 namespace iParty.Business.Validations
 {
-    public class CityValidation : AbstractValidator<City>
+    public class CityValidation : AbstractValidator<City>, ICityValidation
     {
         private bool ibgeNumberAlreadyExists(IRepository<City> cityRepository, IFilterBuilder<City> filterBuilder, City city)
         {
