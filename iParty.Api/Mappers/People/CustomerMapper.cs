@@ -27,19 +27,7 @@ namespace iParty.Api.Mappers.People
             _personRepository = personRepository;
             _autoMapper = autoMapper;
             _addressMapper = addressMapper;
-        }
-
-        private Person getPerson(Guid id, string notFoundMessage)
-        {
-            var person = _personRepository.RecoverById(id);
-
-            if (person == null)
-            {
-                throw new Exception(notFoundMessage);
-            }
-
-            return person;
-        }
+        }        
 
         public MapperResult<Person> Map(CustomerDto dto)
         {
