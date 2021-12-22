@@ -31,12 +31,7 @@ namespace iParty.Business.Services.Notifications
             var currentMessage = Get(id);
 
             if (currentMessage == null)
-                return new ServiceResult<Notification>
-                {
-                    Success = false,
-                    Entity = null,
-                    Errors = new List<string> { "Não foi possível localizar a notificação informada." }
-                };
+                return GetFailureResult("Não foi possível localizar a notificação informada.");
 
             var result = ExecuteValidation(new NotificationValidation(), notification);
 
