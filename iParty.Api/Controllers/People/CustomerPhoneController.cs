@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.Addresses;
-using iParty.Api.Interfaces.Addresses;
+using iParty.Api.Dtos.People;
 using iParty.Api.Interfaces.People;
 using iParty.Business.Interfaces.People;
+using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace iParty.Api.Controllers
+//TODO: Injetar validadores nos serviços
+//TODO: No validador de pessoas, chamar validador de telefone e endereços
+
+namespace iParty.Api.Controllers.People
 {
     [ApiController]
-    [Route("customer/{customerId}/address")]
-    public class CustomerAddressController : ControllerBase
+    [Route("customer/{customerId}/phone")]
+    public class CustomerPhoneController : ControllerBase
     {
         private readonly IPersonService _personService;
 
@@ -18,26 +21,21 @@ namespace iParty.Api.Controllers
 
         private readonly ICustomerMapper _customerMapper;
 
-        private readonly IAddressMapper _addressMapper;
-
-        public CustomerAddressController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper, IAddressMapper addressMapper)
+        public CustomerPhoneController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
         {
             _personService = personService;
             _autoMapper = autoMapper;
             _customerMapper = customerMapper;
-            _addressMapper = addressMapper;
         }
 
         [HttpPost]
-        public IActionResult Create([FromRoute] Guid customerId, [FromBody] AddressDto dto)
+        public IActionResult Create([FromRoute] Guid customerId, [FromBody] PhoneDto dto)
         {
             try
             {
-                var mapperResult = _addressMapper.Map(dto);
+                var phone = _autoMapper.Map<Phone>(dto);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                var result = _personService.AddAddress(customerId, mapperResult.Entity);
+                var result = _personService.AddPhone(customerId, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -53,17 +51,15 @@ namespace iParty.Api.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] AddressDto dto)
+        public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] PhoneDto dto)
         {
             try
             {
-                var mapperResult = _addressMapper.Map(dto);
+                var phone = _autoMapper.Map<Phone>(dto);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+                phone.Id = id;
 
-                mapperResult.Entity.Id = id;
-
-                var result = _personService.ReplaceAddress(customerId, id, mapperResult.Entity);
+                var result = _personService.ReplacePhone(customerId, id, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -83,7 +79,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _personService.RemoveAddress(customerId, id);
+                var result = _personService.RemovePhone(customerId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

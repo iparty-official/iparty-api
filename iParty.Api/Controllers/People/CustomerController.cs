@@ -1,44 +1,43 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.Notifications;
-using iParty.Api.Interfaces.Notifications;
-using iParty.Api.Views.Notifications;
-using iParty.Business.Interfaces.Notifications;
+using iParty.Api.Dtos.People;
+using iParty.Api.Interfaces.People;
+using iParty.Business.Interfaces.People;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
-namespace iParty.Api.Controllers
+namespace iParty.Api.Controllers.People
 {
     [ApiController]
     [Route("[controller]")]
-    public class NotificationController : ControllerBase
+    public class CustomerController : ControllerBase
     {
-        private readonly INotificationService _notificationService;
+        private readonly IPersonService _personService;
+
         private readonly IMapper _autoMapper;
-        private readonly INotificationMapper _notificationMapper;
-        public NotificationController(INotificationService serviceNotification,
-                                      IMapper autoMapper, 
-                                      INotificationMapper notificationMapper)
+
+        private readonly ICustomerMapper _customerMapper;
+
+        public CustomerController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
         {
-            _notificationService = serviceNotification;
+            _personService = personService;
             _autoMapper = autoMapper;
-            _notificationMapper = notificationMapper;
+            _customerMapper = customerMapper;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] NotificationDto dto)
+        public IActionResult Create([FromBody] CustomerDto dto)
         {
             try
             {
-                var mapperResult = _notificationMapper.Map(dto);
+                var mapperResult = _customerMapper.Map(dto);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _notificationService.Create(mapperResult.Entity);
+                var result = _personService.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<NotificationView>(result.Entity);
+                var view = _customerMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -50,21 +49,21 @@ namespace iParty.Api.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] NotificationDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromBody] CustomerDto dto)
         {
             try
             {
-                var mapperResult = _notificationMapper.Map(dto);
+                var mapperResult = _customerMapper.Map(dto);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
                 mapperResult.Entity.Id = id;
 
-                var result = _notificationService.Update(id, mapperResult.Entity);
+                var result = _personService.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<NotificationView>(result.Entity);
+                var view = _customerMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -80,7 +79,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _notificationService.Delete(id);
+                var result = _personService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -99,9 +98,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entity = _notificationService.Get(id);
+                var entity = _personService.Get(id);
 
-                var view = _autoMapper.Map<NotificationView>(entity);
+                var view = _customerMapper.Map(entity);
 
                 return Ok(view);
             }
@@ -116,9 +115,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entitys = _notificationService.Get();
+                var entities = _personService.Get();
 
-                var view = _autoMapper.Map<List<NotificationView>>(entitys);
+                var view = _customerMapper.Map(entities);
 
                 return Ok(view);
             }
@@ -127,5 +126,6 @@ namespace iParty.Api.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
     }
 }

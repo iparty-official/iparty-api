@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace iParty.Api.Controllers
+namespace iParty.Api.Controllers.Addresses
 {
     [ApiController]
     [Route("[controller]")]

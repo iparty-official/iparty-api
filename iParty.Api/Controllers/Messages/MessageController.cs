@@ -1,43 +1,46 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.People;
-using iParty.Api.Interfaces.People;
-using iParty.Business.Interfaces.People;
+using iParty.Api.Dtos.Messages;
+using iParty.Api.Interfaces.Messages;
+using iParty.Api.Views.Messages;
+using iParty.Business.Interfaces.Messages;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
-namespace iParty.Api.Controllers
+namespace iParty.Api.Controllers.Messages
 {
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class CustomerController : ControllerBase
+    public class MessageController : ControllerBase
     {
-        private readonly IPersonService _personService;
+        private readonly IMessageService _serviceMessage;
 
         private readonly IMapper _autoMapper;
 
-        private readonly ICustomerMapper _customerMapper;
+        private readonly IMessageMapper _messageMapper;
 
-        public CustomerController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
+        public MessageController(IMessageService serviceMessage, IMapper autoMapper, IMessageMapper messageMapper)
         {
-            _personService = personService;
+            _serviceMessage = serviceMessage;
             _autoMapper = autoMapper;
-            _customerMapper = customerMapper;
+            _messageMapper = messageMapper;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CustomerDto dto)
+        public IActionResult Create([FromBody] MessageDto dto)
         {
             try
             {
-                var mapperResult = _customerMapper.Map(dto);
+                var mapperResult = _messageMapper.Map(dto);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.Create(mapperResult.Entity);
+                var result = _serviceMessage.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _autoMapper.Map<MessageView>(result.Entity);
 
                 return Ok(view);
             }
@@ -49,21 +52,21 @@ namespace iParty.Api.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] CustomerDto dto)
-        {
+        public IActionResult Update([FromRoute] Guid id, [FromBody] MessageDto dto)
+        {            
             try
             {
-                var mapperResult = _customerMapper.Map(dto);
+                var mapperResult = _messageMapper.Map(dto);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.Update(id, mapperResult.Entity);
+                var result = _serviceMessage.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _autoMapper.Map<MessageView>(result.Entity);
 
                 return Ok(view);
             }
@@ -79,7 +82,7 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var result = _personService.Delete(id);
+                var result = _serviceMessage.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -98,9 +101,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entity = _personService.Get(id);
+                var entity = _serviceMessage.Get(id);
 
-                var view = _customerMapper.Map(entity);
+                var view = _autoMapper.Map<MessageView>(entity);
 
                 return Ok(view);
             }
@@ -115,9 +118,9 @@ namespace iParty.Api.Controllers
         {
             try
             {
-                var entities = _personService.Get();
+                var entitys = _serviceMessage.Get();
 
-                var view = _customerMapper.Map(entities);
+                var view = _autoMapper.Map<List<MessageView>>(entitys);
 
                 return Ok(view);
             }
