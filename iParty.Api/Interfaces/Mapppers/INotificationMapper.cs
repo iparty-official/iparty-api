@@ -2,7 +2,7 @@
 using iParty.Api.Infra;
 using iParty.Business.Models.Notications;
 
-namespace iParty.Api.Interfaces.Notifications
+namespace iParty.Api.Interfaces.Mappers
 {
     public interface INotificationMapper
     {

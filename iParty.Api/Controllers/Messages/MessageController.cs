@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Messages;
-using iParty.Api.Interfaces.Messages;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
 using iParty.Business.Interfaces.Messages;
 using Microsoft.AspNetCore.Mvc;

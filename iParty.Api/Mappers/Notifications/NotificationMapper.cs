@@ -1,6 +1,6 @@
 ﻿using iParty.Api.Dtos.Notifications;
 using iParty.Api.Infra;
-using iParty.Api.Interfaces.Notifications;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Notications;
 using iParty.Business.Models.People;

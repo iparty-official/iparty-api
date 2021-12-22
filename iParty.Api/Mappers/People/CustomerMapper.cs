@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.People;
 using iParty.Api.Infra;
-using iParty.Api.Interfaces.Addresses;
-using iParty.Api.Interfaces.People;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Addresses;
 using iParty.Api.Views.People;
 using iParty.Business.Models.Addresses;

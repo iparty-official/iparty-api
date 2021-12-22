@@ -2,7 +2,7 @@
 using iParty.Api.Infra;
 using iParty.Business.Models.Addresses;
 
-namespace iParty.Api.Interfaces.Addresses
+namespace iParty.Api.Interfaces.Mappers
 {
     public interface IAddressMapper
     {

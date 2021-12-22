@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.People;
-using iParty.Api.Interfaces.People;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.People;
 using Microsoft.AspNetCore.Mvc;
 using System;

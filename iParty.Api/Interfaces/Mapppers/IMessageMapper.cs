@@ -2,7 +2,7 @@
 using iParty.Api.Infra;
 using iParty.Business.Models.Messages;
 
-namespace iParty.Api.Interfaces.Messages
+namespace iParty.Api.Interfaces.Mappers
 {
     public interface IMessageMapper
     {

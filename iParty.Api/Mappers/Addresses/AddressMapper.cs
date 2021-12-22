@@ -1,6 +1,6 @@
 ﻿using iParty.Api.Dtos.Addresses;
 using iParty.Api.Infra;
-using iParty.Api.Interfaces.Addresses;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Data.Repositories;

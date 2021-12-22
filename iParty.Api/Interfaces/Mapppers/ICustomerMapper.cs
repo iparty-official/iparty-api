@@ -4,7 +4,7 @@ using iParty.Api.Views.People;
 using iParty.Business.Models.People;
 using System.Collections.Generic;
 
-namespace iParty.Api.Interfaces.People
+namespace iParty.Api.Interfaces.Mappers
 {
     public interface ICustomerMapper
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Notifications;
-using iParty.Api.Interfaces.Notifications;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Notifications;
 using iParty.Business.Interfaces.Notifications;
 using Microsoft.AspNetCore.Mvc;

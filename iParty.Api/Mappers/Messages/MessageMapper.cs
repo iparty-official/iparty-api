@@ -1,5 +1,5 @@
 ﻿using iParty.Api.Dtos.Messages;
-using iParty.Api.Interfaces.Messages;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.People;
