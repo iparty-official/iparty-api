@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Views.Addresses;
-using iParty.Business.Interfaces.Addresses;
+using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Addresses;
 using Microsoft.AspNetCore.Mvc;
 using System;

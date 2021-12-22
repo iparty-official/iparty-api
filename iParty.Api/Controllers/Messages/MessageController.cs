@@ -2,7 +2,7 @@
 using iParty.Api.Dtos.Messages;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
-using iParty.Business.Interfaces.Messages;
+using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

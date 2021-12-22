@@ -3,7 +3,7 @@ using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
 using System;
 
-namespace iParty.Business.Interfaces.People
+namespace iParty.Business.Interfaces.Services
 {
     public interface IPersonService : IService<Person>
     {

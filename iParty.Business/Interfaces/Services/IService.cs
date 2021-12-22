@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace iParty.Business.Interfaces
+namespace iParty.Business.Interfaces.Services
 {
     public interface IService<TEntity> where TEntity : IEntity
     {

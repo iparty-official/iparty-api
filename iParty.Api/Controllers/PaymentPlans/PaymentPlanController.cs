@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos;
 using iParty.Api.Views;
-using iParty.Business.Interfaces;
+using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.PaymentPlans;
 using Microsoft.AspNetCore.Mvc;
 using System;

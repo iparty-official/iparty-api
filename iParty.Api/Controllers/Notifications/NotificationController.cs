@@ -2,7 +2,7 @@
 using iParty.Api.Dtos.Notifications;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Notifications;
-using iParty.Business.Interfaces.Notifications;
+using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

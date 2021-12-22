@@ -1,10 +1,9 @@
 ﻿using iParty.Business.Infra;
-using iParty.Business.Interfaces.Notifications;
+using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Notications;
 using iParty.Business.Validations;
 using iParty.Data.Repositories;
 using System;
-using System.Collections.Generic;
 
 namespace iParty.Business.Services.Notifications
 {

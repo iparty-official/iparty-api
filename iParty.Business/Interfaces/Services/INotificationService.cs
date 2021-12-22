@@ -2,7 +2,7 @@
 using iParty.Business.Models.Notications;
 using System;
 
-namespace iParty.Business.Interfaces.Notifications
+namespace iParty.Business.Interfaces.Services
 {
     public interface INotificationService : IService<Notification>
     {

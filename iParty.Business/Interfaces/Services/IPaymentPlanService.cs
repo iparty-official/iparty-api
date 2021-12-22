@@ -2,7 +2,7 @@
 using iParty.Business.Models.PaymentPlans;
 using System;
 
-namespace iParty.Business.Interfaces
+namespace iParty.Business.Interfaces.Services
 {
     public interface IPaymentPlanService : IService<PaymentPlan>
     {

@@ -1,6 +1,6 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Interfaces.Filters;
-using iParty.Business.Interfaces.People;
+using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.People;
 using iParty.Business.Validations;

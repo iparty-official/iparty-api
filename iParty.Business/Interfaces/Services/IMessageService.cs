@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iParty.Business.Interfaces.Messages
+namespace iParty.Business.Interfaces.Services
 {
     public interface IMessageService : IService<Message>
     {

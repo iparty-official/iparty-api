@@ -2,7 +2,7 @@
 using iParty.Business.Models.Addresses;
 using System;
 
-namespace iParty.Business.Interfaces.Addresses
+namespace iParty.Business.Interfaces.Services
 {
     public interface ICityService : IService<City>
     {
