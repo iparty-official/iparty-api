@@ -5,8 +5,6 @@ namespace iParty.Api.Views.PaymentPlans
 {
     public class PaymentPlanView : View
     {
-        public string Description { get; set; }
-
         public PaymentMethod PaymentMethod { get; set; }
 
         public decimal MinInstallmentValue { get; set; }
