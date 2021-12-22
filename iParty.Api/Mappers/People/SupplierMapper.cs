@@ -59,10 +59,12 @@ namespace iParty.Api.Mappers.People
 
             person.SupplierInfo.PaymentPlans.AddRange(dto.PaymentPlans.Select(x =>
             {
-                var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("Plano de pagamento informado não foi encontrado."); });                
+                var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("O plano de pagamento informado não foi encontrado."); });                
 
                 return paymentPlan;
             }));
+
+            if (!SuccessResult()) return GetResult();            
 
             SetEntity(person);
 

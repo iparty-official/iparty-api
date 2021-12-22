@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Dtos
+﻿namespace iParty.Api.Dtos.PaymentPlans
 {
     public class PaymentPlanInstalmentDto
     {

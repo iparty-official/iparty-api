@@ -18,7 +18,7 @@ namespace iParty.Business.Services.Cities
 
         public ServiceResult<Message> Create(Message message)
         {
-            var result = ExecuteValidation(_messageValidation, message);
+            var result = _messageValidation.Validate(message);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -35,7 +35,7 @@ namespace iParty.Business.Services.Cities
             if (currentMessage == null)
                 return GetFailureResult("Não foi possível localizar a mensagem informada.");
 
-            var result = ExecuteValidation(_messageValidation, message);
+            var result = _messageValidation.Validate(message);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

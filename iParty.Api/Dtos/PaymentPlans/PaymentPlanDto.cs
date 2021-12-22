@@ -1,7 +1,7 @@
 ﻿using iParty.Business.Models.PaymentPlans;
 using System.Collections.Generic;
 
-namespace iParty.Api.Dtos
+namespace iParty.Api.Dtos.PaymentPlans
 {
     public class PaymentPlanDto
     {

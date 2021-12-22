@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos;
+using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.PaymentPlans;

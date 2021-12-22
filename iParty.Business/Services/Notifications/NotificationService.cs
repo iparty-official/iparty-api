@@ -18,7 +18,7 @@ namespace iParty.Business.Services.Notifications
 
         public ServiceResult<Notification> Create(Notification notification)
         {
-            var result = ExecuteValidation(_notificationValidation, notification);
+            var result = _notificationValidation.Validate(notification);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -35,7 +35,7 @@ namespace iParty.Business.Services.Notifications
             if (currentMessage == null)
                 return GetFailureResult("Não foi possível localizar a notificação informada.");
 
-            var result = ExecuteValidation(_notificationValidation, notification);
+            var result = _notificationValidation.Validate(notification);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

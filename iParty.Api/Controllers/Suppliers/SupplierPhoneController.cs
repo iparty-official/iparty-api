@@ -26,13 +26,13 @@ namespace iParty.Api.Controllers.Suppliers
         }
 
         [HttpPost]
-        public IActionResult Create([FromRoute] Guid customerId, [FromBody] PhoneDto dto)
+        public IActionResult Create([FromRoute] Guid supplierId, [FromBody] PhoneDto dto)
         {
             try
             {
                 var phone = _autoMapper.Map<Phone>(dto);
 
-                var result = _personService.AddPhone(customerId, phone);
+                var result = _personService.AddPhone(supplierId, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -48,7 +48,7 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] PhoneDto dto)
+        public IActionResult Update([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromBody] PhoneDto dto)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 phone.Id = id;
 
-                var result = _personService.ReplacePhone(customerId, id, phone);
+                var result = _personService.ReplacePhone(supplierId, id, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -72,11 +72,11 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
-        public IActionResult Delete([FromRoute] Guid customerId, [FromRoute] Guid id)
+        public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
         {
             try
             {
-                var result = _personService.RemovePhone(customerId, id);
+                var result = _personService.RemovePhone(supplierId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

@@ -22,7 +22,7 @@ namespace iParty.Business.Services.Cities
 
         public ServiceResult<City> Create(City city)
         {                       
-            var result = ExecuteValidation(_cityValidation, city);
+            var result = _cityValidation.Validate(city);
 
             if (!result.IsValid)
                 return GetFailureResult(result);           
@@ -39,7 +39,7 @@ namespace iParty.Business.Services.Cities
             if (currentCity == null)
                 return GetFailureResult("Não foi possível localizar a cidade informada.");            
 
-            var result = ExecuteValidation(_cityValidation, city);
+            var result = _cityValidation.Validate(city);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

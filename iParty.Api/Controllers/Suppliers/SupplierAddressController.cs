@@ -28,7 +28,7 @@ namespace iParty.Api.Controllers.Suppliers
         }
 
         [HttpPost]
-        public IActionResult Create([FromRoute] Guid customerId, [FromBody] AddressDto dto)
+        public IActionResult Create([FromRoute] Guid supplierId, [FromBody] AddressDto dto)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.AddAddress(customerId, mapperResult.Entity);
+                var result = _personService.AddAddress(supplierId, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -52,7 +52,7 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] AddressDto dto)
+        public IActionResult Update([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromBody] AddressDto dto)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.ReplaceAddress(customerId, id, mapperResult.Entity);
+                var result = _personService.ReplaceAddress(supplierId, id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -78,11 +78,11 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
-        public IActionResult Delete([FromRoute] Guid customerId, [FromRoute] Guid id)
+        public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
         {
             try
             {
-                var result = _personService.RemoveAddress(customerId, id);
+                var result = _personService.RemoveAddress(supplierId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

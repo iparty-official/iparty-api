@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos;
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Dtos.Messages;
 using iParty.Api.Dtos.Notifications;
+using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Dtos.People;
 using iParty.Api.Views.Addresses;
 using iParty.Api.Views.Messages;

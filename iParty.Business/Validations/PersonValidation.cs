@@ -2,6 +2,7 @@
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
+using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 using System;
@@ -28,6 +29,13 @@ namespace iParty.Business.Validations
             return city != null;
         }
 
+        private bool paymentPlanExists(Guid id, IRepository<PaymentPlan> paymentPlanRepository)
+        {
+            var paymentPlan = paymentPlanRepository.RecoverById(id);
+
+            return paymentPlan != null;
+        }
+
         private bool documentAlreadyExists(IRepository<Person> personRepository, IFilterBuilder<Person> filterBuilder, Person person)
         {
             if (String.IsNullOrEmpty(person.Document)) return false;
@@ -39,10 +47,14 @@ namespace iParty.Business.Validations
             return personRepository.Recover(filterBuilder).Count > 0;
         }
 
-        public PersonValidation(IRepository<City> cityRepository, IRepository<Person> personRepository, IFilterBuilder<Person> personFilterBuilder)
-        {           
-            //TODO: Add supplier data validation
-
+        public PersonValidation(IRepository<City> cityRepository, 
+                                IRepository<Person> personRepository, 
+                                IRepository<PaymentPlan> paymentPlanRepository, 
+                                IAddressValidation addressValidation,
+                                IFilterBuilder<Person> personFilterBuilder)
+        {                       
+            //TODO: Validar DV do CPF/CNPJ
+            
             RuleFor(p => p.Name).NotEmpty().WithMessage("O nome da pessoa não foi informado.");
 
             RuleFor(p => p.SupplierOrCustomer).IsInEnum().WithMessage("O campo 'Cliente ou Fornecedor' está com um valor inválido.");           
@@ -55,6 +67,8 @@ namespace iParty.Business.Validations
 
             RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");
 
+            RuleFor(p => p.SupplierOrCustomer == SupplierOrCustomer.Supplier && string.IsNullOrEmpty(p.SupplierInfo.BusinessDescription)).Equal(false).WithMessage("A descrição do negócio não foi informada");
+            
             RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => x.Prefix).NotEmpty().WithMessage("O prefixo do número do telefone não foi informado."));
 
             RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => x.Number).NotEmpty().WithMessage("O número do telefone não foi informado."));
@@ -72,6 +86,8 @@ namespace iParty.Business.Validations
             RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => x.District).NotEmpty().WithMessage("O nome do bairro não foi informado."));
 
             RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => cityExists(x.City.Id, cityRepository)).Equal(true).WithMessage("A cidade informada não existe."));
+
+            RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanExists(x.Id, paymentPlanRepository)).Equal(true).WithMessage("O plano de pagamento informado não existe."));            
         }        
     }
 }

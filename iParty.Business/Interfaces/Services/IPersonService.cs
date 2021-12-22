@@ -1,5 +1,6 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Models.Addresses;
+using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
 using System;
 
@@ -22,5 +23,9 @@ namespace iParty.Business.Interfaces.Services
         public ServiceResult<Person> ReplaceAddress(Guid personId, Guid addressId, Address address);
 
         public ServiceResult<Person> RemoveAddress(Guid personId, Guid addressId);
+
+        public ServiceResult<Person> AddPaymentPlan(Guid personId, Guid paymentPlanId);        
+
+        public ServiceResult<Person> RemovePaymentPlan(Guid personId, Guid paymentPlanId);
     }
 }

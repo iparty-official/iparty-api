@@ -18,7 +18,7 @@ namespace iParty.Business.Services.PaymentPlans
 
         public ServiceResult<PaymentPlan> Create(PaymentPlan paymentPlan)
         {
-            var result = ExecuteValidation(_paymentPlanValidation, paymentPlan);
+            var result = _paymentPlanValidation.Validate(paymentPlan);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -35,7 +35,7 @@ namespace iParty.Business.Services.PaymentPlans
             if (currentPaymentPlan == null)
                 return GetFailureResult("Não foi possível localizar a forma de pagamento informada.");
 
-            var result = ExecuteValidation(_paymentPlanValidation, paymentPlan);
+            var result = _paymentPlanValidation.Validate(paymentPlan);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using iParty.Business.Interfaces;
 using iParty.Data.Repositories;
 using System.Collections.Generic;
@@ -16,12 +15,7 @@ namespace iParty.Business.Infra
             Rep = rep;
         }
 
-        protected TRepository Rep { get; private set; }
-
-        protected ValidationResult ExecuteValidation<TValidator>(TValidator validator, TEntity entity) where TValidator : IValidator<TEntity>
-        {
-            return validator.Validate(entity);
-        }
+        protected TRepository Rep { get; private set; }        
 
         protected ServiceResult<TEntity> GetSuccessResult(TEntity entity)
         {
