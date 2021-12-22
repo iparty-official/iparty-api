@@ -1,39 +1,43 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos;
-using iParty.Api.Views.PaymentPlans;
+using iParty.Api.Dtos.People;
+using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
-using iParty.Business.Models.PaymentPlans;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
-namespace iParty.Api.Controllers.PaymentPlans
+namespace iParty.Api.Controllers.Suppliers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PaymentPlanController : ControllerBase
+    public class SupplierController : ControllerBase
     {
+        private readonly IPersonService _personService;
+
         private readonly IMapper _autoMapper;
 
-        private readonly IPaymentPlanService _paymentPlanService;
-        public PaymentPlanController(IPaymentPlanService paymentPlanService, IMapper autoMapper)
+        private readonly ISupplierMapper _supplierMapper;
+
+        public SupplierController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper)
         {
-            _paymentPlanService = paymentPlanService;
+            _personService = personService;
             _autoMapper = autoMapper;
+            _supplierMapper = supplierMapper;
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] PaymentPlanDto dto)
+        public IActionResult Create([FromBody] SupplierDto dto)
         {
             try
             {
-                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
+                var mapperResult = _supplierMapper.Map(dto);
 
-                var result = _paymentPlanService.Create(paymentPlan);
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+
+                var result = _personService.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
+                var view = _supplierMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -45,19 +49,21 @@ namespace iParty.Api.Controllers.PaymentPlans
 
         [Route("{id}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] PaymentPlanDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromBody] SupplierDto dto)
         {
             try
             {
-                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
+                var mapperResult = _supplierMapper.Map(dto);
 
-                paymentPlan.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _paymentPlanService.Update(id, paymentPlan);
+                mapperResult.Entity.Id = id;
+
+                var result = _personService.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
+                var view = _supplierMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -73,7 +79,7 @@ namespace iParty.Api.Controllers.PaymentPlans
         {
             try
             {
-                var result = _paymentPlanService.Delete(id);
+                var result = _personService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -92,9 +98,9 @@ namespace iParty.Api.Controllers.PaymentPlans
         {
             try
             {
-                var entity = _paymentPlanService.Get(id);
+                var entity = _personService.Get(id);
 
-                var view = _autoMapper.Map<PaymentPlanView>(entity);
+                var view = _supplierMapper.Map(entity);
 
                 return Ok(view);
             }
@@ -109,9 +115,9 @@ namespace iParty.Api.Controllers.PaymentPlans
         {
             try
             {
-                var entitys = _paymentPlanService.Get();
+                var entities = _personService.Get();
 
-                var view = _autoMapper.Map<List<PaymentPlanView>>(entitys);
+                var view = _supplierMapper.Map(entities);
 
                 return Ok(view);
             }
@@ -120,5 +126,6 @@ namespace iParty.Api.Controllers.PaymentPlans
                 return StatusCode(500, e.Message);
             }
         }
+
     }
 }

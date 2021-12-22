@@ -6,25 +6,23 @@ using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-//TODO: No validador de pessoas, chamar validador de telefone e endereços
-
-namespace iParty.Api.Controllers.Customers
+namespace iParty.Api.Controllers.Suppliers
 {
     [ApiController]
-    [Route("customer/{customerId}/phone")]
-    public class CustomerPhoneController : ControllerBase
+    [Route("supplier/{supplierId}/phone")]
+    public class SupplierPhoneController : ControllerBase
     {
         private readonly IPersonService _personService;
 
         private readonly IMapper _autoMapper;
 
-        private readonly ICustomerMapper _customerMapper;
+        private readonly ISupplierMapper _supplierMapper;
 
-        public CustomerPhoneController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper)
+        public SupplierPhoneController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper)
         {
             _personService = personService;
             _autoMapper = autoMapper;
-            _customerMapper = customerMapper;
+            _supplierMapper = supplierMapper;
         }
 
         [HttpPost]
@@ -38,7 +36,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _supplierMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -62,7 +60,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _supplierMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -82,7 +80,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _supplierMapper.Map(result.Entity);
 
                 return Ok(view);
             }

@@ -4,7 +4,6 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Data.Repositories;
-using System;
 
 namespace iParty.Api.Mappers.Addresses
 {

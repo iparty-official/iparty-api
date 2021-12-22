@@ -5,25 +5,21 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Addresses;
 using iParty.Api.Views.People;
 using iParty.Business.Models.Addresses;
+using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
-using iParty.Data.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace iParty.Api.Mappers.People
 {
     public class CustomerMapper : BaseMapper<Person>, ICustomerMapper
-    {
-        private IRepository<Person> _personRepository;
-
+    {     
         private IMapper _autoMapper;
 
-        private IAddressMapper _addressMapper;
+        private IAddressMapper _addressMapper;        
 
-        public CustomerMapper(IRepository<Person> personRepository, IMapper autoMapper, IAddressMapper addressMapper)
-        {
-            _personRepository = personRepository;
+        public CustomerMapper(IMapper autoMapper, IAddressMapper addressMapper)
+        {            
             _autoMapper = autoMapper;
             _addressMapper = addressMapper;
         }        
@@ -38,8 +34,9 @@ namespace iParty.Api.Mappers.People
                 Photo = dto.Photo,
                 SupplierOrCustomer = SupplierOrCustomer.Customer,
                 CustomerInfo = new Customer() { BirthDate = dto.BirthDate },
-                Addresses = new List<Address>(),
-                Phones = new List<Phone>()
+                SupplierInfo = new Supplier() { PaymentPlans = new List<PaymentPlan>() },
+                Phones = new List<Phone>(),
+                Addresses = new List<Address>()                
             };
 
             person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));
@@ -59,19 +56,37 @@ namespace iParty.Api.Mappers.People
             SetEntity(person);
 
             return GetResult();
-        }
+        }        
 
         public CustomerView Map(Person person)
+        {            
+            return mapPersonToCustomerView(person);
+        }
+
+        public List<CustomerView> Map(List<Person> people)
+        {
+            var customers = new List<CustomerView>();
+
+            foreach (var person in people)
+            {                                               
+                customers.Add(mapPersonToCustomerView(person));
+            }
+
+
+            return customers;
+        }
+
+        private CustomerView mapPersonToCustomerView(Person person)
         {
             if (person == null) return null;
-            
+
             var customerView = new CustomerView()
             {
                 Id = person.Id,
                 User = person.User,
                 Name = person.Name,
                 Document = person.Document,
-                Photo = person.Photo,                
+                Photo = person.Photo,
                 BirthDate = person.CustomerInfo.BirthDate,
                 Addresses = new List<AddressView>(),
                 Phones = new List<PhoneView>()
@@ -84,33 +99,5 @@ namespace iParty.Api.Mappers.People
             return customerView;
         }
 
-        public List<CustomerView> Map(List<Person> people)
-        {
-            var customers = new List<CustomerView>();
-
-            foreach (var person in people)
-            {               
-                var customerView = new CustomerView()
-                {
-                    Id = person.Id,
-                    User = person.User,
-                    Name = person.Name,
-                    Document = person.Document,
-                    Photo = person.Photo,                    
-                    BirthDate = person.CustomerInfo.BirthDate,
-                    Addresses = new List<AddressView>(),
-                    Phones = new List<PhoneView>()
-                };
-
-                customerView.Addresses.AddRange(person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)));
-
-                customerView.Phones.AddRange(person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)));
-
-                customers.Add(customerView);
-            }
-
-
-            return customers;
-        }
     }
 }

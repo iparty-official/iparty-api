@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Views
+﻿namespace iParty.Api.Views.PaymentPlans
 {
     public class PaymentPlanInstalmentView : View
     {

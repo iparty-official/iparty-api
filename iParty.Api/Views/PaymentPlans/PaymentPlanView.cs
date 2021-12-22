@@ -1,7 +1,7 @@
 ﻿using iParty.Business.Models.PaymentPlans;
 using System.Collections.Generic;
 
-namespace iParty.Api.Views
+namespace iParty.Api.Views.PaymentPlans
 {
     public class PaymentPlanView : View
     {

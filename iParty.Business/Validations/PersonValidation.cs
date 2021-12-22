@@ -40,7 +40,9 @@ namespace iParty.Business.Validations
         }
 
         public PersonValidation(IRepository<City> cityRepository, IRepository<Person> personRepository, IFilterBuilder<Person> personFilterBuilder)
-        {            
+        {           
+            //TODO: Add supplier data validation
+
             RuleFor(p => p.Name).NotEmpty().WithMessage("O nome da pessoa não foi informado.");
 
             RuleFor(p => p.SupplierOrCustomer).IsInEnum().WithMessage("O campo 'Cliente ou Fornecedor' está com um valor inválido.");           
