@@ -17,25 +17,13 @@ namespace iParty.Api.Infra.Messages
             _personRepository = personRepository;
         }
 
-        private Person getPerson(Guid id, string notFoundMessage)
-        {
-            var person = _personRepository.RecoverById(id);
-
-            if (person == null)
-            {
-                throw new Exception(notFoundMessage);
-            }
-
-            return person;
-        }
-
         public MapperResult<Message> Map(MessageDto dto)
         {
             var from = _personRepository.RecoverById(dto.FromId).IfNull(() => { AddError("O remetente da mensagem não existe."); });
             
             var to = _personRepository.RecoverById(dto.ToId).IfNull(() => { AddError("O destinatário da mensagem não existe."); });
 
-            if (!SuccessResult()) return GetResult();            
+            if (!SuccessResult()) return GetResult();
 
             SetEntity (new Message()
             {

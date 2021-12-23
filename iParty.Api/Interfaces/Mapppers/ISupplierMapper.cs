@@ -10,7 +10,7 @@ namespace iParty.Api.Interfaces.Mappers
     {
         MapperResult<Person> Map(SupplierDto dto);
 
-        SupplierView Map(Person dto);
+        SupplierView Map(Person person);
 
         List<SupplierView> Map(List<Person> people);
     }

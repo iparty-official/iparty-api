@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Addresses;
+using iParty.Api.Dtos.Items;
 using iParty.Api.Dtos.Messages;
 using iParty.Api.Dtos.Notifications;
 using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Dtos.People;
 using iParty.Api.Views.Addresses;
+using iParty.Api.Views.Items;
 using iParty.Api.Views.Messages;
 using iParty.Api.Views.Notifications;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
 using iParty.Business.Models.Addresses;
+using iParty.Business.Models.Items;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.Notications;
 using iParty.Business.Models.PaymentPlans;
@@ -48,7 +51,13 @@ namespace iParty.Api.AutoMapper
             CreateMap<PaymentPlan, PaymentPlanView>().ReverseMap();
 
             CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentDto>().ReverseMap();
-            CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentView>().ReverseMap();            
+            CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentView>().ReverseMap();
+
+            CreateMap<Schedule, ScheduleDto>().ReverseMap();
+            CreateMap<Schedule, ScheduleView>().ReverseMap();
+
+            CreateMap<ScheduleItem, ScheduleItemDto>().ReverseMap();
+            CreateMap<ScheduleItem, ScheduleItemView>().ReverseMap();
         }
     }
 }
