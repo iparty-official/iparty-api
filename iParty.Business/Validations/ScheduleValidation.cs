@@ -8,6 +8,7 @@ namespace iParty.Business.Validations
     {
         public ScheduleValidation()
         {
+            //TODO: Implementar validação da agenda
         }
     }
 }

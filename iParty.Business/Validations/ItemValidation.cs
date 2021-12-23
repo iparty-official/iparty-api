@@ -8,6 +8,7 @@ namespace iParty.Business.Validations
     {
         public ItemValidation()
         {
+            //TODO: Implementar validação dos itens
         }
     }
 }
