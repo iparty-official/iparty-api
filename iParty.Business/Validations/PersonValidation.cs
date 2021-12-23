@@ -11,46 +11,10 @@ using System.Linq;
 namespace iParty.Business.Validations
 {
     public class PersonValidation : AbstractValidator<Person>, IPersonValidation
-    {        
-        private bool isCPF(string document)
-        {
-            return document.Length == 11;
-        }
-
-        private bool isCNPJ(string document)
-        {
-            return document.Length == 14;
-        }
-
-        private bool cityExists(Guid id, IRepository<City> cityRepository)
-        {
-            var city = cityRepository.RecoverById(id);
-
-            return city != null;
-        }
-
-        private bool paymentPlanExists(Guid id, IRepository<PaymentPlan> paymentPlanRepository)
-        {
-            var paymentPlan = paymentPlanRepository.RecoverById(id);
-
-            return paymentPlan != null;
-        }
-
-        private bool documentAlreadyExists(IRepository<Person> personRepository, IFilterBuilder<Person> filterBuilder, Person person)
-        {
-            if (String.IsNullOrEmpty(person.Document)) return false;
-            
-            filterBuilder
-                .Equal(x => x.Document, person.Document)
-                .Unequal(x => x.Id, person.Id);
-
-            return personRepository.Recover(filterBuilder).Count > 0;
-        }
-
+    {                
         public PersonValidation(IRepository<City> cityRepository, 
                                 IRepository<Person> personRepository, 
-                                IRepository<PaymentPlan> paymentPlanRepository, 
-                                IAddressValidation addressValidation,
+                                IRepository<PaymentPlan> paymentPlanRepository,                                 
                                 IFilterBuilder<Person> personFilterBuilder)
         {                       
             //TODO: Validar DV do CPF/CNPJ
@@ -85,9 +49,30 @@ namespace iParty.Business.Validations
 
             RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => x.District).NotEmpty().WithMessage("O nome do bairro não foi informado."));
 
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => cityExists(x.City.Id, cityRepository)).Equal(true).WithMessage("A cidade informada não existe."));
+            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => cityRepository.RecoverById(x.City.Id)).NotNull().WithMessage("A cidade informada não existe."));
 
-            RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanExists(x.Id, paymentPlanRepository)).Equal(true).WithMessage("O plano de pagamento informado não existe."));            
-        }        
+            RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanRepository.RecoverById(x.Id)).NotNull().WithMessage("O plano de pagamento informado não existe."));
+        }
+
+        private bool isCPF(string document)
+        {
+            return document.Length == 11;
+        }
+
+        private bool isCNPJ(string document)
+        {
+            return document.Length == 14;
+        }               
+
+        private bool documentAlreadyExists(IRepository<Person> personRepository, IFilterBuilder<Person> filterBuilder, Person person)
+        {
+            if (String.IsNullOrEmpty(person.Document)) return false;
+
+            filterBuilder
+                .Equal(x => x.Document, person.Document)
+                .Unequal(x => x.Id, person.Id);
+
+            return personRepository.Recover(filterBuilder).Count > 0;
+        }
     }
 }

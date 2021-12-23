@@ -12,14 +12,7 @@ using System.Threading.Tasks;
 namespace iParty.Business.Validations
 {
     public class MessageValidation : AbstractValidator<Message>, IMessageValidation
-    {
-        private bool personExists(Guid id, IRepository<Person> personRepository)
-        {
-            var person = personRepository.RecoverById(id);
-
-            return person != null;
-        }
-
+    {        
         public MessageValidation(IRepository<Person> personRepository)
         {
             RuleFor(p => p.From).NotNull().WithMessage("O remetente da mensagem não foi informado.");
@@ -32,9 +25,9 @@ namespace iParty.Business.Validations
             
             RuleFor(p => p.DateTime).NotNull().WithMessage("A data/hora da mensagem não foi informada.");
             
-            RuleFor(x => personExists(x.From.Id, personRepository)).Equal(true).WithMessage("O remetente informado não existe.");
+            RuleFor(x => personRepository.RecoverById(x.From.Id)).NotNull().WithMessage("O remetente informado não existe.");
 
-            RuleFor(x => personExists(x.To.Id, personRepository)).Equal(true).WithMessage("O destinatário informado não existe.");
+            RuleFor(x => personRepository.RecoverById(x.To.Id)).NotNull().WithMessage("O destinatário informado não existe.");
         }
     }
 }

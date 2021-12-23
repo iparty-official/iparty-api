@@ -9,14 +9,7 @@ using System.Linq;
 namespace iParty.Business.Validations
 {
     public class AddressValidation : AbstractValidator<Address>, IAddressValidation
-    {
-        private bool cityExists(Guid id, IRepository<City> cityRepository)
-        {
-            var city = cityRepository.RecoverById(id);
-
-            return city != null;
-        }
-
+    {       
         public AddressValidation(IRepository<City> cityRepository)
         {
             //TODO: Impedir endereço duplicado. Talvez eu tenha que criar o campo Number. Daí posso validar se há repetição de ZipCode + Number
@@ -29,7 +22,7 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.District).NotEmpty().WithMessage("O nome do bairro não foi informado.");
 
-            RuleFor(x => cityExists(x.City.Id, cityRepository)).Equal(true).WithMessage("A cidade informada não existe.");
+            RuleFor(x => cityRepository.RecoverById(x.City.Id)).NotNull().WithMessage("A cidade informada não existe.");
         }        
     }
 }

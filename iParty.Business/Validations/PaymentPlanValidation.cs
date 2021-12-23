@@ -6,7 +6,6 @@ namespace iParty.Business.Validations
 {
     public class PaymentPlanValidation : AbstractValidator<PaymentPlan>, IPaymentPlanValidation
     {
-
         public PaymentPlanValidation()
         {
             RuleFor(p => p.PaymentMethod).IsInEnum().WithMessage("O campo 'Método de pagamento' está com um valor inválido.");
