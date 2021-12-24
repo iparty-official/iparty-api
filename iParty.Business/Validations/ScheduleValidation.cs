@@ -10,9 +10,9 @@ namespace iParty.Business.Validations
         {
             RuleFor(x => x.DayOfWeek).IsInEnum().WithMessage("O dia da semana informado é inválido.");
 
-            RuleFor(x => x.Hours).NotEmpty().WithMessage("Nenhum horário foi informado.");
+            RuleFor(x => x.Hours).NotEmpty().WithMessage("Nenhum horário foi informado.");            
 
-            RuleForEach(x => x.Hours).ChildRules(y => y.RuleFor(hour => hour.InitialHour).LessThan(hour => hour.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final"));
+            RuleForEach(x => x.Hours).Must(hour => hour.InitialHour < hour.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final");
         }
     }
 }

@@ -72,10 +72,11 @@ namespace iParty.Api.Mappers.People
         {
             if (item == null) return null;
 
-            var supplier = new PersonSummarizedView() { Name = item.Supplier.Name };
+            var supplier = new PersonSummarizedView() { Id = item.Supplier.Id, Name = item.Supplier.Name };
 
             var itemView = new ItemView()
             {
+                Id = item.Id,
                 Supplier = supplier,
                 Name = item.Name,
                 Details = item.Details,
