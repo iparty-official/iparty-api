@@ -1,4 +1,5 @@
 ﻿using iParty.Business.Models.People;
+using System;
 using System.Collections.Generic;
 
 namespace iParty.Business.Models.Items
@@ -13,6 +14,6 @@ namespace iParty.Business.Models.Items
         public MeasurementUnit Unit { get; set; }        
         public ProductOrService ProductOrService { get; set; }        
         public Product ProductInfo { get; set; }
-        public List<Schedule> Schedules { get; set; }
+        public List<Schedule> Schedules { get; set; }      
     }
 }

@@ -13,12 +13,16 @@ namespace iParty.Business.Services.Items
 
         private IScheduleValidation _scheduleValidation;
 
+        private IItemScheduleValidation _itemScheduleValidation;
+
         public ItemService(IRepository<Item> rep,                           
                            IItemValidation itemValidation,
-                           IScheduleValidation scheduleValidation) : base(rep)
+                           IScheduleValidation scheduleValidation,
+                           IItemScheduleValidation itemScheduleValidation) : base(rep)
         {            
             _itemValidation = itemValidation;
             _scheduleValidation = scheduleValidation;
+            _itemScheduleValidation = itemScheduleValidation;
         }
 
         public ServiceResult<Item> Create(Item item)
@@ -63,6 +67,11 @@ namespace iParty.Business.Services.Items
                 return GetFailureResult(result);
 
             item.Schedules.Add(schedule);
+
+            result = _itemScheduleValidation.Validate(item);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(itemId, item);
 
@@ -120,6 +129,11 @@ namespace iParty.Business.Services.Items
             newSchedule.Id = scheduleId;
 
             item.Schedules.Insert(index, newSchedule);
+
+            var result = _itemScheduleValidation.Validate(item);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             return GetSuccessResult(item);
         }

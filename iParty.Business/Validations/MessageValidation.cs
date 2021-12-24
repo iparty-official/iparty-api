@@ -3,11 +3,6 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iParty.Business.Validations
 {

@@ -11,13 +11,17 @@ namespace iParty.Business.Validations
     {
         private IScheduleValidation _scheduleValidation;
 
-        public ItemValidation(IRepository<Person> personRepository, IScheduleValidation scheduleValidation)
+        private IItemScheduleValidation _itemScheduleValidation;
+
+        public ItemValidation(IRepository<Person> personRepository, IScheduleValidation scheduleValidation, IItemScheduleValidation itemScheduleValidation)
         {
             //TODO: Adicionar SKU
             //TODO: Impedir duplicidade do item
             //TODO: Impedir duplicidade do schedule
 
             _scheduleValidation = scheduleValidation;
+
+            _itemScheduleValidation = itemScheduleValidation;
 
             RuleFor(x => x.Supplier).NotNull().WithMessage("O fornecedor precisa ser informado");
 
@@ -50,6 +54,10 @@ namespace iParty.Business.Validations
                 
                 if (!result.IsValid) return result;
             }
+
+            result = _itemScheduleValidation.Validate(item);
+
+            if (!result.IsValid) return result;
 
             return result;
         }
