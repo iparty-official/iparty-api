@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.People;
@@ -8,11 +9,15 @@ namespace iParty.Business.Validations
 {
     public class ItemValidation : AbstractValidator<Item>, IItemValidation
     {
-        public ItemValidation(IRepository<Person> personRepository)
+        private IScheduleValidation _scheduleValidation;
+
+        public ItemValidation(IRepository<Person> personRepository, IScheduleValidation scheduleValidation)
         {
             //TODO: Adicionar SKU
             //TODO: Impedir duplicidade do item
             //TODO: Impedir duplicidade do schedule
+
+            _scheduleValidation = scheduleValidation;
 
             RuleFor(x => x.Supplier).NotNull().WithMessage("O fornecedor precisa ser informado");
 
@@ -30,13 +35,23 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.ProductInfo.ForRentOrSale).IsInEnum().WithMessage("O valor do campo 'Aluguel ou Venda' é inválido.");
 
-            RuleFor(x => x.ProductInfo.AvailableQuantity).GreaterThanOrEqualTo(0).WithMessage("A quantidade disponível em estoque não pode ser negativa");
+            RuleFor(x => x.ProductInfo.AvailableQuantity).GreaterThanOrEqualTo(0).WithMessage("A quantidade disponível em estoque não pode ser negativa");            
+        }
 
-            RuleForEach(x => x.Schedules).ChildRules(y => y.RuleFor(sch => sch.DayOfWeek).IsInEnum().WithMessage("O dia da semana informado é inválido."));
-            
-            RuleForEach(x => x.Schedules).ChildRules(y => y.RuleFor(sch => sch.Hours).NotEmpty().WithMessage("Nenhum horário foi informado."));                       
+        public ValidationResult CustomValidate(Item item)
+        {
+            var result = this.Validate(item);
 
-            RuleForEach(x => x.Schedules).ChildRules(y => y.RuleForEach(sch => sch.Hours).Must(hour => hour.InitialHour < hour.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final"));
-        }       
+            if (!result.IsValid) return result;
+
+            foreach (var schedule in item.Schedules)
+            {
+                result = _scheduleValidation.Validate(schedule);
+                
+                if (!result.IsValid) return result;
+            }
+
+            return result;
+        }
     }
 }

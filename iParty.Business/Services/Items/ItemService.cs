@@ -1,9 +1,7 @@
 ﻿using iParty.Business.Infra;
-using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
-using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 using System;
 
@@ -25,11 +23,11 @@ namespace iParty.Business.Services.Items
 
         public ServiceResult<Item> Create(Item item)
         {
-            var result = _itemValidation.Validate(item);
+            var result = _itemValidation.CustomValidate(item);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
-
+                return GetFailureResult(result);            
+                            
             Rep.Create(item);
 
             return GetSuccessResult(item);

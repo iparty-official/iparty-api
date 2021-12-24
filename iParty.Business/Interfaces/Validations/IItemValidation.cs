@@ -1,14 +1,11 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using iParty.Business.Models.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iParty.Business.Interfaces.Validations
 {
     public interface IItemValidation : IValidator<Item>
     {
+        public ValidationResult CustomValidate(Item item);        
     }
 }
