@@ -12,6 +12,6 @@ namespace iParty.Business.Models.Bookmark
     {
         public Person Customer { get; set; }
         public Item Item{ get; set; }
-        public DateTime DateTime { get; set; }        
+        public DateTime DateTime { get; set; }
     }
 }

@@ -1,0 +1,11 @@
+﻿using System;
+
+namespace iParty.Api.Dtos.Bookmarks
+{
+    public class BookmarkDto
+    {
+        public Guid CustomerId { get; set; }
+        public Guid ItemId { get; set; }
+        public DateTime DateTime { get; set; }
+    }
+}

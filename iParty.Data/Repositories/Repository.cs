@@ -9,6 +9,7 @@ namespace iParty.Data.Repositories
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : IEntity
     {
         private IMongoCollection<TEntity> _collection { get; set; }
+        private IMongoDatabase _database { get; set; }
 
         private FilterDefinition<TEntity> translateToFilterDefinition(List<IFilter<TEntity>> filters)
         {
@@ -46,9 +47,9 @@ namespace iParty.Data.Repositories
 
             var client = new MongoClient(settings);
 
-            var database = client.GetDatabase(databaseConfig.DatabaseAlias);
+            _database = client.GetDatabase(databaseConfig.DatabaseAlias);
 
-            _collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
+            _collection = _database.GetCollection<TEntity>(typeof(TEntity).Name);
         }
 
         public void Create(TEntity entity)
@@ -81,6 +82,11 @@ namespace iParty.Data.Repositories
             var filterDefinition = translateToFilterDefinition(filters);
 
             filterDefinition &= Builders<TEntity>.Filter.Eq(x => x.Removed, false);
+
+            var serializerRegistry = _database.Settings.SerializerRegistry;
+            var fileInfoSerializer = serializerRegistry.GetSerializer<TEntity>();
+            var renderedFilter = filterDefinition.Render(fileInfoSerializer, serializerRegistry);
+            Console.WriteLine(renderedFilter);
 
             return _collection.Find(filterDefinition).ToList();
         }
