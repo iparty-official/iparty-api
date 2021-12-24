@@ -12,7 +12,7 @@ namespace iParty.Business.Validations
 
             RuleFor(p => p.MinInstallmentValue).GreaterThanOrEqualTo(0).WithMessage("O campo 'Valor mínimo da prestação' não pode ser negativo.");
             
-            RuleForEach(p => p.Instalments).ChildRules(instalment => instalment.RuleFor(x => x.Fee).GreaterThanOrEqualTo(0).WithMessage("A taxa informada na prestação não pode ser negativa."));
+            RuleForEach(p => p.Instalments).ChildRules(instalment => instalment.RuleFor(x => x.Fee).GreaterThanOrEqualTo(0).WithMessage("A taxa informada na prestação não pode ser negativa."));            
         }
     }
 }

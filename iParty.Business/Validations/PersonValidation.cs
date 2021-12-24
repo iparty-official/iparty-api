@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
@@ -11,14 +12,28 @@ using System.Linq;
 namespace iParty.Business.Validations
 {
     public class PersonValidation : AbstractValidator<Person>, IPersonValidation
-    {                
+    {
+        private IPhoneValidation _phoneValidation;
+        
+        private IAddressValidation _addressValidation;
+
+        private IPaymentPlanValidation _paymentPlanValidation;
+
         public PersonValidation(IRepository<City> cityRepository, 
                                 IRepository<Person> personRepository, 
                                 IRepository<PaymentPlan> paymentPlanRepository,                                 
-                                IFilterBuilder<Person> personFilterBuilder)
-        {                       
+                                IFilterBuilder<Person> personFilterBuilder,
+                                IPhoneValidation phoneValidation,
+                                IAddressValidation addressValidation,
+                                IPaymentPlanValidation paymentPlanValidation)
+        {
             //TODO: Validar DV do CPF/CNPJ
-            
+            _phoneValidation = phoneValidation;
+
+            _addressValidation = addressValidation;
+
+            _paymentPlanValidation = paymentPlanValidation;
+
             RuleFor(p => p.Name).NotEmpty().WithMessage("O nome da pessoa não foi informado.");
 
             RuleFor(p => p.SupplierOrCustomer).IsInEnum().WithMessage("O campo 'Cliente ou Fornecedor' está com um valor inválido.");           
@@ -32,27 +47,39 @@ namespace iParty.Business.Validations
             RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");
 
             RuleFor(p => p.SupplierOrCustomer == SupplierOrCustomer.Supplier && string.IsNullOrEmpty(p.SupplierInfo.BusinessDescription)).Equal(false).WithMessage("A descrição do negócio não foi informada");
-            
-            RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => x.Prefix).NotEmpty().WithMessage("O prefixo do número do telefone não foi informado."));
-
-            RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => x.Number).NotEmpty().WithMessage("O número do telefone não foi informado."));
-
-            RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => true).Equal(x => x.Prefix.All(char.IsDigit)).WithMessage("O prefixo do telefone deve conter apenas números."));
-
-            RuleForEach(p => p.Phones).ChildRules(phone => phone.RuleFor(x => true).Equal(x => x.Number.All(char.IsDigit)).WithMessage("O número do telefone deve conter apenas números."));
-
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => true).Equal(x => x.ZipCode.All(char.IsDigit)).WithMessage("O CEP deve conter apenas números."));
-
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => x.ZipCode).Length(8).WithMessage("O CEP deve conter exatamente oito dígitos."));
-
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => x.Street).NotEmpty().WithMessage("O nome da rua não foi informado."));
-
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => x.District).NotEmpty().WithMessage("O nome do bairro não foi informado."));
-
-            RuleForEach(p => p.Addresses).ChildRules(addr => addr.RuleFor(x => cityRepository.RecoverById(x.City.Id)).NotNull().WithMessage("A cidade informada não existe."));
 
             RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanRepository.RecoverById(x.Id)).NotNull().WithMessage("O plano de pagamento informado não existe."));
         }
+
+        public ValidationResult CustomValidate(Person person)        
+        {
+            var result = this.Validate(person);
+
+            if (!result.IsValid) return result;
+
+            foreach (var phone in person.Phones)
+            {
+                result = _phoneValidation.Validate(phone);
+
+                if (!result.IsValid) return result;
+            }
+
+            foreach (var address in person.Addresses)
+            {
+                result = _addressValidation.Validate(address);
+
+                if (!result.IsValid) return result;
+            }
+
+            foreach (var paymentPlan in person.SupplierInfo.PaymentPlans)
+            {
+                result = _paymentPlanValidation.Validate(paymentPlan);
+
+                if (!result.IsValid) return result;
+            }
+
+            return result;
+        }    
 
         private bool isCPF(string document)
         {

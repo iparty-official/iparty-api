@@ -42,7 +42,7 @@ namespace iParty.Business.Services.Cities
 
         public ServiceResult<Person> Create(Person person)
         {
-            var result = _personValidation.Validate(person);
+            var result = _personValidation.CustomValidate(person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
@@ -59,7 +59,7 @@ namespace iParty.Business.Services.Cities
             if (currentPerson == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var result = _personValidation.Validate(person);
+            var result = _personValidation.CustomValidate(person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

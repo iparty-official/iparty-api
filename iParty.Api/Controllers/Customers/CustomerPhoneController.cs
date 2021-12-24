@@ -6,8 +6,6 @@ using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-//TODO: No validador de pessoas, chamar validador de telefone e endereços
-
 namespace iParty.Api.Controllers.Customers
 {
     [ApiController]

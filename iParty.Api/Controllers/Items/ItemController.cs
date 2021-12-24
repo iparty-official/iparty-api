@@ -9,8 +9,7 @@ namespace iParty.Api.Controllers.Items
     [ApiController]
     [Route("[controller]")]
     public class ItemController : ControllerBase
-    {        
-        //TODO: Testar controller de items
+    {                
         private readonly IItemService _itemService;
 
         private readonly IItemMapper _itemMapper;
