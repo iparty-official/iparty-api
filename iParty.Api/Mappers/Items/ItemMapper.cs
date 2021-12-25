@@ -11,7 +11,7 @@ using iParty.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace iParty.Api.Mappers.People
+namespace iParty.Api.Mappers.Items
 {
     public class ItemMapper : BaseMapper<Item>, IItemMapper
     {

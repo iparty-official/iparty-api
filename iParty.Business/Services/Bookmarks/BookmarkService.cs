@@ -5,7 +5,7 @@ using iParty.Business.Models.Bookmark;
 using iParty.Data.Repositories;
 using System;
 
-namespace iParty.Business.Services.Cities
+namespace iParty.Business.Services.Bookmarks
 {
     public class BookmarkService : Service<Bookmark, IRepository<Bookmark>>, IBookmarkService
     {

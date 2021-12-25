@@ -5,7 +5,7 @@ using iParty.Business.Models.Messages;
 using iParty.Data.Repositories;
 using System;
 
-namespace iParty.Business.Services.Cities
+namespace iParty.Business.Services.Messages
 {
     public class MessageService : Service<Message, IRepository<Message>>, IMessageService
     {

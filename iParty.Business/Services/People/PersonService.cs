@@ -8,7 +8,7 @@ using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 using System;
 
-namespace iParty.Business.Services.Cities
+namespace iParty.Business.Services.People
 {
     public class PersonService : Service<Person, IRepository<Person>>, IPersonService
     {
