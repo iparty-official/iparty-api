@@ -6,8 +6,6 @@ namespace iParty.Business.Interfaces.Services
 {
     public interface IInventoryStatementService : IService<InventoryStatement>
     {
-        public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement);
-
-        public ServiceResult<InventoryStatement> Update(Guid id, InventoryStatement inventoryStatement);
+        public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement);     
     }
 }

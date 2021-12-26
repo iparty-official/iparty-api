@@ -34,7 +34,7 @@ namespace iParty.Business.Infra
                 Success = false,
                 Errors = validationResult.Errors.Select(p => p.ErrorMessage).ToList(),                
             };
-        }
+        }        
 
         protected ServiceResult<TEntity> GetFailureResult(string errorMessage)
         {

@@ -7,6 +7,7 @@ using System;
 
 namespace iParty.Business.Services.Items
 {
+    //TODO: Tratar problemas de concorrências
     public class ItemService : Service<Item, IRepository<Item>>, IItemService
     {                
         private IItemValidation _itemValidation;
@@ -113,7 +114,38 @@ namespace iParty.Business.Services.Items
             Rep.Update(itemId, item);
 
             return GetSuccessResult(item);
-        }                
+        }
+
+        public ServiceResult<Item> IncreaseAvailableQuantity(Guid itemId, decimal quantity)
+        {
+            var item = Get(itemId);
+
+            if (item == null)
+                return GetFailureResult("Não foi possível localizar o item informado.");
+
+            item.ProductInfo.AvailableQuantity += quantity;
+
+            Rep.Update(itemId, item);
+
+            return GetSuccessResult(item);
+        }
+
+        public ServiceResult<Item> DecreaseAvailableQuantity(Guid itemId, decimal quantity)
+        {
+            var item = Get(itemId);
+
+            if (item == null)
+                return GetFailureResult("Não foi possível localizar o item informado.");
+
+            if ((item.ProductInfo.AvailableQuantity- quantity) < 0)
+                return GetFailureResult("Não foi possível decrementar o estoque do item, pois sua quantidade ficará negativa.");
+
+            item.ProductInfo.AvailableQuantity -= quantity;
+
+            Rep.Update(itemId, item);
+
+            return GetSuccessResult(item);
+        }
 
         private ServiceResult<Item> replaceSchedule(Item item, Guid scheduleId, Schedule newSchedule)
         {
@@ -150,6 +182,6 @@ namespace iParty.Business.Services.Items
             item.Schedules.Remove(currentSchedule);
 
             return GetSuccessResult(item);
-        }        
+        }
     }
 }

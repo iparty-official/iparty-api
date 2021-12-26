@@ -14,6 +14,10 @@ namespace iParty.Business.Interfaces.Services
 
         public ServiceResult<Item> ReplaceSchedule(Guid itemId, Guid scheduleId, Schedule schedule);
 
-        public ServiceResult<Item> RemoveSchedule(Guid itemId, Guid scheduleId);        
+        public ServiceResult<Item> RemoveSchedule(Guid itemId, Guid scheduleId);
+
+        public ServiceResult<Item> IncreaseAvailableQuantity(Guid itemId, decimal quantity);
+
+        public ServiceResult<Item> DecreaseAvailableQuantity(Guid itemId, decimal quantity);
     }
 }

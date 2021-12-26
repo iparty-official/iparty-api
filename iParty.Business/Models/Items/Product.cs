@@ -2,7 +2,7 @@
 {
     public class Product
     {
-        public int AvailableQuantity { get; set; }
+        public decimal AvailableQuantity { get; set; }
         public RentOrSale ForRentOrSale { get; set; }
     }
 }

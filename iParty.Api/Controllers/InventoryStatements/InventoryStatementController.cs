@@ -45,33 +45,7 @@ namespace iParty.Api.Controllers.InventoryStatements
             {
                 return StatusCode(500, e.Message);
             }
-        }
-
-        [Route("{id}")]
-        [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] InventoryStatementDto dto)
-        {
-            try
-            {
-                var mapperResult = _inventoryStatementMapper.Map(dto);
-
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
-
-                var result = _serviceInventoryStatement.Update(id, mapperResult.Entity);
-
-                if (!result.Success) return BadRequest(result.Errors);
-
-                var view = _inventoryStatementMapper.Map(result.Entity);
-
-                return Ok(view);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
+        }        
 
         [Route("{id}")]
         [HttpDelete]
