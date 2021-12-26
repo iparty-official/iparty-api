@@ -14,7 +14,9 @@ namespace iParty.Business.Validations
     public class PersonValidation : AbstractValidator<Person>, IPersonValidation
     {
         private IPhoneValidation _phoneValidation;
-        
+
+        private IPersonPhoneValidation _personPhoneValidation;
+
         private IAddressValidation _addressValidation;
 
         private IPaymentPlanValidation _paymentPlanValidation;
@@ -24,11 +26,14 @@ namespace iParty.Business.Validations
                                 IRepository<PaymentPlan> paymentPlanRepository,                                 
                                 IFilterBuilder<Person> personFilterBuilder,
                                 IPhoneValidation phoneValidation,
+                                IPersonPhoneValidation personPhoneValidation,
                                 IAddressValidation addressValidation,
                                 IPaymentPlanValidation paymentPlanValidation)
         {
             //TODO: Validar DV do CPF/CNPJ
             _phoneValidation = phoneValidation;
+
+            _personPhoneValidation = personPhoneValidation;
 
             _addressValidation = addressValidation;
 
@@ -77,6 +82,8 @@ namespace iParty.Business.Validations
 
                 if (!result.IsValid) return result;
             }
+
+            result = _personPhoneValidation.Validate(person);            
 
             return result;
         }    

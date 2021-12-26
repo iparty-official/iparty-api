@@ -22,6 +22,8 @@ namespace iParty.Business.Services.People
         
         private IPhoneValidation _phoneValidation;
 
+        private IPersonPhoneValidation _personPhoneValidation;
+
         private IAddressValidation _addressValidation;                
 
         public PersonService(IRepository<Person> rep, 
@@ -29,6 +31,7 @@ namespace iParty.Business.Services.People
                              IFilterBuilder<Person> personFilterBuilder, 
                              IPersonValidation personValidation,
                              IPhoneValidation phoneValidation,
+                             IPersonPhoneValidation personPhoneValidation,
                              IAddressValidation addressValidation,
                              IRepository<PaymentPlan> paymentPlanRepository) : base(rep)
         {
@@ -36,6 +39,7 @@ namespace iParty.Business.Services.People
             _personFilterBuilder = personFilterBuilder;
             _personValidation = personValidation;
             _phoneValidation = phoneValidation;
+            _personPhoneValidation = personPhoneValidation;
             _addressValidation = addressValidation;
             _paymentPlanRepository = paymentPlanRepository;
         }
@@ -79,9 +83,14 @@ namespace iParty.Business.Services.People
             var result = _phoneValidation.Validate(phone);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return GetFailureResult(result);            
 
             person.Phones.Add(phone);
+
+            result = _personPhoneValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(personId, person);
 
@@ -233,6 +242,11 @@ namespace iParty.Business.Services.People
             newPhone.Id = phoneId;
 
             person.Phones.Insert(index, newPhone);
+
+            var result = _personPhoneValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             return GetSuccessResult(person);
         }

@@ -9,9 +9,7 @@ namespace iParty.Business.Validations
     public class PhoneValidation : AbstractValidator<Phone>, IPhoneValidation
     {        
         public PhoneValidation()
-        {
-            //TODO: Impedir telefones repetidos            
-
+        {           
             RuleFor(x => x.Prefix).NotEmpty().WithMessage("O prefixo do número do telefone não foi informado.");
 
             RuleFor(x => x.Prefix).Length(2).WithMessage("O prefixo do número do telefone deve conter exatamentee dois dígitos.");
