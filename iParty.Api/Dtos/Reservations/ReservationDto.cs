@@ -1,14 +1,14 @@
-﻿using iParty.Business.Models.Orders;
+﻿using iParty.Business;
 using System;
 
-namespace iParty.Business.Models.Reservation
+namespace iParty.Api.Dtos.Reservations
 {
-    public class Reservation: Entity
+    public class ReservationDto
     {
         public DateTime Date { get; set; }
         public int InitialHour { get; set; }
         public int FinalHour { get; set; }
-        public Order Order { get; set; }
+        public Guid OrderId { get; set; }
         public ReservationReason ReservationReason { get; set; }
     }
 }

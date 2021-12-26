@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.People;
-using iParty.Data.Repositories;
 using System.Linq;
 
 namespace iParty.Business.Validations

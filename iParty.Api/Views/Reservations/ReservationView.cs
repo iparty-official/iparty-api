@@ -1,14 +1,15 @@
-﻿using iParty.Business.Models.Orders;
+﻿using iParty.Api.Views.Orders;
+using iParty.Business;
 using System;
 
-namespace iParty.Business.Models.Reservation
+namespace iParty.Api.Views.Reservations
 {
-    public class Reservation: Entity
+    public class ReservationView : View
     {
         public DateTime Date { get; set; }
         public int InitialHour { get; set; }
         public int FinalHour { get; set; }
-        public Order Order { get; set; }
+        public OrderView Order { get; set; }
         public ReservationReason ReservationReason { get; set; }
     }
 }

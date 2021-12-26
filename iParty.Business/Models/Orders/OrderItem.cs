@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace iParty.Business.Models.Orders
 {
     public class OrderItem: Entity
-    {
-        public Order Order { get; set; }
+    {        
         public Item Item  { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }

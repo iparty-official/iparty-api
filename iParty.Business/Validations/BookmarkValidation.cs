@@ -3,7 +3,6 @@ using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Bookmark;
 using iParty.Business.Models.Items;
-using iParty.Business.Models.Messages;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 

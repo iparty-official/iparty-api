@@ -24,6 +24,7 @@ namespace iParty.Business.Models.Orders
         public OrderStatus Status { get; set; }
         public DateTime PartyDate { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public List<OrderItem> Items { get; set; }
 
     }
 }
