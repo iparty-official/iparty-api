@@ -138,7 +138,7 @@ namespace iParty.Business.Services.Items
                 return GetFailureResult("Não foi possível localizar o item informado.");
 
             if ((item.ProductInfo.AvailableQuantity- quantity) < 0)
-                return GetFailureResult("Não foi possível decrementar o estoque do item, pois sua quantidade ficará negativa.");
+                return GetFailureResult("Não foi possível diminuir o estoque do item, pois sua quantidade ficaria negativa.");
 
             item.ProductInfo.AvailableQuantity -= quantity;
 
