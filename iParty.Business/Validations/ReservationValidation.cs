@@ -51,41 +51,59 @@ namespace iParty.Business.Validations
         {
             var schedule = reservation.Item.Schedules.Where(x => x.DayOfWeek == reservation.Date.DayOfWeek).First();
 
-            var hoursList = transfomrScheduleItemsIntoHoursList(schedule.Items);
+            var scheduleHoursList = transfomrScheduleItemsIntoHoursList(schedule.Items);
 
             var reservations = getReservedHours(reservationRepository, reservationFilterBuilder, reservation);
 
-            var availableHours = buildAvailableHoursList(hoursList, reservations);
+            var availableHours = buildAvailableHoursList(scheduleHoursList, reservations);
+
+            var wishedHoursList = buildWishedHoursList(reservation);
+
+            foreach (var wishedHour in wishedHoursList)
+            {
+                if (!availableHours.Exists(x => x == wishedHour))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
 
-        private List<ScheduleItem> buildAvailableHoursList(List<ScheduleItem> hoursList, List<Reservation> reservations)
+        private List<int> buildWishedHoursList(Reservation reservation)
         {
-            var result = new List<ScheduleItem>();
+            var result = new List<int>();
 
-            result.AddRange(hoursList);
-
-            foreach (var reservation in reservations)
+            for (int hour = reservation.InitialHour; hour < reservation.FinalHour; hour++)
             {
-                for (int hour = reservation.InitialHour; hour <= reservation.FinalHour; hour++)
-                {
-                    result.RemoveAll(x => x.InitialHour == hour && x.FinalHour == hour + 1);
-                }
+                result.Add(hour);
             }
 
             return result;
         }
 
-        private List<ScheduleItem> transfomrScheduleItemsIntoHoursList(List<ScheduleItem> scheduleItems)
+        private List<int> buildAvailableHoursList(List<int> scheduleHoursList, List<Reservation> reservations)
+        {            
+            foreach (var reservation in reservations)
+            {
+                for (int hour = reservation.InitialHour; hour < reservation.FinalHour; hour++)
+                {
+                    scheduleHoursList.RemoveAll(x => x == hour);
+                }
+            }
+
+            return scheduleHoursList;
+        }
+
+        private List<int> transfomrScheduleItemsIntoHoursList(List<ScheduleItem> scheduleItems)
         {
-            var result = new List<ScheduleItem>();
+            var result = new List<int>();
 
             foreach (var scheduleItem in scheduleItems)
             {
-                for (int hour = scheduleItem.InitialHour; hour <= scheduleItem.FinalHour; hour++)
+                for (int hour = scheduleItem.InitialHour; hour < scheduleItem.FinalHour; hour++)
                 {
-                    result.Add(new ScheduleItem() { InitialHour = hour, FinalHour = hour + 1 });
+                    result.Add(hour);
                 }
             }
 
