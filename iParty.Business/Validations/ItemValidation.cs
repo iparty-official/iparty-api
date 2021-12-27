@@ -24,6 +24,8 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.Supplier).NotNull().WithMessage("O fornecedor precisa ser informado");
 
+            RuleFor(x => x.Supplier.SupplierOrCustomer).Equal(SupplierOrCustomer.Supplier).WithMessage("A pessoa informada não é um fornecedor.");
+
             RuleFor(x => personRepository.RecoverById(x.Supplier.Id)).NotNull().WithMessage("O fornecedor informado não existe.");
 
             RuleFor(x => x.Name).NotEmpty().WithMessage("O nome do item precisa ser informado.");

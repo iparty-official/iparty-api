@@ -3,6 +3,7 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
+using System;
 
 namespace iParty.Business.Validations
 {
@@ -19,7 +20,9 @@ namespace iParty.Business.Validations
             RuleFor(p => p.Text).NotEmpty().WithMessage("O texto da mensagem não foi informado.");
             
             RuleFor(p => p.DateTime).NotNull().WithMessage("A data/hora da mensagem não foi informada.");
-            
+
+            RuleFor(p => p.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data/hora da mensagem não foi informada.");
+
             RuleFor(x => personRepository.RecoverById(x.From.Id)).NotNull().WithMessage("O remetente informado não existe.");
 
             RuleFor(x => personRepository.RecoverById(x.To.Id)).NotNull().WithMessage("O destinatário informado não existe.");

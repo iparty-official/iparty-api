@@ -49,7 +49,7 @@ namespace iParty.Business.Validations
 
             RuleFor(p => documentAlreadyExists(personRepository, personFilterBuilder, p)).Equal(false).WithMessage("Já existe uma pessoa cadastrada com o documento informado.");
 
-            RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");
+            RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");            
 
             RuleFor(p => p.SupplierOrCustomer == SupplierOrCustomer.Supplier && string.IsNullOrEmpty(p.SupplierInfo.BusinessDescription)).Equal(false).WithMessage("A descrição do negócio não foi informada");
 
