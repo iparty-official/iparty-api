@@ -16,8 +16,7 @@ namespace iParty.Business.Validations
         public ItemValidation(IRepository<Person> personRepository, IScheduleValidation scheduleValidation, IItemScheduleValidation itemScheduleValidation)
         {
             //TODO: Adicionar SKU
-            //TODO: Impedir duplicidade do item
-            //TODO: Impedir duplicidade do schedule
+            //TODO: Impedir duplicidade do item            
 
             _scheduleValidation = scheduleValidation;
 

@@ -9,12 +9,12 @@ namespace iParty.Business.Validations
     {        
         public ItemScheduleValidation()
         {
-            RuleFor(p => itemScheduleDuplicated(p)).Equal(false).WithMessage("O item possui mais de uma agenda aberta para o mesmo dia da semana.");
+            RuleFor(p => scheduleDuplicated(p)).Equal(false).WithMessage("O item possui mais de uma agenda aberta para o mesmo dia da semana.");
 
-            RuleFor(p => hourRangeDuplicated(p)).Equal(false).WithMessage("O item possui um ou mais dias da semana com horários conflitantes.");
+            RuleFor(p => scheduleItemInConflict(p)).Equal(false).WithMessage("O item possui um ou mais dias da semana com horários conflitantes.");
         }
 
-        private bool itemScheduleDuplicated(Item item)
+        private bool scheduleDuplicated(Item item)
         {
             var result = item.Schedules
                 .GroupBy(x => x.DayOfWeek)
@@ -24,23 +24,32 @@ namespace iParty.Business.Validations
             return result.Count() > 0;
         }
 
-        private bool hourRangeDuplicated(Item item)
+        private bool scheduleItemInConflict(Item item)
         {           
             foreach (var schedule in item.Schedules)
             {
-                foreach (var currentHour in schedule.Hours)
+                foreach (var currentScheduleItem in schedule.Items)
                 {                                        
                     var equalHours = schedule
-                        .Hours
-                        .Where (otherHour => otherHour.Id != currentHour.Id && otherHour.InitialHour == currentHour.InitialHour && otherHour.FinalHour == currentHour.FinalHour);
+                        .Items
+                        .Where (otherScheduleItem => 
+                            otherScheduleItem.Id != currentScheduleItem.Id && 
+                            otherScheduleItem.InitialHour == currentScheduleItem.InitialHour && 
+                            otherScheduleItem.FinalHour == currentScheduleItem.FinalHour);
 
                     var hoursWhereInitialHourItIsInsideTheRange = schedule
-                        .Hours
-                        .Where(otherHour => otherHour.Id != currentHour.Id && otherHour.InitialHour < currentHour.InitialHour && currentHour.InitialHour < otherHour.FinalHour);
+                        .Items
+                        .Where(otherScheduleItem => 
+                            otherScheduleItem.Id != currentScheduleItem.Id && 
+                            otherScheduleItem.InitialHour < currentScheduleItem.InitialHour && 
+                            currentScheduleItem.InitialHour < otherScheduleItem.FinalHour);
 
                     var hoursWhereFinalHourItIsInsideTheRange = schedule
-                        .Hours
-                        .Where(otherHour => otherHour.Id != currentHour.Id && otherHour.InitialHour < currentHour.FinalHour && currentHour.FinalHour < otherHour.FinalHour);
+                        .Items
+                        .Where(otherScheduleItem => 
+                            otherScheduleItem.Id != currentScheduleItem.Id && 
+                            otherScheduleItem.InitialHour < currentScheduleItem.FinalHour && 
+                            currentScheduleItem.FinalHour < otherScheduleItem.FinalHour);
 
                     if (equalHours.Count() > 0 || hoursWhereInitialHourItIsInsideTheRange.Count() > 0 || hoursWhereFinalHourItIsInsideTheRange.Count() > 0)
                         return true;                    

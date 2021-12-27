@@ -8,6 +8,7 @@ namespace iParty.Api.Dtos.Reservations
         public DateTime Date { get; set; }
         public int InitialHour { get; set; }
         public int FinalHour { get; set; }
+        public Guid ItemId { get; set; }
         public Guid OrderId { get; set; }
         public ReservationReason ReservationReason { get; set; }
     }
