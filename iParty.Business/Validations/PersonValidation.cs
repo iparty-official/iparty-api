@@ -19,6 +19,8 @@ namespace iParty.Business.Validations
 
         private IAddressValidation _addressValidation;
 
+        private IPersonAddressValidation _personAddressValidation;
+
         private IPaymentPlanValidation _paymentPlanValidation;
 
         public PersonValidation(IRepository<City> cityRepository, 
@@ -28,6 +30,7 @@ namespace iParty.Business.Validations
                                 IPhoneValidation phoneValidation,
                                 IPersonPhoneValidation personPhoneValidation,
                                 IAddressValidation addressValidation,
+                                IPersonAddressValidation personAddressValidation,
                                 IPaymentPlanValidation paymentPlanValidation)
         {
             //TODO: Validar DV do CPF/CNPJ
@@ -36,6 +39,8 @@ namespace iParty.Business.Validations
             _personPhoneValidation = personPhoneValidation;
 
             _addressValidation = addressValidation;
+
+            _personAddressValidation = personAddressValidation;
 
             _paymentPlanValidation = paymentPlanValidation;
 
@@ -83,7 +88,11 @@ namespace iParty.Business.Validations
                 if (!result.IsValid) return result;
             }
 
-            result = _personPhoneValidation.Validate(person);            
+            result = _personPhoneValidation.Validate(person);
+
+            if (!result.IsValid) return result;
+
+            result = _personAddressValidation.Validate(person);
 
             return result;
         }    

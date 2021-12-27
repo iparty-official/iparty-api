@@ -24,7 +24,9 @@ namespace iParty.Business.Services.People
 
         private IPersonPhoneValidation _personPhoneValidation;
 
-        private IAddressValidation _addressValidation;                
+        private IAddressValidation _addressValidation;
+
+        private IPersonAddressValidation _personAddressValidation;
 
         public PersonService(IRepository<Person> rep, 
                              IRepository<City> cityRepository, 
@@ -33,6 +35,7 @@ namespace iParty.Business.Services.People
                              IPhoneValidation phoneValidation,
                              IPersonPhoneValidation personPhoneValidation,
                              IAddressValidation addressValidation,
+                             IPersonAddressValidation personAddressValidation,
                              IRepository<PaymentPlan> paymentPlanRepository) : base(rep)
         {
             _cityRepository = cityRepository;
@@ -41,6 +44,7 @@ namespace iParty.Business.Services.People
             _phoneValidation = phoneValidation;
             _personPhoneValidation = personPhoneValidation;
             _addressValidation = addressValidation;
+            _personAddressValidation = personAddressValidation;
             _paymentPlanRepository = paymentPlanRepository;
         }
 
@@ -146,6 +150,11 @@ namespace iParty.Business.Services.People
             if (!result.IsValid)
                 return GetFailureResult(result);
 
+            result = _personAddressValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
             person.Addresses.Add(address);
 
             Rep.Update(personId, person);
@@ -161,6 +170,11 @@ namespace iParty.Business.Services.People
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _addressValidation.Validate(address);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
+            result = _personAddressValidation.Validate(person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
