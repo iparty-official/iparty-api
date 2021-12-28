@@ -26,12 +26,12 @@ namespace iParty.Business.Infra
             return GetSuccessResult(entity);
         }
 
-        public TEntity Get(Guid id)
+        public virtual TEntity Get(Guid id)
         {
             return Rep.RecoverById(id);
         }
 
-        public List<TEntity> Get()
+        public virtual List<TEntity> Get()
         {
             return Rep.Recover();
         }

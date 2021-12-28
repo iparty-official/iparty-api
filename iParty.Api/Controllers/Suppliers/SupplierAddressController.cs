@@ -11,7 +11,7 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("supplier/{supplierId}/address")]
     public class SupplierAddressController : ControllerBase
     {
-        private readonly IPersonService _personService;
+        private readonly ISupplierService _supplierService;
 
         private readonly IMapper _autoMapper;
 
@@ -19,9 +19,9 @@ namespace iParty.Api.Controllers.Suppliers
 
         private readonly IAddressMapper _addressMapper;
 
-        public SupplierAddressController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper, IAddressMapper addressMapper)
+        public SupplierAddressController(ISupplierService supplierService, IMapper autoMapper, ISupplierMapper supplierMapper, IAddressMapper addressMapper)
         {
-            _personService = personService;
+            _supplierService = supplierService;
             _autoMapper = autoMapper;
             _supplierMapper = supplierMapper;
             _addressMapper = addressMapper;
@@ -36,7 +36,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.AddAddress(supplierId, mapperResult.Entity);
+                var result = _supplierService.AddAddress(supplierId, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -62,7 +62,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.ReplaceAddress(supplierId, id, mapperResult.Entity);
+                var result = _supplierService.ReplaceAddress(supplierId, id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -82,7 +82,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var result = _personService.RemoveAddress(supplierId, id);
+                var result = _supplierService.RemoveAddress(supplierId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

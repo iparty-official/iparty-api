@@ -11,12 +11,8 @@ using System;
 namespace iParty.Business.Services.People
 {
     public class PersonService : Service<Person, IRepository<Person>>, IPersonService
-    {
-        private IRepository<City> _cityRepository;
-
-        private IRepository<PaymentPlan> _paymentPlanRepository;
-
-        private IFilterBuilder<Person> _personFilterBuilder;
+    {       
+        private IRepository<PaymentPlan> _paymentPlanRepository;        
         
         private IPersonValidation _personValidation;
         
@@ -28,8 +24,9 @@ namespace iParty.Business.Services.People
 
         private IPersonAddressValidation _personAddressValidation;
 
-        public PersonService(IRepository<Person> rep, 
-                             IRepository<City> cityRepository, 
+        protected IFilterBuilder<Person> PersonFilterBuilder;
+
+        public PersonService(IRepository<Person> rep,                              
                              IFilterBuilder<Person> personFilterBuilder, 
                              IPersonValidation personValidation,
                              IPhoneValidation phoneValidation,
@@ -37,15 +34,15 @@ namespace iParty.Business.Services.People
                              IAddressValidation addressValidation,
                              IPersonAddressValidation personAddressValidation,
                              IRepository<PaymentPlan> paymentPlanRepository) : base(rep)
-        {
-            _cityRepository = cityRepository;
-            _personFilterBuilder = personFilterBuilder;
+        {                        
             _personValidation = personValidation;
             _phoneValidation = phoneValidation;
             _personPhoneValidation = personPhoneValidation;
             _addressValidation = addressValidation;
             _personAddressValidation = personAddressValidation;
             _paymentPlanRepository = paymentPlanRepository;
+            
+            PersonFilterBuilder = personFilterBuilder;
         }
 
         public ServiceResult<Person> Create(Person person)

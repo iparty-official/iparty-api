@@ -11,16 +11,13 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("supplier/{supplierId}/paymentplan")]
     public class SupplierPaymentController : ControllerBase
     {
-        private readonly IPersonService _personService;
-
-        private readonly IMapper _autoMapper;
+        private readonly ISupplierService _supplierService;        
 
         private readonly ISupplierMapper _supplierMapper;      
 
-        public SupplierPaymentController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper)
+        public SupplierPaymentController(ISupplierService supplierService, ISupplierMapper supplierMapper)
         {
-            _personService = personService;
-            _autoMapper = autoMapper;
+            _supplierService = supplierService;            
             _supplierMapper = supplierMapper;            
         }
         
@@ -29,7 +26,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {               
-                var result = _personService.AddPaymentPlan(supplierId, dto.Id);
+                var result = _supplierService.AddPaymentPlan(supplierId, dto.Id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -49,7 +46,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var result = _personService.RemovePaymentPlan(supplierId, id);
+                var result = _supplierService.RemovePaymentPlan(supplierId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
