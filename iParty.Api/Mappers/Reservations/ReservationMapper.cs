@@ -2,30 +2,25 @@
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Reservations;
 using iParty.Api.Views.Items;
-using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Reservation;
 using iParty.Business.Models.Items;
-using iParty.Business.Models.People;
 using iParty.Data.Repositories;
 using System.Collections.Generic;
-using iParty.Api.Views.Orders;
+using AutoMapper;
 
 namespace iParty.Api.Infra.Reservations
 {
     public class ReservationMapper : BaseMapper<Reservation>, IReservationMapper
-    {
-        private IRepository<Person> _personRepository;
-
+    {        
         private IRepository<Item> _itemRepository;
 
-        private IItemMapper _itemMapper;
+        private IMapper _autoMapper;
 
-        public ReservationMapper(IRepository<Person> personRepository, IRepository<Item> itemRepository, IItemMapper itemMapper)
-        {
-            _personRepository = personRepository;
+        public ReservationMapper(IRepository<Item> itemRepository, IMapper autoMapper)
+        {            
             _itemRepository = itemRepository;
-            _itemMapper = itemMapper;
+            _autoMapper = autoMapper;
         }
 
         public MapperResult<Reservation> Map(ReservationDto dto)
@@ -75,7 +70,7 @@ namespace iParty.Api.Infra.Reservations
                 Date = entity.Date,
                 InitialHour = entity.InitialHour,
                 FinalHour = entity.FinalHour,
-                Item = new ItemSummarizedView(){ Id = entity.Item.Id, Name = entity.Item.Name},
+                Item = _autoMapper.Map<ItemSummarizedView>(entity.Item),
                 ReservationReason = entity.ReservationReason,                
                 OrderItem = null
             };

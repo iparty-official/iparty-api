@@ -11,8 +11,7 @@ namespace iParty.Business.Models.Orders
 {
     public class Order: Entity
     {
-        public DateTime Date { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime DateTime { get; set; }        
         public Person Supplier { get; set; }
         public Person Customer { get; set; }
         public Address ShippingAddress { get; set; }
@@ -25,6 +24,11 @@ namespace iParty.Business.Models.Orders
         public DateTime PartyDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public List<OrderItem> Items { get; set; }
+
+        public DateTime CalcExpirationDate(DateTime baseDateTime)
+        {
+            return baseDateTime.AddDays(7);
+        }
 
     }
 }
