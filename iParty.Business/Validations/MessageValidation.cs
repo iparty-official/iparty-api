@@ -17,9 +17,7 @@ namespace iParty.Business.Validations
             
             RuleFor(p => p.From.Id == p.To.Id).Equal(false).WithMessage("O remetente e o destinatário da mensagem são iguais.");
             
-            RuleFor(p => p.Text).NotEmpty().WithMessage("O texto da mensagem não foi informado.");
-            
-            RuleFor(p => p.DateTime).NotNull().WithMessage("A data/hora da mensagem não foi informada.");
+            RuleFor(p => p.Text).NotEmpty().WithMessage("O texto da mensagem não foi informado.");                       
 
             RuleFor(p => p.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data/hora da mensagem não foi informada.");
 

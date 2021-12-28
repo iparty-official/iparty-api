@@ -50,16 +50,16 @@ namespace iParty.Business.Validations
 
             RuleFor(p => p.Document).Length(x => isCPF(x.Document) ? 11 : isCNPJ(x.Document) ? 14 : 0). WithMessage("O CPF/CNPJ precisa ter 11 ou 14 dígitos.");
 
-            RuleFor(p => true).Equal(x => x.Document.All(char.IsDigit)).WithMessage("O número do documento deve conter apenas números");
+            RuleFor(p => p.Document).Must(x => x.All(char.IsDigit)).WithMessage("O número do documento deve conter apenas números");
 
             RuleFor(p => documentAlreadyExists(personRepository, personFilterBuilder, p)).Equal(false).WithMessage("Já existe uma pessoa cadastrada com o documento informado.");
 
-            RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");            
+            RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");
 
-            RuleFor(p => p.SupplierOrCustomer == SupplierOrCustomer.Supplier && string.IsNullOrEmpty(p.SupplierInfo.BusinessDescription)).Equal(false).WithMessage("A descrição do negócio não foi informada");
+            RuleFor(p => businessDescriptionIsEmpty(p)).Equal(false).WithMessage("A descrição do negócio não foi informada");
 
             RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanRepository.RecoverById(x.Id)).NotNull().WithMessage("O plano de pagamento informado não existe."));
-        }
+        }        
 
         public ValidationResult CustomValidate(Person person)        
         {
@@ -116,6 +116,11 @@ namespace iParty.Business.Validations
                 .Unequal(x => x.Id, person.Id);
 
             return personRepository.Recover(filterBuilder).Count > 0;
+        }
+
+        private bool businessDescriptionIsEmpty(Person person)
+        {
+            return person.SupplierOrCustomer == SupplierOrCustomer.Supplier && string.IsNullOrEmpty(person.SupplierInfo.BusinessDescription);
         }
     }
 }

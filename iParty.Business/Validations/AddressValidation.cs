@@ -12,7 +12,7 @@ namespace iParty.Business.Validations
     {       
         public AddressValidation(IRepository<City> cityRepository)
         {           
-            RuleFor(x => true).Equal(x => x.ZipCode.All(char.IsDigit)).WithMessage("O CEP deve conter apenas números.");
+            RuleFor(x => x.ZipCode).Must(x => x.All(char.IsDigit)).WithMessage("O CEP deve conter apenas números.");
 
             RuleFor(x => x.ZipCode).Length(8).WithMessage("O CEP deve conter exatamente oito dígitos.");
 

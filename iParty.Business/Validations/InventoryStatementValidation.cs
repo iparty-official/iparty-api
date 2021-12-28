@@ -15,9 +15,7 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.Quantity).GreaterThan(0).WithMessage("A quantidade precisa ser maior que zero.");
 
-            RuleFor(x => x.InOrOut).IsInEnum().WithMessage("O valor do campo 'Entrada ou Saída' é inválido.");
-
-            RuleFor(x => x.DateTime).NotNull().WithMessage("A data/hora do lançamento não foi informada.");
+            RuleFor(x => x.InOrOut).IsInEnum().WithMessage("O valor do campo 'Entrada ou Saída' é inválido.");            
 
             RuleFor(x => x.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data/hora do lançamento não foi informada.");
 

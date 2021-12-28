@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Reservations
-{
-    //TODO: Revisar validações do tipo NotNull() em todos os serviços.
-
+{   
     //[Authorize]
     [ApiController]
     [Route("[controller]")]

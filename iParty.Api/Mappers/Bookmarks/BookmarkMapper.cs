@@ -8,6 +8,7 @@ using iParty.Business.Models.Bookmark;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Infra.Bookmarks
@@ -39,7 +40,7 @@ namespace iParty.Api.Infra.Bookmarks
             {
                 Customer = customer,
                 Item = item,
-                DateTime = dto.DateTime
+                DateTime = DateTime.Now
             });
 
             return GetResult();
