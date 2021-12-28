@@ -28,8 +28,8 @@ namespace iParty.Api.Infra.Messages
             SetEntity (new Message()
             {
                 DateTime = DateTime.Now,
-                From = from,
-                To = to,
+                From = new PersonForMessage() { Id = from.Id, Name = from.Name },
+                To = new PersonForMessage() { Id = to.Id, Name = to.Name },
                 Text = dto.Text,
                 Order = null
             });

@@ -6,8 +6,8 @@ namespace iParty.Business.Models.Messages
 {
     public class Message: Entity
     {
-        public Person From { get; set; }
-        public Person To { get; set; }
+        public PersonForMessage From { get; set; }
+        public PersonForMessage To { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }         
         public Order Order { get; set; }
