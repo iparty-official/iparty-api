@@ -1,4 +1,5 @@
-﻿using iParty.Api.Dtos.InventoryStatements;
+﻿using AutoMapper;
+using iParty.Api.Dtos.InventoryStatements;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.InventoryStatements;
@@ -15,9 +16,12 @@ namespace iParty.Api.Mappers.InventoryStatements
     {        
         private IRepository<Item> _itemRepository;
 
-        public InventoryStatementMapper(IRepository<Item> itemRepository)
+        private IMapper _autoMapper;
+
+        public InventoryStatementMapper(IRepository<Item> itemRepository, IMapper autoMapper)
         {            
             _itemRepository = itemRepository;
+            _autoMapper = autoMapper;
         }
 
         public MapperResult<InventoryStatement> Map(InventoryStatementDto dto)
@@ -60,7 +64,7 @@ namespace iParty.Api.Mappers.InventoryStatements
         {
             if (inventoryStatement == null) return null;
 
-            var product = new ItemSummarizedView() { Id = inventoryStatement.Product.Id, Name = inventoryStatement.Product.Name };
+            var product = _autoMapper.Map<ItemSummarizedView>(inventoryStatement.Product);
 
             var inventoryStatementView = new InventoryStatementView()
             {

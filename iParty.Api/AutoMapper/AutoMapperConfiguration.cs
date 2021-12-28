@@ -69,7 +69,9 @@ namespace iParty.Api.AutoMapper
             CreateMap<Review, ReviewDto>().ReverseMap();
             CreateMap<Review, ReviewView>().ReverseMap();
 
-            CreateMap<OrderItem, OrderItemView>().ReverseMap(); 
+            CreateMap<OrderItem, OrderItemView>().ReverseMap();
+
+            CreateMap<Item, ItemSummarizedView>().ReverseMap();
         }
     }
 }

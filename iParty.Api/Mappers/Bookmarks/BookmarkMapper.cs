@@ -1,4 +1,5 @@
-﻿using iParty.Api.Dtos.Bookmarks;
+﻿using AutoMapper;
+using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Bookmarks;
 using iParty.Api.Views.Items;
@@ -19,13 +20,13 @@ namespace iParty.Api.Infra.Bookmarks
 
         private IRepository<Item> _itemRepository;
 
-        private IItemMapper _itemMapper;
+        private IMapper _autoMapper;
 
-        public BookmarkMapper(IRepository<Person> personRepository, IRepository<Item> itemRepository, IItemMapper itemMapper)
+        public BookmarkMapper(IRepository<Person> personRepository, IRepository<Item> itemRepository, IMapper autoMapper)
         {
             _personRepository = personRepository;
             _itemRepository = itemRepository;
-            _itemMapper = itemMapper;
+            _autoMapper = autoMapper;
         }
 
         public MapperResult<Bookmark> Map(BookmarkDto dto)
@@ -70,8 +71,8 @@ namespace iParty.Api.Infra.Bookmarks
             var bookmarkView = new BookmarkView()
             {
                 Id = entity.Id,
-                Customer = new PersonSummarizedView() { Id = entity.Customer.Id, Name = entity.Customer.Name },
-                Item = new ItemSummarizedView() { Id = entity.Item.Id, Name = entity.Item.Name },
+                Customer = _autoMapper.Map<PersonSummarizedView>(entity.Customer),
+                Item = _autoMapper.Map<ItemSummarizedView>(entity.Item),
                 DateTime = entity.DateTime
             };
 
