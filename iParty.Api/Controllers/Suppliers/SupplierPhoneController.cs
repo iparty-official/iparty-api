@@ -12,15 +12,15 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("supplier/{supplierId}/phone")]
     public class SupplierPhoneController : ControllerBase
     {
-        private readonly IPersonService _personService;
+        private readonly ISupplierService _supplierService;
 
         private readonly IMapper _autoMapper;
 
         private readonly ISupplierMapper _supplierMapper;
 
-        public SupplierPhoneController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper)
+        public SupplierPhoneController(ISupplierService supplierService, IMapper autoMapper, ISupplierMapper supplierMapper)
         {
-            _personService = personService;
+            _supplierService = supplierService;
             _autoMapper = autoMapper;
             _supplierMapper = supplierMapper;
         }
@@ -32,7 +32,7 @@ namespace iParty.Api.Controllers.Suppliers
             {
                 var phone = _autoMapper.Map<Phone>(dto);
 
-                var result = _personService.AddPhone(supplierId, phone);
+                var result = _supplierService.AddPhone(supplierId, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -56,7 +56,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 phone.Id = id;
 
-                var result = _personService.ReplacePhone(supplierId, id, phone);
+                var result = _supplierService.ReplacePhone(supplierId, id, phone);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -76,7 +76,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var result = _personService.RemovePhone(supplierId, id);
+                var result = _supplierService.RemovePhone(supplierId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

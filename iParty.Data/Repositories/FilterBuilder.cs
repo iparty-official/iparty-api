@@ -15,6 +15,11 @@ namespace iParty.Data.Repositories
             _filters = new List<IFilter<TEntity>>();
         }
 
+        public void Clear()
+        {
+            _filters.Clear();            
+        }
+
         public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value)
         {
             _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.Equal, Value = value });

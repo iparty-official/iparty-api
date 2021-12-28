@@ -13,16 +13,13 @@ namespace iParty.Api.Controllers.Suppliers
     {
         //TODO: Esse controller está retornando tantos clientes quanto fornecedores. Isso está errado.
 
-        private readonly IPersonService _personService;
-
-        private readonly IMapper _autoMapper;
+        private readonly ISupplierService _supplierService;        
 
         private readonly ISupplierMapper _supplierMapper;
 
-        public SupplierController(IPersonService personService, IMapper autoMapper, ISupplierMapper supplierMapper)
+        public SupplierController(ISupplierService supplierService, ISupplierMapper supplierMapper)
         {
-            _personService = personService;
-            _autoMapper = autoMapper;
+            _supplierService = supplierService;            
             _supplierMapper = supplierMapper;
         }
 
@@ -35,7 +32,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.Create(mapperResult.Entity);
+                var result = _supplierService.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -61,7 +58,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.Update(id, mapperResult.Entity);
+                var result = _supplierService.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -81,7 +78,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var result = _personService.Delete(id);
+                var result = _supplierService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -100,7 +97,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var entity = _personService.Get(id);
+                var entity = _supplierService.Get(id);
 
                 var view = _supplierMapper.Map(entity);
 
@@ -117,7 +114,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var entities = _personService.Get();
+                var entities = _supplierService.Get();
 
                 var view = _supplierMapper.Map(entities);
 

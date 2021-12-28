@@ -12,13 +12,13 @@ namespace iParty.Api.Controllers.Customers
     public class CustomerController : ControllerBase
     {
         //TODO: Esse controller está retornando tantos clientes quanto fornecedores. Isso está errado.
-        private readonly IPersonService _personService;        
+        private readonly ICustomerService _customerService;        
 
         private readonly ICustomerMapper _customerMapper;
 
-        public CustomerController(IPersonService personService, ICustomerMapper customerMapper)
+        public CustomerController(ICustomerService customerService, ICustomerMapper customerMapper)
         {
-            _personService = personService;            
+            _customerService = customerService;            
             _customerMapper = customerMapper;
         }
 
@@ -31,7 +31,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.Create(mapperResult.Entity);
+                var result = _customerService.Create(mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -57,7 +57,7 @@ namespace iParty.Api.Controllers.Customers
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.Update(id, mapperResult.Entity);
+                var result = _customerService.Update(id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -77,7 +77,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var result = _personService.Delete(id);
+                var result = _customerService.Delete(id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -96,7 +96,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var entity = _personService.Get(id);
+                var entity = _customerService.Get(id);
 
                 var view = _customerMapper.Map(entity);
 
@@ -113,7 +113,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var entities = _personService.Get();
+                var entities = _customerService.Get();
 
                 var view = _customerMapper.Map(entities);
 

@@ -9,6 +9,8 @@ namespace iParty.Business.Interfaces.Filters
 {
     public interface IFilterBuilder<TEntity> where TEntity : IEntity
     {
+        public void Clear();
+
         public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value);
 
         public IFilterBuilder<TEntity> Unequal(Expression<Func<TEntity, object>> field, object value);
