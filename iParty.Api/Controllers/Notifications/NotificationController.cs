@@ -49,32 +49,6 @@ namespace iParty.Api.Controllers.Notifications
         }
 
         [Route("{id}")]
-        [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] NotificationDto dto)
-        {
-            try
-            {
-                var mapperResult = _notificationMapper.Map(dto);
-
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
-
-                var result = _notificationService.Update(id, mapperResult.Entity);
-
-                if (!result.Success) return BadRequest(result.Errors);
-
-                var view = _autoMapper.Map<NotificationView>(result.Entity);
-
-                return Ok(view);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [Route("{id}")]
         [HttpDelete]
         public IActionResult Delete([FromRoute] Guid id)
         {

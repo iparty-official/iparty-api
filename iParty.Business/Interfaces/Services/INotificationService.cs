@@ -6,7 +6,6 @@ namespace iParty.Business.Interfaces.Services
 {
     public interface INotificationService : IService<Notification>
     {
-        ServiceResult<Notification> Create(Notification notification);
-        ServiceResult<Notification> Update(Guid id, Notification notification);
+        ServiceResult<Notification> Create(Notification notification);       
     }
 }

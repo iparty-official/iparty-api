@@ -3,7 +3,6 @@ using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
 using iParty.Data.Repositories;
-using System;
 
 namespace iParty.Business.Services.Notifications
 {
@@ -26,23 +25,6 @@ namespace iParty.Business.Services.Notifications
             Rep.Create(notification);
 
             return GetSuccessResult(notification);
-        }
-
-        public ServiceResult<Notification> Update(Guid id, Notification notification)
-        {
-            var currentNotification = Get(id);
-
-            if (currentNotification == null)
-                return GetFailureResult("Não foi possível localizar a notificação informada.");
-
-            var result = _notificationValidation.Validate(notification);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, notification);
-
-            return GetSuccessResult(notification);
-        }
+        }      
     }
 }
