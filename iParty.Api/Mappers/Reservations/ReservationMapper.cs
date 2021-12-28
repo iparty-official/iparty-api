@@ -41,7 +41,7 @@ namespace iParty.Api.Infra.Reservations
                 FinalHour = dto.FinalHour,
                 Item = item,
                 ReservationReason = dto.ReservationReason,                
-                Order = null,
+                OrderItem = null
                 
             });
 
@@ -76,8 +76,8 @@ namespace iParty.Api.Infra.Reservations
                 InitialHour = entity.InitialHour,
                 FinalHour = entity.FinalHour,
                 Item = new ItemSummarizedView(){ Id = entity.Item.Id, Name = entity.Item.Name},
-                ReservationReason = entity.ReservationReason,
-                Order = new OrderView()
+                ReservationReason = entity.ReservationReason,                
+                OrderItem = null
             };
 
             return reservationView;
