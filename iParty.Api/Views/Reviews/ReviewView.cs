@@ -1,14 +1,14 @@
-﻿using iParty.Business.Models.Orders;
+﻿using iParty.Api.Views.Orders;
 using System;
 
-namespace iParty.Business.Models.Review
+namespace iParty.Api.Views.Reviews
 {
-    public class Review: Entity
+    public class ReviewView : View
     {
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
         public int Stars { get; set; }
         public string Description { get; set; }
-        public OrderItem OrderItem { get; set; }
+        public OrderItemView OrderItem { get; set; }
     }
 }

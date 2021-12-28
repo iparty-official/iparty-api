@@ -30,9 +30,9 @@ namespace iParty.Business.Services.Notifications
 
         public ServiceResult<Notification> Update(Guid id, Notification notification)
         {
-            var currentMessage = Get(id);
+            var currentNotification = Get(id);
 
-            if (currentMessage == null)
+            if (currentNotification == null)
                 return GetFailureResult("Não foi possível localizar a notificação informada.");
 
             var result = _notificationValidation.Validate(notification);

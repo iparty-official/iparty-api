@@ -5,18 +5,23 @@ using iParty.Api.Dtos.Messages;
 using iParty.Api.Dtos.Notifications;
 using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Dtos.People;
+using iParty.Api.Dtos.Reviews;
 using iParty.Api.Views.Addresses;
 using iParty.Api.Views.Items;
 using iParty.Api.Views.Messages;
 using iParty.Api.Views.Notifications;
+using iParty.Api.Views.Orders;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
+using iParty.Api.Views.Reviews;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.Messages;
 using iParty.Business.Models.Notications;
+using iParty.Business.Models.Orders;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
+using iParty.Business.Models.Review;
 
 namespace iParty.Api.AutoMapper
 {
@@ -58,6 +63,11 @@ namespace iParty.Api.AutoMapper
 
             CreateMap<ScheduleItem, ScheduleItemDto>().ReverseMap();
             CreateMap<ScheduleItem, ScheduleItemView>().ReverseMap();
+
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Review, ReviewView>().ReverseMap();
+
+            CreateMap<OrderItem, OrderItemView>().ReverseMap(); 
         }
     }
 }
