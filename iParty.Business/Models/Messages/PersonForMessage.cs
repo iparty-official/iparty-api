@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iParty.Business.Models.Messages
 {
-    public class PersonForMessage : Entity
+    public class PersonForMessage
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

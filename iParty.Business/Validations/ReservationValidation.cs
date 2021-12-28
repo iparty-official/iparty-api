@@ -36,7 +36,7 @@ namespace iParty.Business.Validations
 
         private bool orderWasInformed(Reservation reservation)
         {
-            if (reservation.ReservationReason == ReservationReason.Order && reservation.Order == null)
+            if (reservation.ReservationReason == ReservationReason.Order && reservation.OrderItem == null)
                 return false;
             else
                 return true;
