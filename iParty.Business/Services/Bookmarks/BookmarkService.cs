@@ -26,23 +26,6 @@ namespace iParty.Business.Services.Bookmarks
             Rep.Create(bookmark);
 
             return GetSuccessResult(bookmark);
-        }
-
-        public ServiceResult<Bookmark> Update(Guid id, Bookmark bookmark)
-        {
-            var currentBookmark = Get(id);
-
-            if (currentBookmark == null)
-                return GetFailureResult("Não foi possível localizar o bookmark informado.");
-
-            var result = _bookmarkValidation.Validate(bookmark);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, bookmark);
-
-            return GetSuccessResult(bookmark);
-        }
+        }        
     }
 }

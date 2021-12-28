@@ -26,23 +26,6 @@ namespace iParty.Business.Services.Reservations
             Rep.Create(reservation);
 
             return GetSuccessResult(reservation);
-        }
-
-        public ServiceResult<Reservation> Update(Guid id, Reservation reservation)
-        {
-            var currentReservation = Get(id);
-
-            if (currentReservation == null)
-                return GetFailureResult("Não foi possível localizar a reserva informada.");
-
-            var result = _reservationValidation.Validate(reservation);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, reservation);
-
-            return GetSuccessResult(reservation);
-        }
+        }        
     }
 }

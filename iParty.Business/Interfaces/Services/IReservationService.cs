@@ -6,8 +6,6 @@ namespace iParty.Business.Interfaces.Services
 {
     public interface IReservationService : IService<Reservation>
     {
-        public ServiceResult<Reservation> Create(Reservation reservation);
-
-        public ServiceResult<Reservation> Update(Guid id, Reservation reservation);
+        public ServiceResult<Reservation> Create(Reservation reservation);        
     }
 }

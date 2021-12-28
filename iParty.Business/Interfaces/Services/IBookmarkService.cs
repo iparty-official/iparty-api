@@ -6,8 +6,6 @@ namespace iParty.Business.Interfaces.Services
 {
     public interface IBookmarkService : IService<Bookmark>
     {
-        public ServiceResult<Bookmark> Create(Bookmark bookmark);
-
-        public ServiceResult<Bookmark> Update(Guid id, Bookmark bookmark);
+        public ServiceResult<Bookmark> Create(Bookmark bookmark);     
     }
 }
