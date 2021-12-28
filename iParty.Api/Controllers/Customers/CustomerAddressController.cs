@@ -11,18 +11,15 @@ namespace iParty.Api.Controllers.Customers
     [Route("customer/{customerId}/address")]
     public class CustomerAddressController : ControllerBase
     {
-        private readonly IPersonService _personService;
-
-        private readonly IMapper _autoMapper;
+        private readonly ICustomerService _customerService;        
 
         private readonly ICustomerMapper _customerMapper;
 
         private readonly IAddressMapper _addressMapper;
 
-        public CustomerAddressController(IPersonService personService, IMapper autoMapper, ICustomerMapper customerMapper, IAddressMapper addressMapper)
+        public CustomerAddressController(ICustomerService customerService, ICustomerMapper customerMapper, IAddressMapper addressMapper)
         {
-            _personService = personService;
-            _autoMapper = autoMapper;
+            _customerService = customerService;            
             _customerMapper = customerMapper;
             _addressMapper = addressMapper;
         }
@@ -36,7 +33,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
 
-                var result = _personService.AddAddress(customerId, mapperResult.Entity);
+                var result = _customerService.AddAddress(customerId, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -62,7 +59,7 @@ namespace iParty.Api.Controllers.Customers
 
                 mapperResult.Entity.Id = id;
 
-                var result = _personService.ReplaceAddress(customerId, id, mapperResult.Entity);
+                var result = _customerService.ReplaceAddress(customerId, id, mapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
 
@@ -82,7 +79,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var result = _personService.RemoveAddress(customerId, id);
+                var result = _customerService.RemoveAddress(customerId, id);
 
                 if (!result.Success) return BadRequest(result.Errors);
 

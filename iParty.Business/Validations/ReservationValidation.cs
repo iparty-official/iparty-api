@@ -14,28 +14,27 @@ namespace iParty.Business.Validations
     public class ReservationValidation : AbstractValidator<Reservation>, IReservationValidation
     {
         public ReservationValidation(IRepository<Reservation> reservationRepository, IFilterBuilder<Reservation> reservationFilterBuilder)
-        {
-            //TODO: Validar se a reserva pode ser feita
-            RuleFor(x => x.Date).NotNull().WithMessage("A data da reserva não foi informada.");
+        {                        
+            RuleFor(x => x.Date).GreaterThan(DateTime.MinValue).WithMessage("A data da reserva não foi informada.");
 
-            RuleFor(x => x.InitialHour).NotNull().WithMessage("A hora inicial da reserva não foi informada.");
+            RuleFor(x => x.Date).GreaterThanOrEqualTo(DateTime.Today).WithMessage("A data da reserva precisa ser maior ou igual a data atual.");
 
-            RuleFor(x => x.FinalHour).NotNull().WithMessage("A hora final da reserva não foi informada.");            
+            RuleFor(x => x.InitialHour).InclusiveBetween(0, 23).WithMessage("A hora inicial precisa estar entre 0 (meia-noite) e 23 horas");
 
-            RuleFor(x => x.InitialHour).LessThan(x => x.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final");
+            RuleFor(x => x.InitialHour).LessThan(x => x.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final");                                  
 
-            RuleFor(x => x.ReservationReason).NotNull().WithMessage("O motivo da reserva não foi informado.");
+            RuleFor(x => x.FinalHour).InclusiveBetween(0, 23).WithMessage("A hora final precisa estar entre 0 (meia-noite) e 23 horas");            
 
             RuleFor(x => x.ReservationReason).IsInEnum().WithMessage("O motivo da reserva informado é inválido.");
 
-            RuleFor(x => ordemWasInformed(x)).Equal(true).WithMessage("O pedido não foi informado.");
+            RuleFor(x => orderWasInformed(x)).Equal(true).WithMessage("O pedido não foi informado.");
 
             RuleFor(x => itemHasAnOpenSchedule(x)).Equal(true).WithMessage("O item não possui agenda aberta para a data solicitada.");
 
             RuleFor(x => itemHasAvailableHours(reservationRepository, reservationFilterBuilder, x)).Equal(true).WithMessage("O item não possui disponibilidade nos horários solicitados.");
         }
 
-        private bool ordemWasInformed(Reservation reservation)
+        private bool orderWasInformed(Reservation reservation)
         {
             if (reservation.ReservationReason == ReservationReason.Order && reservation.Order == null)
                 return false;
@@ -49,9 +48,11 @@ namespace iParty.Business.Validations
 
         private bool itemHasAvailableHours(IRepository<Reservation> reservationRepository, IFilterBuilder<Reservation> reservationFilterBuilder, Reservation reservation)
         {
-            var schedule = reservation.Item.Schedules.Where(x => x.DayOfWeek == reservation.Date.DayOfWeek).First();
+            var schedule = reservation.Item.Schedules.Where(x => x.DayOfWeek == reservation.Date.DayOfWeek).FirstOrDefault();
 
-            var scheduleHoursList = transfomrScheduleItemsIntoHoursList(schedule.Items);
+            if (schedule == null) return false;            
+
+            var scheduleHoursList = transformScheduleItemsIntoHoursList(schedule.Items);
 
             var reservations = getReservedHours(reservationRepository, reservationFilterBuilder, reservation);
 
@@ -95,7 +96,7 @@ namespace iParty.Business.Validations
             return scheduleHoursList;
         }
 
-        private List<int> transfomrScheduleItemsIntoHoursList(List<ScheduleItem> scheduleItems)
+        private List<int> transformScheduleItemsIntoHoursList(List<ScheduleItem> scheduleItems)
         {
             var result = new List<int>();
 

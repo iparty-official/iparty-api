@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.People;
@@ -13,16 +14,19 @@ namespace iParty.Business.Validations
 
         private IItemScheduleValidation _itemScheduleValidation;
 
-        public ItemValidation(IRepository<Person> personRepository, IScheduleValidation scheduleValidation, IItemScheduleValidation itemScheduleValidation)
-        {
-            //TODO: Adicionar SKU
-            //TODO: Impedir duplicidade do item            
-
+        public ItemValidation(IRepository<Item> itemRepository, IFilterBuilder<Item> itemFilterBuilder, IRepository<Person> personRepository, IScheduleValidation scheduleValidation, IItemScheduleValidation itemScheduleValidation)
+        {                  
             _scheduleValidation = scheduleValidation;
 
             _itemScheduleValidation = itemScheduleValidation;
 
+            RuleFor(x => x.SKU).NotEmpty().WithMessage("O SKU do item não foi informado.");
+
+            RuleFor(x => skuAlreadyExists(itemRepository, itemFilterBuilder, x)).Equal(false).WithMessage("Já existe um item cadastrado com o SKU informado.");
+
             RuleFor(x => x.Supplier).NotNull().WithMessage("O fornecedor precisa ser informado");
+
+            RuleFor(x => x.Supplier.SupplierOrCustomer).Equal(SupplierOrCustomer.Supplier).WithMessage("A pessoa informada não é um fornecedor.");
 
             RuleFor(x => personRepository.RecoverById(x.Supplier.Id)).NotNull().WithMessage("O fornecedor informado não existe.");
 
@@ -59,6 +63,16 @@ namespace iParty.Business.Validations
             if (!result.IsValid) return result;
 
             return result;
+        }
+
+        private bool skuAlreadyExists(IRepository<Item> itemRepository, IFilterBuilder<Item> filterBuilder, Item item)
+        {
+            filterBuilder
+                .Equal(x => x.SKU, item.SKU)
+                .Equal(x => x.Supplier, item.Supplier)
+                .Unequal(x => x.Id, item.Id);
+
+            return itemRepository.Recover(filterBuilder).Count > 0;
         }
     }
 }

@@ -40,6 +40,8 @@ namespace iParty.Api.AutoMapper
             
             CreateMap<Person, PersonSummarizedView>().ReverseMap();
 
+            CreateMap<PersonForMessage, PersonSummarizedView>().ReverseMap();
+
             CreateMap<Message, MessageDto>().ReverseMap();
             CreateMap<Message, MessageView>().ReverseMap();
 

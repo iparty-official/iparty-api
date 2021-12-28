@@ -6,6 +6,6 @@ namespace iParty.Api.Dtos.Items
     public class ScheduleDto
     {
         public DayOfWeek DayOfWeek { get; set; }
-        public List<ScheduleItemDto> Hours { get; set; }
+        public List<ScheduleItemDto> Items { get; set; }
     }
 }

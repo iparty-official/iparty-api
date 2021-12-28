@@ -5,6 +5,7 @@ using iParty.Business.Models.Bookmark;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
+using System;
 
 namespace iParty.Business.Validations
 {
@@ -14,7 +15,7 @@ namespace iParty.Business.Validations
         {
             RuleFor(p => p.Customer).NotNull().WithMessage("O cliente não foi informado.");            
 
-            RuleFor(p => p.DateTime).NotNull().WithMessage("A data/hora da mensagem não foi informada.");
+            RuleFor(p => p.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data/hora da mensagem não foi informada.");
 
             RuleFor(x => personRepository.RecoverById(x.Customer.Id)).NotNull().WithMessage("O cliente informado não existe.");
 

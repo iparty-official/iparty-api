@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace iParty.Api.Views.Addresses
+﻿namespace iParty.Api.Views.Addresses
 {
     public class AddressView : View
     {
         public string ZipCode { get; set; }
         public string Street { get; set; }
         public string District { get; set; }
+        public int Number { get; set; }
         public CityView City { get; set; }
     }
 }

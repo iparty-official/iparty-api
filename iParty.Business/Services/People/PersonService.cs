@@ -11,12 +11,8 @@ using System;
 namespace iParty.Business.Services.People
 {
     public class PersonService : Service<Person, IRepository<Person>>, IPersonService
-    {
-        private IRepository<City> _cityRepository;
-
-        private IRepository<PaymentPlan> _paymentPlanRepository;
-
-        private IFilterBuilder<Person> _personFilterBuilder;
+    {       
+        private IRepository<PaymentPlan> _paymentPlanRepository;        
         
         private IPersonValidation _personValidation;
         
@@ -24,24 +20,29 @@ namespace iParty.Business.Services.People
 
         private IPersonPhoneValidation _personPhoneValidation;
 
-        private IAddressValidation _addressValidation;                
+        private IAddressValidation _addressValidation;
 
-        public PersonService(IRepository<Person> rep, 
-                             IRepository<City> cityRepository, 
+        private IPersonAddressValidation _personAddressValidation;
+
+        protected IFilterBuilder<Person> PersonFilterBuilder;
+
+        public PersonService(IRepository<Person> rep,                              
                              IFilterBuilder<Person> personFilterBuilder, 
                              IPersonValidation personValidation,
                              IPhoneValidation phoneValidation,
                              IPersonPhoneValidation personPhoneValidation,
                              IAddressValidation addressValidation,
+                             IPersonAddressValidation personAddressValidation,
                              IRepository<PaymentPlan> paymentPlanRepository) : base(rep)
-        {
-            _cityRepository = cityRepository;
-            _personFilterBuilder = personFilterBuilder;
+        {                        
             _personValidation = personValidation;
             _phoneValidation = phoneValidation;
             _personPhoneValidation = personPhoneValidation;
             _addressValidation = addressValidation;
+            _personAddressValidation = personAddressValidation;
             _paymentPlanRepository = paymentPlanRepository;
+            
+            PersonFilterBuilder = personFilterBuilder;
         }
 
         public ServiceResult<Person> Create(Person person)
@@ -146,6 +147,11 @@ namespace iParty.Business.Services.People
             if (!result.IsValid)
                 return GetFailureResult(result);
 
+            result = _personAddressValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
             person.Addresses.Add(address);
 
             Rep.Update(personId, person);
@@ -161,6 +167,11 @@ namespace iParty.Business.Services.People
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _addressValidation.Validate(address);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
+            result = _personAddressValidation.Validate(person);
 
             if (!result.IsValid)
                 return GetFailureResult(result);

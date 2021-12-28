@@ -5,6 +5,7 @@ using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Notications;
 using iParty.Business.Models.People;
 using iParty.Data.Repositories;
+using System;
 
 namespace iParty.Api.Mappers.Notifications
 {
@@ -25,8 +26,7 @@ namespace iParty.Api.Mappers.Notifications
 
             SetEntity(new Notification
             {
-                Date = dto.Date,
-                Time = dto.Time,
+                DateTime = DateTime.Now,
                 Text = dto.Text,
                 Destination = person
             });

@@ -17,9 +17,9 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.Number).Length(8, 11).WithMessage("O número do telefone deve conter entre oito e onze dígitos.");
 
-            RuleFor(x => true).Equal(x => x.Prefix.All(char.IsDigit)).WithMessage("O prefixo do telefone deve conter apenas números.");
+            RuleFor(x => x.Prefix).Must(x => x.All(char.IsDigit)).WithMessage("O prefixo do telefone deve conter apenas números.");
 
-            RuleFor(x => true).Equal(x => x.Number.All(char.IsDigit)).WithMessage("O número do telefone deve conter apenas números.");          
+            RuleFor(x => x.Number).Must(x => x.All(char.IsDigit)).WithMessage("O número do telefone deve conter apenas números.");          
         }        
     }
 }

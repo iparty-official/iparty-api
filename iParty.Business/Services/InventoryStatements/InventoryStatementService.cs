@@ -21,11 +21,7 @@ namespace iParty.Business.Services.InventoryStatements
         }
 
         public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement)
-        {
-            //TODO: Essa rotina tem duas operações: Atualizar o estoque do item e lançar um movimento.
-            //Elas não estão protegida por uma transação atômica.
-            //Implementar mecanismo que garanta a execução de ambas operações ou que garanta o desfazimento de ambas
-
+        {            
             var result = _inventoryStatementValidation.Validate(inventoryStatement);
 
             if (!result.IsValid)

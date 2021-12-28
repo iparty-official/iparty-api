@@ -9,6 +9,7 @@ namespace iParty.Api.Dtos.Items
     public class ItemDto
     {
         public Guid SupplierId { get; set; }        
+        public string SKU { get; set; }
         public string Name { get; set; }        
         public string Details { get; set; }        
         public object Photo { get; set; }        

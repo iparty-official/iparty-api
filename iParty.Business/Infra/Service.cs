@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Infra
 {
+    //TODO: Abstrair serviços. Criar branch separada.
     public class Service<TEntity, TRepository> : BaseService<TEntity, TRepository>, IService<TEntity>
         where TEntity : IEntity, new()
         where TRepository : IRepository<TEntity>        
@@ -25,12 +26,12 @@ namespace iParty.Business.Infra
             return GetSuccessResult(entity);
         }
 
-        public TEntity Get(Guid id)
+        public virtual TEntity Get(Guid id)
         {
             return Rep.RecoverById(id);
         }
 
-        public List<TEntity> Get()
+        public virtual List<TEntity> Get()
         {
             return Rep.Recover();
         }

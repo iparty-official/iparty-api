@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Reservations
-{
+{   
     //[Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -42,33 +42,7 @@ namespace iParty.Api.Controllers.Reservations
             {
                 return StatusCode(500, e.Message);
             }
-        }
-
-        [Route("{id}")]
-        [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] ReservationDto dto)
-        {
-            try
-            {
-                var mapperResult = _reservationMapper.Map(dto);
-
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
-
-                var result = _serviceReservation.Update(id, mapperResult.Entity);
-
-                if (!result.Success) return BadRequest(result.Errors);
-
-                var view = _reservationMapper.Map(result.Entity);
-
-                return Ok(view);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
+        }        
 
         [Route("{id}")]
         [HttpDelete]

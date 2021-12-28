@@ -27,9 +27,9 @@ namespace iParty.Api.Infra.Messages
 
             SetEntity (new Message()
             {
-                DateTime = dto.DateTime,
-                From = from,
-                To = to,
+                DateTime = DateTime.Now,
+                From = new PersonForMessage() { Id = from.Id, Name = from.Name },
+                To = new PersonForMessage() { Id = to.Id, Name = to.Name },
                 Text = dto.Text,
                 Order = null
             });

@@ -26,6 +26,7 @@ namespace iParty.Api.Mappers.Addresses
             {
                 ZipCode = dto.ZipCode,
                 Street = dto.Street,
+                Number = dto.Number,
                 District = dto.District,
                 City = city
             });

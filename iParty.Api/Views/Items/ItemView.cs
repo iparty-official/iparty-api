@@ -7,6 +7,7 @@ namespace iParty.Api.Views.Items
     public class ItemView : View
     {
         public PersonSummarizedView Supplier { get; set; }
+        public string SKU { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
         public object Photo { get; set; }
