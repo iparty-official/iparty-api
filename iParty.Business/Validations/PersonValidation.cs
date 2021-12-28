@@ -31,8 +31,7 @@ namespace iParty.Business.Validations
                                 IAddressValidation addressValidation,
                                 IPersonAddressValidation personAddressValidation,
                                 IPaymentPlanValidation paymentPlanValidation)
-        {
-            //TODO: Validar DV do CPF/CNPJ
+        {            
             _phoneValidation = phoneValidation;
 
             _personPhoneValidation = personPhoneValidation;

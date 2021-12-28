@@ -6,8 +6,7 @@ using iParty.Data.Repositories;
 using System;
 
 namespace iParty.Business.Services.Items
-{
-    //TODO: Tratar problemas de concorrências
+{  
     public class ItemService : Service<Item, IRepository<Item>>, IItemService
     {                
         private IItemValidation _itemValidation;
