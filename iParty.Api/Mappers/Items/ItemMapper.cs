@@ -33,6 +33,7 @@ namespace iParty.Api.Mappers.Items
 
             var item = new Item()
             {
+                SKU = dto.SKU,
                 Supplier = supplier,
                 Name = dto.Name,
                 Details = dto.Details,
@@ -78,6 +79,7 @@ namespace iParty.Api.Mappers.Items
             {
                 Id = item.Id,
                 Supplier = supplier,
+                SKU = item.SKU,
                 Name = item.Name,
                 Details = item.Details,
                 Photo = item.Photo,

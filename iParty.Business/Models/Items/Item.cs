@@ -6,8 +6,9 @@ namespace iParty.Business.Models.Items
 {
     public class Item: Entity
     {
-        public Person Supplier { get; set; }        
-        public string Name { get; set; }        
+        public Person Supplier { get; set; }
+        public string SKU { get; set; }
+        public string Name { get; set; }
         public string Details { get; set; }        
         public object Photo { get; set; }        
         public decimal Price { get; set; }        
