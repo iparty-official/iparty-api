@@ -1,9 +1,8 @@
 ﻿using iParty.Business.Infra;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Bookmark;
-using iParty.Data.Repositories;
-using System;
 
 namespace iParty.Business.Services.Bookmarks
 {

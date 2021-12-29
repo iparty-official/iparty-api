@@ -7,7 +7,7 @@ using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.People;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 

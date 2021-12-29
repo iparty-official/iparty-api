@@ -2,7 +2,7 @@
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 
 namespace iParty.Business.Validations
 {

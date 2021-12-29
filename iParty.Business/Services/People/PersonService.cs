@@ -5,7 +5,7 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 
 namespace iParty.Business.Services.People

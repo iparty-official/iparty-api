@@ -7,7 +7,7 @@ using iParty.Api.Views.Reviews;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Orders;
 using iParty.Business.Models.Review;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

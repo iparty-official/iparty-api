@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using iParty.Business.Interfaces;
-using iParty.Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 

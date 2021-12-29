@@ -2,7 +2,7 @@
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Reservation;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 
 namespace iParty.Business.Services.Reservations

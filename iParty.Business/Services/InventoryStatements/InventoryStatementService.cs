@@ -3,7 +3,7 @@ using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.InventoryStatements;
 using iParty.Business.Models.Items;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 
 namespace iParty.Business.Services.InventoryStatements

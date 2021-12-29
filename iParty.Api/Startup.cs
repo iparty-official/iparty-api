@@ -1,7 +1,7 @@
 using iParty.Api.Infra;
 using iParty.Business.Infra;
 using iParty.Data.Infra;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using iParty.Data.Repositories;
 
 namespace iParty.Api
 {

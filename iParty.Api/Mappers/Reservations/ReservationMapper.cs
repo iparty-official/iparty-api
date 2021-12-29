@@ -5,7 +5,7 @@ using iParty.Api.Views.Items;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Reservation;
 using iParty.Business.Models.Items;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System.Collections.Generic;
 using AutoMapper;
 

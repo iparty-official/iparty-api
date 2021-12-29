@@ -4,7 +4,7 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Notications;
 using iParty.Business.Models.People;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 
 namespace iParty.Api.Mappers.Notifications

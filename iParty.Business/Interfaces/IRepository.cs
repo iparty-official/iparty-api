@@ -1,9 +1,8 @@
-﻿using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Filters;
+﻿using iParty.Business.Interfaces.Filters;
 using System;
 using System.Collections.Generic;
 
-namespace iParty.Data.Repositories
+namespace iParty.Business.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {

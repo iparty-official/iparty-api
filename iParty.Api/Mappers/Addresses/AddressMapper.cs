@@ -3,7 +3,7 @@ using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System.Collections.Generic;
 
 namespace iParty.Api.Mappers.Addresses

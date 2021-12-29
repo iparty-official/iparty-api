@@ -4,7 +4,7 @@ using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.Reservation;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

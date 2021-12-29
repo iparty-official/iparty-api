@@ -2,7 +2,7 @@
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
-using iParty.Data.Repositories;
+using iParty.Business.Interfaces;
 
 namespace iParty.Business.Services.Notifications
 {
