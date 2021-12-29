@@ -1,4 +1,5 @@
 ﻿using iParty.Business;
+using iParty.Business.Models.Reservation;
 using System;
 
 namespace iParty.Api.Dtos.Reservations

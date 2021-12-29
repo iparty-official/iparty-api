@@ -1,6 +1,7 @@
 ﻿using iParty.Api.Views.Items;
 using iParty.Api.Views.Orders;
 using iParty.Business;
+using iParty.Business.Models.Reservation;
 using System;
 
 namespace iParty.Api.Views.Reservations

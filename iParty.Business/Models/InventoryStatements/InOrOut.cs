@@ -1,4 +1,4 @@
-﻿namespace iParty.Business
+﻿namespace iParty.Business.Models.InventoryStatements
 {
     public enum InOrOut
     {

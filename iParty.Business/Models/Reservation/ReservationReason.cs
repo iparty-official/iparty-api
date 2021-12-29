@@ -1,4 +1,4 @@
-﻿namespace iParty.Business
+﻿namespace iParty.Business.Models.Reservation
 {
     public enum ReservationReason
     {
