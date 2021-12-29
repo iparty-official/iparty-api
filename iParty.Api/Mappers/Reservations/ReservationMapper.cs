@@ -45,7 +45,7 @@ namespace iParty.Api.Infra.Reservations
 
         public ReservationView Map(Reservation entity)
         {
-            return MapReservationToReservationView(entity);
+            return MapToView(entity);
         }
 
         public List<ReservationView> Map(List<Reservation> entities)
@@ -54,13 +54,13 @@ namespace iParty.Api.Infra.Reservations
 
             foreach (var reservation in entities)
             {
-                reservations.Add(MapReservationToReservationView(reservation));
+                reservations.Add(MapToView(reservation));
             }
 
             return reservations;
         }
 
-        public ReservationView MapReservationToReservationView(Reservation entity)
+        public ReservationView MapToView(Reservation entity)
         {
             if (entity == null) return null;
 

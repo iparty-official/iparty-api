@@ -27,6 +27,8 @@ namespace iParty.Api.Mappers.People
 
         public MapperResult<Person> Map(CustomerDto dto)
         {
+            var addresses = mapAddresses(dto);
+
             var person = new Person()
             {                
                 User = dto.User,
@@ -36,13 +38,9 @@ namespace iParty.Api.Mappers.People
                 SupplierOrCustomer = SupplierOrCustomer.Customer,
                 CustomerInfo = new Customer() { BirthDate = dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate },
                 SupplierInfo = new Supplier() { PaymentPlans = new List<PaymentPlan>() },
-                Phones = new List<Phone>(),
-                Addresses = new List<Address>()                
-            };            
-
-            person = mapPersonAddresses(dto, person);
-
-            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));            
+                Phones = dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList(),
+                Addresses = addresses
+            };                        
 
             if (!SuccessResult()) return GetResult();           
 
@@ -53,7 +51,7 @@ namespace iParty.Api.Mappers.People
 
         public CustomerView Map(Person person)
         {            
-            return mapPersonToCustomerView(person);
+            return mapToView(person);
         }
 
         public List<CustomerView> Map(List<Person> people)
@@ -62,14 +60,13 @@ namespace iParty.Api.Mappers.People
 
             foreach (var person in people)
             {                                               
-                customers.Add(mapPersonToCustomerView(person));
+                customers.Add(mapToView(person));
             }
-
 
             return customers;
         }
 
-        private CustomerView mapPersonToCustomerView(Person person)
+        private CustomerView mapToView(Person person)
         {
             if (person == null) return null;
 
@@ -81,29 +78,26 @@ namespace iParty.Api.Mappers.People
                 Document = person.Document,
                 Photo = person.Photo,
                 BirthDate = person.CustomerInfo.BirthDate,
-                Addresses = new List<AddressView>(),
-                Phones = new List<PhoneView>()
-            };
-
-            customerView.Addresses.AddRange(person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)));
-
-            customerView.Phones.AddRange(person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)));
+                Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
+                Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList()
+            };            
 
             return customerView;
         }
 
-        private Person mapPersonAddresses(CustomerDto dto, Person person)
+        private List<Address> mapAddresses(CustomerDto dto)
         {
             var mapperResultList = _addressMapper.Map(dto.Addresses);
 
-            if (mapperResultList.Where(x => !x.Success).Count() > 0)
+            if (mapperResultList.Exists(x => !x.Success))
+            {
                 foreach (var mapperResult in mapperResultList)
                     foreach (var erro in mapperResult.Errors) AddError(erro);
 
-            person.Addresses.AddRange(mapperResultList.Select(x => { return x.Entity; }));
-
-            return person;
+                return mapperResultList.Select(x => x.Entity).ToList();
+            }
+            else
+                return new List<Address>();
         }
-
     }
 }

@@ -43,7 +43,7 @@ namespace iParty.Api.Mappers.InventoryStatements
 
         public InventoryStatementView Map(InventoryStatement inventoryStatement)
         {
-            return mapEntityToView(inventoryStatement);
+            return mapToView(inventoryStatement);
         }
 
         public List<InventoryStatementView> Map(List<InventoryStatement> inventoryStatements)
@@ -52,13 +52,13 @@ namespace iParty.Api.Mappers.InventoryStatements
 
             foreach (var inventoryStatement in inventoryStatements)
             {
-                result.Add(mapEntityToView(inventoryStatement));
+                result.Add(mapToView(inventoryStatement));
             }
 
             return result;
         }
 
-        private InventoryStatementView mapEntityToView(InventoryStatement inventoryStatement)
+        private InventoryStatementView mapToView(InventoryStatement inventoryStatement)
         {
             if (inventoryStatement == null) return null;
 

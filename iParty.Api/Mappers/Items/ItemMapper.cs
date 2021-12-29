@@ -42,10 +42,8 @@ namespace iParty.Api.Mappers.Items
                 Unit = dto.Unit,
                 ProductOrService = dto.ProductOrService,
                 ProductInfo = new Product() { AvailableQuantity = dto.AvailableQuantity, ForRentOrSale = dto.ForRentOrSale },
-                Schedules = new List<Schedule>()
-            };
-
-            item.Schedules.AddRange(dto.Schedules.Select(x => _autoMapper.Map<Schedule>(x)));
+                Schedules = dto.Schedules.Select(x => _autoMapper.Map<Schedule>(x)).ToList()
+            };            
 
             SetEntity(item);
 
@@ -54,7 +52,7 @@ namespace iParty.Api.Mappers.Items
 
         public ItemView Map(Item item)
         {
-            return mapItemToItemView(item);
+            return mapToView(item);
         }
 
         public List<ItemView> Map(List<Item> items)
@@ -63,13 +61,13 @@ namespace iParty.Api.Mappers.Items
 
             foreach (var item in items)
             {
-                result.Add(mapItemToItemView(item));
+                result.Add(mapToView(item));
             }
 
             return result;
         }
 
-        private ItemView mapItemToItemView(Item item)
+        private ItemView mapToView(Item item)
         {
             if (item == null) return null;
 
@@ -88,10 +86,8 @@ namespace iParty.Api.Mappers.Items
                 ProductOrService = item.ProductOrService,
                 AvailableQuantity = item.ProductInfo.AvailableQuantity,
                 ForRentOrSale = item.ProductInfo.ForRentOrSale,
-                Schedules = new List<ScheduleView>()
-            };            
-
-            itemView.Schedules.AddRange(item.Schedules.Select(x => _autoMapper.Map<ScheduleView>(x)));
+                Schedules = item.Schedules.Select(x => _autoMapper.Map<ScheduleView>(x)).ToList()
+            };
 
             return itemView;            
         }

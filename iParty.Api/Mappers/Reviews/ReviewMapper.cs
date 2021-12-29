@@ -44,7 +44,7 @@ namespace iParty.Api.Mappers.Reviews
 
         public ReviewView Map(Review review)
         {
-            return mapReviewToReviewView(review);
+            return mapToView(review);
         }
 
         public List<ReviewView> Map(List<Review> reviews)
@@ -52,12 +52,12 @@ namespace iParty.Api.Mappers.Reviews
             var reviewsView = new List<ReviewView>(); 
             foreach (Review review in reviews)
             {
-                reviewsView.Add(mapReviewToReviewView(review));
+                reviewsView.Add(mapToView(review));
             }
             return reviewsView;
         }
 
-        private ReviewView mapReviewToReviewView(Review review)
+        private ReviewView mapToView(Review review)
         {
             if (review == null) return null;
 

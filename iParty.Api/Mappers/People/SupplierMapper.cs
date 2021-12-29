@@ -32,6 +32,10 @@ namespace iParty.Api.Mappers.People
 
         public MapperResult<Person> Map(SupplierDto dto)
         {
+            var addresses = mapAddresses(dto);
+
+            var paymentPlans = mapnPaymentPlans(dto);
+
             var person = new Person()
             {
                 User = dto.User,
@@ -39,17 +43,11 @@ namespace iParty.Api.Mappers.People
                 Document = dto.Document,
                 Photo = dto.Photo,
                 SupplierOrCustomer = SupplierOrCustomer.Supplier,
-                Phones = new List<Phone>(),
-                Addresses = new List<Address>(),
+                Phones = dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList(),
+                Addresses = addresses,
                 CustomerInfo = new Customer(),
-                SupplierInfo = new Supplier() { BusinessDescription = dto.BusinessDescription, PaymentPlans = new List<PaymentPlan>() }
-            };
-
-            person = mapPersonAddresses(dto, person);
-
-            person = mapPersonPaymentPlans(dto, person);
-
-            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));            
+                SupplierInfo = new Supplier() { BusinessDescription = dto.BusinessDescription, PaymentPlans = paymentPlans }
+            };            
 
             if (!SuccessResult()) return GetResult();            
 
@@ -60,7 +58,7 @@ namespace iParty.Api.Mappers.People
 
         public SupplierView Map(Person person)
         {            
-            return mapPersonToSupplierView(person);
+            return mapToView(person);
         }
 
         public List<SupplierView> Map(List<Person> people)
@@ -69,13 +67,13 @@ namespace iParty.Api.Mappers.People
 
             foreach (var person in people)
             {                               
-                suplliers.Add(mapPersonToSupplierView(person));
+                suplliers.Add(mapToView(person));
             }
 
             return suplliers;
         }
 
-        private SupplierView mapPersonToSupplierView(Person person)
+        private SupplierView mapToView(Person person)
         {
             if (person == null) return null;
 
@@ -87,43 +85,37 @@ namespace iParty.Api.Mappers.People
                 Document = person.Document,
                 Photo = person.Photo,
                 BusinessDescription = person.SupplierInfo.BusinessDescription,
-                Addresses = new List<AddressView>(),
-                Phones = new List<PhoneView>(),
-                PaymentPlans = new List<PaymentPlanView>()
-            };
-
-            supplierView.Addresses.AddRange(person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)));
-
-            supplierView.Phones.AddRange(person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)));
-
-            supplierView.PaymentPlans.AddRange(person.SupplierInfo.PaymentPlans.Select(x => _autoMapper.Map<PaymentPlanView>(x)));
+                Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
+                Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList(),
+                PaymentPlans = person.SupplierInfo.PaymentPlans.Select(x => _autoMapper.Map<PaymentPlanView>(x)).ToList()
+            };            
 
             return supplierView;
         }
 
-        private Person mapPersonAddresses(SupplierDto dto, Person person)
+        private List<Address> mapAddresses(SupplierDto dto)
         {
             var mapperResultList = _addressMapper.Map(dto.Addresses);
 
-            if (mapperResultList.Where(x => !x.Success).Count() > 0)
+            if (mapperResultList.Exists(x => !x.Success))
+            {
                 foreach (var mapperResult in mapperResultList)
                     foreach (var erro in mapperResult.Errors) AddError(erro);
 
-            person.Addresses.AddRange(mapperResultList.Select(x => { return x.Entity; }));
-
-            return person;
+                return mapperResultList.Select(x => x.Entity).ToList();
+            }
+            else
+                return new List<Address>();                                     
         }
 
-        private Person mapPersonPaymentPlans(SupplierDto dto, Person person)
+        private List<PaymentPlan> mapnPaymentPlans(SupplierDto dto)
         {
-            person.SupplierInfo.PaymentPlans.AddRange(dto.PaymentPlans.Select(x =>
+            return dto.PaymentPlans.Select(x =>
             {
                 var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("O plano de pagamento informado não foi encontrado."); });
 
                 return paymentPlan;
-            }));
-
-            return person;
+            }).ToList();
         }
     }
 }

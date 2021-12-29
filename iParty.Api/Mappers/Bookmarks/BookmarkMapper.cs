@@ -49,7 +49,7 @@ namespace iParty.Api.Infra.Bookmarks
 
         public BookmarkView Map(Bookmark entity)
         {            
-            return MapBookmarkToBookmarkView(entity);
+            return MapToView(entity);
         }
 
         public List<BookmarkView> Map(List<Bookmark> entities)
@@ -58,13 +58,13 @@ namespace iParty.Api.Infra.Bookmarks
 
             foreach (var bookmark in entities)
             {
-                bookmarks.Add(MapBookmarkToBookmarkView(bookmark));
+                bookmarks.Add(MapToView(bookmark));
             }
 
             return bookmarks;
         }
 
-        public BookmarkView MapBookmarkToBookmarkView(Bookmark entity)
+        public BookmarkView MapToView(Bookmark entity)
         {
             if (entity == null) return null;
 
