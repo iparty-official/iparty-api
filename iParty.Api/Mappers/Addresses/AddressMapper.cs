@@ -4,6 +4,7 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Data.Repositories;
+using System.Collections.Generic;
 
 namespace iParty.Api.Mappers.Addresses
 {
@@ -32,6 +33,19 @@ namespace iParty.Api.Mappers.Addresses
             });
 
             return GetResult();
-        }        
+        }
+
+        public List<MapperResult<Address>> Map(List<AddressDto> dtos)
+        {           
+            var result = new List<MapperResult<Address>>();
+
+            foreach (var dto in dtos)
+            {
+                this.ClearResult();
+                result.Add(this.Map(dto));
+            }
+
+            return result;
+        }
     }
 }

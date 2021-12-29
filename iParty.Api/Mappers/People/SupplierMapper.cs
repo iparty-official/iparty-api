@@ -43,33 +43,20 @@ namespace iParty.Api.Mappers.People
                 Addresses = new List<Address>(),
                 CustomerInfo = new Customer(),
                 SupplierInfo = new Supplier() { BusinessDescription = dto.BusinessDescription, PaymentPlans = new List<PaymentPlan>() }
-            };            
+            };
 
-            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));
-           
-            person.Addresses.AddRange(dto.Addresses.Select(x =>
-            {
-                var mapperResult = _addressMapper.Map(x);
+            person = mapPersonAddresses(dto, person);
 
-                if (!mapperResult.Success)
-                    foreach (var erro in mapperResult.Errors) AddError(erro);
+            person = mapPersonPaymentPlans(dto, person);
 
-                return mapperResult.Entity;
-            }));
-
-            person.SupplierInfo.PaymentPlans.AddRange(dto.PaymentPlans.Select(x =>
-            {
-                var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("O plano de pagamento informado não foi encontrado."); });                
-
-                return paymentPlan;
-            }));
+            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));            
 
             if (!SuccessResult()) return GetResult();            
 
             SetEntity(person);
 
             return GetResult();
-        }
+        }        
 
         public SupplierView Map(Person person)
         {            
@@ -112,6 +99,31 @@ namespace iParty.Api.Mappers.People
             supplierView.PaymentPlans.AddRange(person.SupplierInfo.PaymentPlans.Select(x => _autoMapper.Map<PaymentPlanView>(x)));
 
             return supplierView;
+        }
+
+        private Person mapPersonAddresses(SupplierDto dto, Person person)
+        {
+            var mapperResultList = _addressMapper.Map(dto.Addresses);
+
+            if (mapperResultList.Where(x => !x.Success).Count() > 0)
+                foreach (var mapperResult in mapperResultList)
+                    foreach (var erro in mapperResult.Errors) AddError(erro);
+
+            person.Addresses.AddRange(mapperResultList.Select(x => { return x.Entity; }));
+
+            return person;
+        }
+
+        private Person mapPersonPaymentPlans(SupplierDto dto, Person person)
+        {
+            person.SupplierInfo.PaymentPlans.AddRange(dto.PaymentPlans.Select(x =>
+            {
+                var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("O plano de pagamento informado não foi encontrado."); });
+
+                return paymentPlan;
+            }));
+
+            return person;
         }
     }
 }

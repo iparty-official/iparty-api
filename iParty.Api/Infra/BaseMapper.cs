@@ -15,6 +15,11 @@ namespace iParty.Api.Infra
             return _mapperResult;
         }
 
+        protected void ClearResult()
+        {
+            _mapperResult.Clear();            
+        }
+
         protected void SetEntity(TEntity entity)
         {
             _mapperResult.Entity = entity;

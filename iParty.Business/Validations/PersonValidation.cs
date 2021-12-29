@@ -120,6 +120,8 @@ namespace iParty.Business.Validations
 
         private bool documentIsValid(string document)
         {
+            if (String.IsNullOrEmpty(document)) return true;
+            
             if (isCPF(document))
                 return IsCpfValid(document);
             else if (isCNPJ(document))

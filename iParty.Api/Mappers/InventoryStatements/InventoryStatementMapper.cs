@@ -28,17 +28,15 @@ namespace iParty.Api.Mappers.InventoryStatements
         {
             var product = _itemRepository.RecoverById(dto.ProductId).IfNull(() => { AddError("O item informado não existe."); });
 
-            if (!SuccessResult()) return GetResult();
+            if (!SuccessResult()) return GetResult();            
 
-            var inventoryStatement = new InventoryStatement()
+            SetEntity(new InventoryStatement()
             {
                 DateTime = dto.DataTime,
                 InOrOut = dto.InOrOut,
                 Product = product,
-                Quantity = dto.Quantity                
-            };            
-
-            SetEntity(inventoryStatement);
+                Quantity = dto.Quantity
+            });
 
             return GetResult();
         }

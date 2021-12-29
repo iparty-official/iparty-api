@@ -4,6 +4,6 @@ namespace iParty.Api.Views.People
 {
     public class CustomerView: PersonView
     {
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }

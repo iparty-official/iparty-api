@@ -14,5 +14,11 @@ namespace iParty.Api.Infra
         public bool Success => !Errors.Any();
         public List<string> Errors { get; set; }
         public TEntity Entity { get; set; }
+
+        public void Clear()
+        {
+            Errors.Clear();
+            Entity = default(TEntity);
+        }
     }
 }

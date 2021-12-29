@@ -3,9 +3,7 @@ using iParty.Api.Dtos.Orders;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Interfaces.Mapppers;
-using iParty.Api.Views.Addresses;
 using iParty.Api.Views.Orders;
-using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Addresses;
@@ -19,9 +17,7 @@ using System.Linq;
 namespace iParty.Api.Mappers.Orders
 {
     public class OrderMapper : BaseMapper<Order>, IOrderMapper
-    {
-        //TODO: Devo injetar serviços no lugar de repositórios
-        //TODO: Criar método GET no serviço que receba um FilerBuilder
+    {      
         //TODO: Rever mappers
         
         private IMapper _autoMapper;

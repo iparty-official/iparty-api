@@ -7,6 +7,7 @@ using iParty.Api.Views.People;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,23 +34,15 @@ namespace iParty.Api.Mappers.People
                 Document = dto.Document,
                 Photo = dto.Photo,
                 SupplierOrCustomer = SupplierOrCustomer.Customer,
-                CustomerInfo = new Customer() { BirthDate = dto.BirthDate },
+                CustomerInfo = new Customer() { BirthDate = dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate },
                 SupplierInfo = new Supplier() { PaymentPlans = new List<PaymentPlan>() },
                 Phones = new List<Phone>(),
                 Addresses = new List<Address>()                
-            };
+            };            
 
-            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));
+            person = mapPersonAddresses(dto, person);
 
-            person.Addresses.AddRange(dto.Addresses.Select(x => 
-            { 
-                var mapperResult = _addressMapper.Map(x);
-
-                if (!mapperResult.Success)                 
-                    foreach (var erro in mapperResult.Errors) AddError(erro);
-               
-                return mapperResult.Entity;
-            }));
+            person.Phones.AddRange(dto.Phones.Select(x => _autoMapper.Map<Phone>(x)));            
 
             if (!SuccessResult()) return GetResult();           
 
@@ -97,6 +90,19 @@ namespace iParty.Api.Mappers.People
             customerView.Phones.AddRange(person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)));
 
             return customerView;
+        }
+
+        private Person mapPersonAddresses(CustomerDto dto, Person person)
+        {
+            var mapperResultList = _addressMapper.Map(dto.Addresses);
+
+            if (mapperResultList.Where(x => !x.Success).Count() > 0)
+                foreach (var mapperResult in mapperResultList)
+                    foreach (var erro in mapperResult.Errors) AddError(erro);
+
+            person.Addresses.AddRange(mapperResultList.Select(x => { return x.Entity; }));
+
+            return person;
         }
 
     }
