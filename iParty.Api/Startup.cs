@@ -1,7 +1,6 @@
 using iParty.Api.Infra;
 using iParty.Business.Infra;
 using iParty.Data.Infra;
-using iParty.Business.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

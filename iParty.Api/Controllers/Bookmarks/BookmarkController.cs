@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using iParty.Api.Dtos.Bookmarks;
+﻿using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
-using iParty.Api.Views.Bookmarks;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Bookmarks
 {

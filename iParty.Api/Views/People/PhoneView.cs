@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace iParty.Api.Views.People
+﻿namespace iParty.Api.Views.People
 {
     public class PhoneView : View
     {

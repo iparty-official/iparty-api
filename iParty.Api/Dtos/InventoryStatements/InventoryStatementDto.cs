@@ -1,9 +1,5 @@
-﻿using iParty.Business;
-using iParty.Business.Models.InventoryStatements;
+﻿using iParty.Business.Models.InventoryStatements;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iParty.Api.Dtos.InventoryStatements
 {

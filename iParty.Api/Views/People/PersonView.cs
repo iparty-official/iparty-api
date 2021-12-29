@@ -1,5 +1,4 @@
 ﻿using iParty.Api.Views.Addresses;
-using iParty.Business.Models.People;
 using System.Collections.Generic;
 
 namespace iParty.Api.Views.People

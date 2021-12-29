@@ -1,5 +1,4 @@
 ﻿using iParty.Api.Views.Items;
-using iParty.Api.Views.Orders;
 using iParty.Api.Views.People;
 using System;
 

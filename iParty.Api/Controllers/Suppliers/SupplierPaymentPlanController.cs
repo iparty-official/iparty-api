@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using iParty.Api.Dtos;
+﻿using iParty.Api.Dtos;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;

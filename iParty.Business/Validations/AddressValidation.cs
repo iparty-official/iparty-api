@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
-using iParty.Business.Models.People;
 using iParty.Business.Interfaces;
-using System;
 using System.Linq;
 
 namespace iParty.Business.Validations

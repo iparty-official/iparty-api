@@ -1,5 +1,4 @@
-﻿using iParty.Business.Models.People;
-using iParty.Business.Models.Orders;
+﻿using iParty.Business.Models.Orders;
 using System;
 
 namespace iParty.Business.Models.Messages

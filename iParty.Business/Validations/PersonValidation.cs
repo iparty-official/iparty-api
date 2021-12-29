@@ -2,7 +2,6 @@
 using FluentValidation.Results;
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Addresses;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
 using iParty.Business.Interfaces;

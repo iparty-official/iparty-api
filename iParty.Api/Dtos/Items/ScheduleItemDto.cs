@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace iParty.Api.Dtos.Items
+﻿namespace iParty.Api.Dtos.Items
 {
     public class ScheduleItemDto
     {

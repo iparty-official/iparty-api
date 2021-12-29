@@ -1,6 +1,5 @@
 ﻿using iParty.Business.Infra;
 using iParty.Business.Models.Notications;
-using System;
 
 namespace iParty.Business.Interfaces.Services
 {

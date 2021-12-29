@@ -1,5 +1,4 @@
 ﻿using iParty.Business.Models.People;
-using System;
 using System.Collections.Generic;
 
 namespace iParty.Business.Models.Items
