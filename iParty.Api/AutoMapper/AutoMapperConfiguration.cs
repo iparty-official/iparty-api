@@ -42,6 +42,11 @@ namespace iParty.Api.AutoMapper
 
             CreateMap<PersonForMessage, PersonSummarizedView>().ReverseMap();
 
+            CreateMap<PersonForOrder, PersonSummarizedView>().ReverseMap();
+            CreateMap<PersonForOrder, CustomerDto>().ReverseMap();
+            CreateMap<PersonForOrder, SupplierDto>().ReverseMap();
+            CreateMap<PersonForOrder, Person>().ReverseMap();
+
             CreateMap<Message, MessageDto>().ReverseMap();
             CreateMap<Message, MessageView>().ReverseMap();
 
@@ -72,6 +77,10 @@ namespace iParty.Api.AutoMapper
             CreateMap<OrderItem, OrderItemView>().ReverseMap();
 
             CreateMap<Item, ItemSummarizedView>().ReverseMap();
+            
+            CreateMap<ItemForOrder, ItemSummarizedView>().ReverseMap();
+            CreateMap<ItemForOrder, ItemDto>().ReverseMap();
+            CreateMap<ItemForOrder, Item>().ReverseMap();
         }
     }
 }

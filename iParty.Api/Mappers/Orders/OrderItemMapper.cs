@@ -8,7 +8,6 @@ using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.Orders;
-using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Mappers.Orders
@@ -33,12 +32,25 @@ namespace iParty.Api.Mappers.Orders
 
             SetEntity(new OrderItem()
             {
-                Item = item,
-                Price = dto.Price,
-                Quantity = dto.Quantity
+                Item = _autoMapper.Map<ItemForOrder>(item),
+                Quantity = dto.Quantity,
+                Unit = dto.Unit
             });
 
             return GetResult();
+        }
+
+        public List<MapperResult<OrderItem>> Map(List<OrderItemDto> dtos)
+        {
+            var result = new List<MapperResult<OrderItem>>();
+
+            foreach (var dto in dtos)
+            {
+                this.ClearResult();
+                result.Add(this.Map(dto));
+            }
+
+            return result;
         }
 
         public OrderItemView Map(OrderItem orderItem)
@@ -67,6 +79,7 @@ namespace iParty.Api.Mappers.Orders
                 Id = orderItem.Id,
                 Item = _autoMapper.Map<ItemSummarizedView>(orderItem.Item),
                 Price = orderItem.Price,
+                Unit = orderItem.Unit,
                 Quantity = orderItem.Quantity,
                 Total = orderItem.Total
             };

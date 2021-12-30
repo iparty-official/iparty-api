@@ -2,6 +2,7 @@
 using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
 using iParty.Business.Models.Orders;
+using iParty.Business.Models.PaymentPlans;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,8 @@ namespace iParty.Api.Views.Orders
         public decimal Freight { get; set; }
         public decimal ItemsTotal { get; set; }
         public decimal OrderTotal { get; set; }
-        public PaymentPlanView PaymentPlan { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+        public int Instalmments { get; set; }
         public string Notes { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime PartyDate { get; set; }
