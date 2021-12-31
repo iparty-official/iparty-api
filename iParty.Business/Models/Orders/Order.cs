@@ -55,9 +55,14 @@ namespace iParty.Business.Models.Orders
             return Items.Sum(x => x.Total);
         }
 
+        public decimal CalculatePaymentPlanFee()
+        {
+            return Math.Round(this.ItemsTotal * PaymentPlan.Fee / 100, 2);
+        }
+
         public decimal CalculateOrderTotal()
         {
-            return CalculateItemsTotal() + Freight;
+            return CalculateItemsTotal() + Freight + PaymentPlanFee;
         }
 
         public void TotalizeOrder()
@@ -68,6 +73,8 @@ namespace iParty.Business.Models.Orders
             }                
 
             ItemsTotal = CalculateItemsTotal();
+
+            PaymentPlanFee = CalculatePaymentPlanFee();
 
             OrderTotal = CalculateOrderTotal();
         }

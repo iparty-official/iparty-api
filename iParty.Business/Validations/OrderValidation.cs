@@ -47,7 +47,9 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.OrderTotal).GreaterThan(0).WithMessage("O valor total do pedido deve ser maior que zero.");
 
-            RuleFor(x => x.OrderTotal).Equal(x => x.CalculateOrderTotal()).WithMessage("O valor total do pedido deve ser maior que zero.");
+            RuleFor(x => x.OrderTotal).Equal(x => x.CalculateOrderTotal()).WithMessage("O valor total do pedido é inválido.");
+
+            RuleFor(x => x.PaymentPlanFee).Equal(x => x.CalculatePaymentPlanFee()).WithMessage("O valor da taxa do plano de pagamento é inválida.");
 
             RuleFor(x => x.PaymentPlan).NotNull().WithMessage("O plano de pagamento não foi informado.");
 
