@@ -92,7 +92,9 @@ namespace iParty.Api.Mappers.People
             if (mapperResultList.Exists(x => !x.Success))
             {
                 foreach (var mapperResult in mapperResultList)
+                {
                     foreach (var erro in mapperResult.Errors) AddError(erro);
+                }                    
 
                 return mapperResultList.Select(x => x.Entity).ToList();
             }

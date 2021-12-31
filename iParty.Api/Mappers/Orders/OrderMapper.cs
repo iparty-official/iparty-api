@@ -123,7 +123,9 @@ namespace iParty.Api.Mappers.Orders
             if (resultList.Exists(x => !x.Success))
             {
                 foreach (var result in resultList)
-                    foreach (var erro in result.Errors) AddError(erro);
+                {
+                    foreach (var erro in result.Errors) AddError(erro);                                            
+                }                    
                     
                 return new List<OrderItem>();
             }

@@ -50,10 +50,12 @@ namespace iParty.Api.Mappers.Reviews
         public List<ReviewView> Map(List<Review> reviews)
         {
             var reviewsView = new List<ReviewView>(); 
+
             foreach (Review review in reviews)
             {
                 reviewsView.Add(mapToView(review));
             }
+
             return reviewsView;
         }
 

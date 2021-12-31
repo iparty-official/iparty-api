@@ -5,6 +5,7 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.Orders;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace iParty.Business.Services.Orders
@@ -26,9 +27,9 @@ namespace iParty.Business.Services.Orders
 
         public ServiceResult<Order> Create(Order order)
         {
-            order = loadDefaulValues(order);
+            order.SetDefaultValuesForNewOrder(getItemsPrices(order));            
 
-            order = calculateOrder(order);
+            order.TotalizeOrder();
 
             var result = _orderValidation.CustomValidate(order);
 
@@ -47,9 +48,9 @@ namespace iParty.Business.Services.Orders
             if (currentOrder == null)
                 return GetFailureResult("Não foi possível localizar o pedido informado.");
 
-            order = copyFromCurrentOrder(order, currentOrder);
+            order.SetDefaultValuesForUpdatedOrder(currentOrder, getItemsPrices(currentOrder));
 
-            order = calculateOrder(order);
+            order.TotalizeOrder();
 
             var result = _orderValidation.CustomValidate(order);
 
@@ -153,56 +154,22 @@ namespace iParty.Business.Services.Orders
             order.Items.Remove(currentOrderItem);
 
             return GetSuccessResult(order);
-        }
+        }                       
 
-        private Order calculateOrder(Order order)
+        private List<OrderItemPrice> getItemsPrices(Order order)
         {
+            var prices = new List<OrderItemPrice>();
+
             foreach (var item in order.Items)
             {
-                item.Total = item.Quantity * item.Price;
+                prices.Add(new OrderItemPrice()
+                {
+                    ItemId = item.Id,
+                    Price = _itemRepository.RecoverById(item.Id).Price
+                });
             }
 
-            order.ItemsTotal = order.Items.Sum(x => x.Total);
-
-            order.OrderTotal = order.ItemsTotal + order.Freight;
-
-            return order;
-        }
-
-        private Order loadDefaulValues(Order order)
-        {
-            order.DateTime = DateTime.Now;
-
-            order.ExpirationDate = order.DateTime.AddDays(7);
-
-            order.Status = OrderStatus.Draft;
-
-            foreach (var orderItem in order.Items)
-            {
-                var item = _itemRepository.RecoverById(orderItem.Item.Id);
-                
-                orderItem.Price = item.Price;
-            }
-
-            return order;
-        }
-
-        private Order copyFromCurrentOrder(Order order, Order currentOrder)
-        {
-            order.DateTime = currentOrder.DateTime;
-
-            order.ExpirationDate = order.ExpirationDate;
-
-            order.Status = currentOrder.Status;
-
-            foreach (var orderItem in order.Items)
-            {
-                var currentOrderItem = currentOrder.Items.First(x => x.Id == orderItem.Id);
-
-                orderItem.Price = currentOrderItem.Price;
-            }
-
-            return order;
+            return prices;
         }
     }
 }
