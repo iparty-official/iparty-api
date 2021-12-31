@@ -17,8 +17,7 @@ namespace iParty.Api.Views.Orders
         public decimal Freight { get; set; }
         public decimal ItemsTotal { get; set; }
         public decimal OrderTotal { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
-        public int Instalmments { get; set; }
+        public PaymentPlanForOrderView PaymentPlan { get; set; }        
         public string Notes { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime PartyDate { get; set; }

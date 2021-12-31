@@ -65,6 +65,8 @@ namespace iParty.Api.AutoMapper
             CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentDto>().ReverseMap();
             CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentView>().ReverseMap();
 
+            CreateMap<PaymentPlanForOrder, PaymentPlanForOrderView>().ReverseMap();
+
             CreateMap<Schedule, ScheduleDto>().ReverseMap();
             CreateMap<Schedule, ScheduleView>().ReverseMap();
 

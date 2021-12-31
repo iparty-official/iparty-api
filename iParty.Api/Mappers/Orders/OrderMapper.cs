@@ -9,9 +9,11 @@ using iParty.Api.Views.Orders;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.Orders;
+using iParty.Business.Models.PaymentPlans;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +24,8 @@ namespace iParty.Api.Mappers.Orders
         private ISupplierService _supplierService;
 
         private ICustomerService _customerService;
+
+        private IRepository<PaymentPlan> _paymentPlanRepository;
 
         private IAddressMapper _addressMapper;
 
@@ -42,7 +46,9 @@ namespace iParty.Api.Mappers.Orders
         {
             var supplier = _supplierService.Get(dto.SupplierId).IfNull(() => { AddError("O fornecedor informado não existe."); });
 
-            var customer = _customerService.Get(dto.CustomerId).IfNull(() => { AddError("O cliente informado não existe."); });            
+            var customer = _customerService.Get(dto.CustomerId).IfNull(() => { AddError("O cliente informado não existe."); });
+
+            var paymentPlanForOrder = mapPaymentPlan(dto);
 
             var shippingAddress = mapShippingAddress(dto.ShippingAddress);
 
@@ -55,15 +61,28 @@ namespace iParty.Api.Mappers.Orders
                 Customer = _autoMapper.Map<PersonForOrder>(customer),
                 ShippingAddress = shippingAddress,
                 Freight = dto.Freight,
-                PaymentMethod = dto.PaymentMethod,
-                Installments = dto.Installments,
+                PaymentPlan = paymentPlanForOrder,
                 Notes = dto.Notes,
                 PartyDate = dto.PartyDate,
                 Items = items
             });
             
             return GetResult();
-        }        
+        }
+
+        private PaymentPlanForOrder mapPaymentPlan(OrderDto dto)
+        {
+            var paymentPlan = _paymentPlanRepository.RecoverById(dto.PaymentPlanId).IfNull(() => { AddError("O plano de pagamento informado não existe."); });
+
+            var paymentPlanForOrder = new PaymentPlanForOrder() { Id = paymentPlan.Id };
+
+            paymentPlanForOrder.Installments = dto.Installments;
+
+            paymentPlanForOrder.Fee = paymentPlan.Instalments.Where(x => x.Quantity == dto.Installments).First().Fee;
+
+            return paymentPlanForOrder;
+
+        }
 
         public OrderView Map(Order order)
         {
@@ -90,7 +109,9 @@ namespace iParty.Api.Mappers.Orders
 
             var supplier = _autoMapper.Map<PersonSummarizedView>(order.Supplier);
 
-            var shippingAddress = _autoMapper.Map<AddressView>(order.ShippingAddress);            
+            var shippingAddress = _autoMapper.Map<AddressView>(order.ShippingAddress);
+
+            var paymentPlanForOrder = _autoMapper.Map<PaymentPlanForOrderView>(order.PaymentPlan);
 
             var items = _orderItemMapper.Map(order.Items);
 
@@ -104,8 +125,7 @@ namespace iParty.Api.Mappers.Orders
                 Freight = order.Freight,
                 ItemsTotal = order.ItemsTotal,
                 OrderTotal = order.OrderTotal,
-                PaymentMethod = order.PaymentMethod,
-                Instalmments = order.Installments,
+                PaymentPlan = paymentPlanForOrder,                
                 Notes = order.Notes,
                 Status = order.Status,
                 PartyDate = order.PartyDate,

@@ -13,21 +13,26 @@ namespace iParty.Business.Models.Orders
         public PersonForOrder Customer { get; set; }
         public Address ShippingAddress { get; set; }
         public decimal Freight { get; set; }
+        public decimal PaymentPlanFee { get; set; }
         public decimal ItemsTotal { get; set; }
         public decimal OrderTotal { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
-        public int Installments { get; set; }
+        public PaymentPlanForOrder PaymentPlan { get; set; }        
         public string Notes { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime PartyDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public List<OrderItem> Items { get; set; }        
+        public List<OrderItem> Items { get; set; }
+
+        public DateTime CalculateExpirationDate(DateTime baseDateTime)
+        {
+            return baseDateTime.AddDays(7);
+        }
 
         public void SetDefaultValuesForNewOrder(List<OrderItemPrice> prices)
         {
             DateTime = DateTime.Now;
 
-            ExpirationDate = DateTime.AddDays(7);
+            ExpirationDate = CalculateExpirationDate(DateTime);
 
             Status = OrderStatus.Draft;
 

@@ -27,6 +27,8 @@ namespace iParty.Business.Services.Orders
 
         public ServiceResult<Order> Create(Order order)
         {
+            //TODO: Calcular taxa do plano de pagamento.
+            
             order.SetDefaultValuesForNewOrder(getItemsPrices(order));            
 
             order.TotalizeOrder();

@@ -11,7 +11,7 @@ namespace iParty.Api.Dtos.Orders
         public Guid CustomerId { get; set; }
         public AddressDto ShippingAddress { get; set; }
         public decimal Freight { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
+        public Guid PaymentPlanId { get; set; }
         public int Installments { get; set; }
         public string Notes { get; set; }
         public DateTime PartyDate { get; set; }
