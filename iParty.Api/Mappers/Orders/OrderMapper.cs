@@ -31,15 +31,21 @@ namespace iParty.Api.Mappers.Orders
 
         private IOrderItemMapper _orderItemMapper;
 
-        private IMapper _autoMapper;        
+        private IMapper _autoMapper;
 
-        public OrderMapper(ISupplierService supplierService, ICustomerService customerService, IAddressMapper addressMapper, IOrderItemMapper orderItemMapper, IMapper autoMapper)
+        public OrderMapper(ISupplierService supplierService, 
+                           ICustomerService customerService, 
+                           IRepository<PaymentPlan> paymentPlanRepository, 
+                           IAddressMapper addressMapper, 
+                           IOrderItemMapper orderItemMapper, 
+                           IMapper autoMapper)
         {
             _supplierService = supplierService;
             _customerService = customerService;
+            _paymentPlanRepository = paymentPlanRepository;
             _addressMapper = addressMapper;
             _orderItemMapper = orderItemMapper;
-            _autoMapper = autoMapper;           
+            _autoMapper = autoMapper;
         }
 
         public MapperResult<Order> Map(OrderDto dto)
@@ -74,11 +80,18 @@ namespace iParty.Api.Mappers.Orders
         {
             var paymentPlan = _paymentPlanRepository.RecoverById(dto.PaymentPlanId).IfNull(() => { AddError("O plano de pagamento informado não existe."); });
 
+            if (paymentPlan == null) return null;       
+
             var paymentPlanForOrder = new PaymentPlanForOrder() { Id = paymentPlan.Id };
 
             paymentPlanForOrder.Installments = dto.Installments;
 
-            paymentPlanForOrder.Fee = paymentPlan.Instalments.Where(x => x.Quantity == dto.Installments).First().Fee;
+            var installment = paymentPlan.Instalments.Where(x => x.Quantity == dto.Installments).FirstOrDefault();
+
+            if (installment == null)
+                AddError("O plano de pagamento informado não aceita a quantidade de parcelas que foi informada.");
+            else 
+                paymentPlanForOrder.Fee = installment.Fee;
 
             return paymentPlanForOrder;
 
@@ -123,6 +136,7 @@ namespace iParty.Api.Mappers.Orders
                 Supplier = supplier,
                 ShippingAddress = shippingAddress,
                 Freight = order.Freight,
+                PaymentPlanFee = order.PaymentPlanFee,
                 ItemsTotal = order.ItemsTotal,
                 OrderTotal = order.OrderTotal,
                 PaymentPlan = paymentPlanForOrder,                

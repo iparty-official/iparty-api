@@ -57,7 +57,7 @@ namespace iParty.Business.Models.Orders
 
         public decimal CalculatePaymentPlanFee()
         {
-            return Math.Round(this.ItemsTotal * PaymentPlan.Fee / 100, 2);
+            return Math.Round((this.ItemsTotal + this.Freight) * PaymentPlan.Fee / 100, 2);
         }
 
         public decimal CalculateOrderTotal()
@@ -83,7 +83,7 @@ namespace iParty.Business.Models.Orders
         {
             foreach (var price in prices)
             {
-                Items.First(x => x.Id == price.ItemId).Price = price.Price;
+                Items.First(x => x.Item.Id == price.ItemId).Price = price.Price;
             }
         }
     }

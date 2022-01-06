@@ -26,16 +26,11 @@ namespace iParty.Api.Mappers.Orders
 
         public MapperResult<OrderItem> Map(OrderItemDto dto)
         {
-            var item = _itemRepository.RecoverById(dto.ItemId).IfNull(() => { AddError("O item informado não existe."); });
+            var result = mapToEntity(dto);
 
-            if (!SuccessResult()) return GetResult();
+            foreach (var erro in result.Errors) AddError(erro);
 
-            SetEntity(new OrderItem()
-            {
-                Item = _autoMapper.Map<ItemForOrder>(item),
-                Quantity = dto.Quantity,
-                Unit = dto.Unit
-            });
+            SetEntity(result.Entity);
 
             return GetResult();
         }
@@ -45,9 +40,8 @@ namespace iParty.Api.Mappers.Orders
             var result = new List<MapperResult<OrderItem>>();
 
             foreach (var dto in dtos)
-            {
-                this.ClearResult();
-                result.Add(this.Map(dto));
+            {                
+                result.Add(mapToEntity(dto));
             }
 
             return result;
@@ -68,6 +62,24 @@ namespace iParty.Api.Mappers.Orders
             }
 
             return items;
+        }
+
+        private MapperResult<OrderItem> mapToEntity(OrderItemDto dto)
+        {
+            var result = new MapperResult<OrderItem>();
+
+            var item = _itemRepository.RecoverById(dto.ItemId).IfNull(() => { result.Errors.Add("O item informado não existe."); });
+
+            if (!result.Success) return result;
+
+            result.Entity = new OrderItem()
+            {
+                Item = _autoMapper.Map<ItemForOrder>(item),
+                Quantity = dto.Quantity,
+                Unit = dto.Unit
+            };
+
+            return result;
         }
 
         private OrderItemView mapToView(OrderItem orderItem)

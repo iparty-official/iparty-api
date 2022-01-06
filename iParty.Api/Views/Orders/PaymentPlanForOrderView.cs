@@ -2,7 +2,7 @@
 
 namespace iParty.Api.Views.Orders
 {
-    public class PaymentPlanForOrderView
+    public class PaymentPlanForOrderView : View
     {
         public PaymentMethod PaymentMethod { get; set; }
         public int Installments { get; set; }

@@ -41,7 +41,7 @@ namespace iParty.Api.Mappers.Addresses
 
             foreach (var dto in dtos)
             {
-                this.ClearResult();
+                //this.ClearResult(); TODO: Rever
                 result.Add(this.Map(dto));
             }
 

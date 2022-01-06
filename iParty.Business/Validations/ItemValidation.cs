@@ -42,7 +42,7 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.ProductInfo.ForRentOrSale).IsInEnum().WithMessage("O valor do campo 'Aluguel ou Venda' é inválido.");
 
-            RuleFor(x => x.ProductInfo.AvailableQuantity).GreaterThanOrEqualTo(0).WithMessage("A quantidade disponível em estoque não pode ser negativa");            
+            RuleFor(x => x.ProductInfo.AvailableQuantity).GreaterThanOrEqualTo(0).WithMessage("A quantidade disponível em estoque não pode ser negativa.");            
         }
 
         public ValidationResult CustomValidate(Item item)

@@ -43,6 +43,7 @@ namespace iParty.Business.Services.Orders
 
         public ServiceResult<Order> Update(Guid id, Order order)
         {
+            //TODO: Update do pedido gera novos IDs pro itens do pedido. Rever.
             var currentOrder = Get(id);
 
             if (currentOrder == null)
@@ -162,10 +163,14 @@ namespace iParty.Business.Services.Orders
 
             foreach (var item in order.Items)
             {
+                var persistedItem = _itemRepository.RecoverById(item.Item.Id);
+
+                var price = persistedItem == null ? 0 : persistedItem.Price;
+
                 prices.Add(new OrderItemPrice()
                 {
-                    ItemId = item.Id,
-                    Price = _itemRepository.RecoverById(item.Id).Price
+                    ItemId = item.Item.Id,
+                    Price = price
                 });
             }
 

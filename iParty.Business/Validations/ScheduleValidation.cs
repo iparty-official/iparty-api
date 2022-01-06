@@ -12,7 +12,7 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.Items).NotEmpty().WithMessage("Nenhum horário foi informado.");
 
-            RuleForEach(x => x.Items).Must(hour => hour.InitialHour < hour.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final");
+            RuleForEach(x => x.Items).Must(hour => hour.InitialHour < hour.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final.");
            
             RuleForEach(x => x.Items).Must(hour => hour.InitialHour >=0  && hour.InitialHour <= 24).WithMessage("A hora inicial precisa estar entre 0 e 24.");
 

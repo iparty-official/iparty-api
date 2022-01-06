@@ -27,15 +27,15 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data do pedido não foi informada.");
 
-            RuleFor(x => x.DateTime).LessThanOrEqualTo(DateTime.Now).WithMessage("A data do pedido não pode ser maior que a data atual.");
+            RuleFor(x => x.DateTime.Date).LessThanOrEqualTo(DateTime.Today).WithMessage("A data do pedido não pode ser maior que a data atual.");
 
             RuleFor(x => x.Supplier).NotNull().WithMessage("O fornecedor do pedido não foi informado.");
             
-            RuleFor(x => customerService.Get(x.Supplier.Id)).NotNull().WithMessage("O fornecedor informado não foi encontrado.");
+            RuleFor(x => supplierService.Get(x.Supplier.Id)).NotNull().WithMessage("O fornecedor informado não foi encontrado.");
 
             RuleFor(x => x.Customer).NotNull().WithMessage("O cliente do pedido não foi informado.");
 
-            RuleFor(x => supplierService.Get(x.Customer.Id)).NotNull().WithMessage("O cliente informado não foi encontrado.");
+            RuleFor(x => customerService.Get(x.Customer.Id)).NotNull().WithMessage("O cliente informado não foi encontrado.");
 
             RuleFor(x => x.ShippingAddress).NotNull().WithMessage("O endereço do pedido não foi informado.");
 
@@ -43,7 +43,7 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.ItemsTotal).GreaterThan(0).WithMessage("O valor total dos items deve ser maior que zero.");
 
-            RuleFor(x => x.ItemsTotal).Equal(x => x.CalculateItemsTotal()).WithMessage("O valor total dos items deve ser maior que zero.");
+            RuleFor(x => x.ItemsTotal).Equal(x => x.CalculateItemsTotal()).WithMessage("O valor total dos items é inválido.");
 
             RuleFor(x => x.OrderTotal).GreaterThan(0).WithMessage("O valor total do pedido deve ser maior que zero.");
 
@@ -54,6 +54,8 @@ namespace iParty.Business.Validations
             RuleFor(x => x.PaymentPlan).NotNull().WithMessage("O plano de pagamento não foi informado.");
 
             RuleFor(x => paymentPlanRepository.RecoverById(x.PaymentPlan.Id)).NotNull().WithMessage("O plano de pagamento informado não foi encontrado.");
+
+            RuleFor(x => isPaymentAttachedToSupplier(supplierService, x.Supplier.Id, x.PaymentPlan.Id)).Equal(true).WithMessage("O plano de pagamento informado não está vinculado ao fornecedor.");
 
             RuleFor(x => x.PaymentPlan.PaymentMethod).IsInEnum().WithMessage("O valor informado no campo 'Método de pagamento' á inválido.");
 
@@ -66,7 +68,7 @@ namespace iParty.Business.Validations
             RuleFor(x => x.ExpirationDate).Equal(x => x.CalculateExpirationDate(x.DateTime)).WithMessage("A data/hora de expiração do pedido é inválida.");
 
             RuleFor(x => x.Items.Count).GreaterThan(0).WithMessage("O pedido precisa ter ao menos um item.");
-        }
+        }        
 
         public ValidationResult CustomValidate(Order order)
         {
@@ -86,6 +88,15 @@ namespace iParty.Business.Validations
             }
 
             return result;
+        }
+
+        private bool isPaymentAttachedToSupplier(ISupplierService supplierService, Guid supplierId, Guid paymentPlanId)
+        {
+            return supplierService
+                .Get(supplierId)
+                .SupplierInfo
+                .PaymentPlans
+                .Exists(x => x.Id == paymentPlanId);
         }
     }
 }

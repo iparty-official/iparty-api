@@ -13,12 +13,7 @@ namespace iParty.Api.Infra
         protected MapperResult<TEntity> GetResult()
         {
             return _mapperResult;
-        }
-
-        protected void ClearResult()
-        {
-            _mapperResult.Clear();            
-        }
+        }        
 
         protected void SetEntity(TEntity entity)
         {

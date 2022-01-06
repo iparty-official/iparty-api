@@ -19,11 +19,11 @@ namespace iParty.Business.Validations
 
             RuleFor(x => x.Date).GreaterThanOrEqualTo(DateTime.Today).WithMessage("A data da reserva precisa ser maior ou igual a data atual.");
 
-            RuleFor(x => x.InitialHour).InclusiveBetween(0, 23).WithMessage("A hora inicial precisa estar entre 0 (meia-noite) e 23 horas");
+            RuleFor(x => x.InitialHour).InclusiveBetween(0, 23).WithMessage("A hora inicial precisa estar entre 0 (meia-noite) e 23 horas.");
 
-            RuleFor(x => x.InitialHour).LessThan(x => x.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final");                                  
+            RuleFor(x => x.InitialHour).LessThan(x => x.FinalHour).WithMessage("A hora inicial precisa ser menor que a hora final.");                                  
 
-            RuleFor(x => x.FinalHour).InclusiveBetween(0, 23).WithMessage("A hora final precisa estar entre 0 (meia-noite) e 23 horas");            
+            RuleFor(x => x.FinalHour).InclusiveBetween(0, 23).WithMessage("A hora final precisa estar entre 0 (meia-noite) e 23 horas.");            
 
             RuleFor(x => x.ReservationReason).IsInEnum().WithMessage("O motivo da reserva informado é inválido.");
 

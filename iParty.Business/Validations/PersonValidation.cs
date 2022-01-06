@@ -55,7 +55,7 @@ namespace iParty.Business.Validations
 
             RuleFor(p => p.CustomerInfo.BirthDate).LessThan(DateTime.Today).WithMessage("A data de nascimento não pode ser maior que a data atual.");
 
-            RuleFor(p => businessDescriptionIsEmpty(p)).Equal(false).WithMessage("A descrição do negócio não foi informada");
+            RuleFor(p => businessDescriptionIsEmpty(p)).Equal(false).WithMessage("A descrição do negócio não foi informada.");
 
             RuleForEach(p => p.SupplierInfo.PaymentPlans).ChildRules(pay => pay.RuleFor(x => paymentPlanRepository.RecoverById(x.Id)).NotNull().WithMessage("O plano de pagamento informado não existe."));
         }

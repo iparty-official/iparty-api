@@ -8,13 +8,13 @@ namespace iParty.Api.Controllers.Suppliers
 {
     [ApiController]
     [Route("supplier/{supplierId}/paymentplan")]
-    public class SupplierPaymentController : ControllerBase
+    public class SupplierPaymentPlanController : ControllerBase
     {
         private readonly ISupplierService _supplierService;        
 
         private readonly ISupplierMapper _supplierMapper;      
 
-        public SupplierPaymentController(ISupplierService supplierService, ISupplierMapper supplierMapper)
+        public SupplierPaymentPlanController(ISupplierService supplierService, ISupplierMapper supplierMapper)
         {
             _supplierService = supplierService;            
             _supplierMapper = supplierMapper;            
