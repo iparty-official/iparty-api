@@ -239,6 +239,7 @@ namespace iParty.Business.Services.People
             return GetSuccessResult(person);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Person> replacePhone(Person person, Guid phoneId, Phone newPhone)
         {
             var currentPhone = person.Phones.Find(x => x.Id == phoneId);
@@ -262,6 +263,7 @@ namespace iParty.Business.Services.People
             return GetSuccessResult(person);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Person> removePhone(Person person, Guid phoneId)
         {
             var currentPhone = person.Phones.Find(x => x.Id == phoneId);
@@ -276,6 +278,7 @@ namespace iParty.Business.Services.People
             return GetSuccessResult(person);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Person> replaceAddress(Person person, Guid addressId, Address newAddress)
         {
             var currentAddress = person.Addresses.Find(x => x.Id == addressId);
@@ -294,6 +297,7 @@ namespace iParty.Business.Services.People
             return GetSuccessResult(person);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Person> removeAddress(Person person, Guid addressId)
         {
             var currentAddress = person.Addresses.Find(x => x.Id == addressId);
@@ -308,6 +312,7 @@ namespace iParty.Business.Services.People
             return GetSuccessResult(person);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Person> removePaymentPlan(Person person, Guid paymentPlanId)
         {
             var currentPaymentPlan = person.SupplierInfo.PaymentPlans.Find(x => x.Id == paymentPlanId);

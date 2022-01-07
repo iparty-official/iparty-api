@@ -146,6 +146,7 @@ namespace iParty.Business.Services.Items
             return GetSuccessResult(item);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Item> replaceSchedule(Item item, Guid scheduleId, Schedule newSchedule)
         {
             var currentSchedule = item.Schedules.Find(x => x.Id == scheduleId);
@@ -169,6 +170,7 @@ namespace iParty.Business.Services.Items
             return GetSuccessResult(item);
         }
 
+        //TODO: Move to entity
         private ServiceResult<Item> removeSchedule(Item item, Guid scheduleId)
         {
             var currentSchedule = item.Schedules.Find(x => x.Id == scheduleId);
