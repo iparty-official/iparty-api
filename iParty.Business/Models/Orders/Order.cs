@@ -28,26 +28,32 @@ namespace iParty.Business.Models.Orders
             return baseDateTime.AddDays(7);
         }
 
-        public void SetDefaultValuesForNewOrder(List<OrderItemPrice> prices)
+        public void SetDefaultValuesForNewOrder()
         {
             DateTime = DateTime.Now;
 
             ExpirationDate = CalculateExpirationDate(DateTime);
 
             Status = OrderStatus.Draft;
-
-            setItemsPrices(prices);
         }
 
-        public void SetDefaultValuesForUpdatedOrder(Order currentOrder, List<OrderItemPrice> prices)
+        public void CopyHeaderData(Order source)
         {
-            DateTime = currentOrder.DateTime;
+            Supplier = source.Supplier;
+            Customer = source.Customer;
+            ShippingAddress = source.ShippingAddress;
+            Freight = source.Freight;
+            PaymentPlan = source.PaymentPlan;
+            Notes = source.Notes;
+            PartyDate = source.PartyDate;            
+        }
 
-            ExpirationDate = currentOrder.ExpirationDate;
-
-            Status = currentOrder.Status;
-
-            setItemsPrices(prices);
+        public void CopyItemsData(Order newOrder)
+        {
+            foreach (var item in Items)
+            {
+                item.CopyData(newOrder.Items.Find(x => x.Item.Id == item.Item.Id));
+            }
         }
 
         public decimal CalculateItemsTotal()
@@ -58,7 +64,7 @@ namespace iParty.Business.Models.Orders
         public decimal CalculatePaymentPlanFee()
         {
             return Math.Round((this.ItemsTotal + this.Freight) * PaymentPlan.Fee / 100, 2);
-        }
+        }        
 
         public decimal CalculateOrderTotal()
         {
@@ -79,12 +85,32 @@ namespace iParty.Business.Models.Orders
             OrderTotal = CalculateOrderTotal();
         }
 
-        private void setItemsPrices(List<OrderItemPrice> prices)
+        public void ReplaceItem(Guid currentOrderItemId, OrderItem newOrderItem)
         {
-            foreach (var price in prices)
-            {
-                Items.First(x => x.Item.Id == price.ItemId).Price = price.Price;
-            }
+            var currentOrderItem = Items.Find(x => x.Id == currentOrderItemId);
+
+            if (currentOrderItem == null)
+                throw new Exception("Não foi possível localizar o item de pedido informado.");
+
+            var index = Items.IndexOf(currentOrderItem);
+
+            Items.Remove(currentOrderItem);
+
+            newOrderItem.Id = currentOrderItemId;
+
+            Items.Insert(index, newOrderItem);            
+        }
+
+        internal void RemoveItem(Guid orderItemId)
+        {
+            var currentOrderItem = Items.Find(x => x.Id == orderItemId);
+
+            if (currentOrderItem == null)
+                throw new Exception("Não foi possível localizar o item de pedido informado");
+
+            var index = Items.IndexOf(currentOrderItem);
+
+            Items.Remove(currentOrderItem);            
         }
     }
 }

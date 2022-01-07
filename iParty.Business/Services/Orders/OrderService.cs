@@ -14,20 +14,17 @@ namespace iParty.Business.Services.Orders
     {
         private IOrderValidation _orderValidation;
 
-        private IOrderItemValidation _orderItemValidation;
+        private IOrderItemValidation _orderItemValidation;        
 
-        private IRepository<Item> _itemRepository;
-
-        public OrderService(IRepository<Order> rep, IOrderValidation orderValidation, IOrderItemValidation orderItemValidation, IRepository<Item> itemRepository) : base(rep)
+        public OrderService(IRepository<Order> rep, IOrderValidation orderValidation, IOrderItemValidation orderItemValidation) : base(rep)
         {
             _orderValidation = orderValidation;
-            _orderItemValidation = orderItemValidation;
-            _itemRepository = itemRepository;
+            _orderItemValidation = orderItemValidation;         
         }
 
         public ServiceResult<Order> Create(Order order)
-        {                        
-            order.SetDefaultValuesForNewOrder(getItemsPrices(order));            
+        {
+            order.SetDefaultValuesForNewOrder();
 
             order.TotalizeOrder();
 
@@ -41,32 +38,35 @@ namespace iParty.Business.Services.Orders
             return GetSuccessResult(order);
         }        
 
-        public ServiceResult<Order> Update(Guid id, Order order)
-        {
-            //TODO: Update do pedido gera novos IDs pro itens do pedido. Rever.
+        public ServiceResult<Order> Update(Guid id, Order newOrder)
+        {            
             var currentOrder = Get(id);
 
             if (currentOrder == null)
-                return GetFailureResult("Não foi possível localizar o pedido informado.");
+                return GetFailureResult("Não foi possível localizar o pedido informado.");            
 
-            order.SetDefaultValuesForUpdatedOrder(currentOrder, getItemsPrices(currentOrder));
+            currentOrder.CopyHeaderData(newOrder);
 
-            order.TotalizeOrder();
+            currentOrder.Items.RemoveAll(x => itemRemoved(x.Item.Id, currentOrder, newOrder));
 
-            var result = _orderValidation.CustomValidate(order);
+            currentOrder.Items.AddRange(itemsAdded(currentOrder, newOrder));
+
+            currentOrder.CopyItemsData(newOrder);
+
+            currentOrder.TotalizeOrder();
+
+            var result = _orderValidation.CustomValidate(currentOrder);
 
             if (!result.IsValid)
                 return GetFailureResult(result);
 
-            Rep.Update(id, order);
+            Rep.Update(id, currentOrder);
 
-            return GetSuccessResult(order);
-        }       
+            return GetSuccessResult(currentOrder);
+        }        
 
         public ServiceResult<Order> AddOrderItem(Guid orderId, OrderItem orderItem)
-        {
-            //TODO: Recalcular totais do pedido aqui
-
+        {            
             var order = Get(orderId);
 
             if (order == null)
@@ -77,7 +77,9 @@ namespace iParty.Business.Services.Orders
             if (!result.IsValid)
                 return GetFailureResult(result);
 
-            order.Items.Add(orderItem);            
+            order.Items.Add(orderItem);
+
+            order.TotalizeOrder();
 
             Rep.Update(orderId, order);
 
@@ -85,9 +87,7 @@ namespace iParty.Business.Services.Orders
         }
 
         public ServiceResult<Order> ReplaceOrderItem(Guid orderId, Guid orderItemId, OrderItem orderItem)
-        {
-            //TODO: Recalcular totais do pedido aqui
-
+        {            
             var order = Get(orderId);
 
             if (order == null)
@@ -97,10 +97,10 @@ namespace iParty.Business.Services.Orders
 
             if (!result.IsValid)
                 return GetFailureResult(result);
+            
+            order.ReplaceItem(orderItemId, orderItem);
 
-            var replaceResult = replaceItem(order, orderId, orderItem);
-
-            if (!replaceResult.Success) return replaceResult;
+            order.TotalizeOrder();
 
             Rep.Update(orderId, order);
 
@@ -108,73 +108,38 @@ namespace iParty.Business.Services.Orders
         }
 
         public ServiceResult<Order> RemoveOrderItem(Guid orderId, Guid orderItemId)
-        {
-            //TODO: Recalcular totais do pedido aqui
-
+        {            
             var order = Get(orderId);
 
             if (order == null)
                 return GetFailureResult("Não foi possível localizar o pedido informado.");
 
-            var removeResult = removeItem(order, orderItemId);
+            order.RemoveItem(orderItemId);
 
-            if (!removeResult.Success) return removeResult;
+            order.TotalizeOrder();            
 
             Rep.Update(orderId, order);
 
             return GetSuccessResult(order);
         }
 
-        private ServiceResult<Order> replaceItem(Order order, Guid orderItemId, OrderItem newOrderItem)
+        private List<OrderItem> itemsAdded(Order currentOrder, Order newOrder)
         {
-            var currentOrderItem = order.Items.Find(x => x.Id == orderItemId);
+            var result = new List<OrderItem>();
 
-            if (currentOrderItem == null)
-                return GetFailureResult("Não foi possível localizar o item de pedido informado.");
-
-            var index = order.Items.IndexOf(currentOrderItem);
-
-            order.Items.Remove(currentOrderItem);
-
-            newOrderItem.Id = orderItemId;
-
-            order.Items.Insert(index, newOrderItem);            
-
-            return GetSuccessResult(order);
-        }
-
-        private ServiceResult<Order> removeItem(Order order, Guid orderItemId)
-        {
-            var currentOrderItem = order.Items.Find(x => x.Id == orderItemId);
-
-            if (currentOrderItem == null)
-                return GetFailureResult("Não foi possível localizar o item de pedido informado");
-
-            var index = order.Items.IndexOf(currentOrderItem);
-
-            order.Items.Remove(currentOrderItem);
-
-            return GetSuccessResult(order);
-        }                       
-
-        private List<OrderItemPrice> getItemsPrices(Order order)
-        {
-            var prices = new List<OrderItemPrice>();
-
-            foreach (var item in order.Items)
+            foreach (var item in newOrder.Items)
             {
-                var persistedItem = _itemRepository.RecoverById(item.Item.Id);
-
-                var price = persistedItem == null ? 0 : persistedItem.Price;
-
-                prices.Add(new OrderItemPrice()
+                if (!currentOrder.Items.Exists(x => x.Item.Id == item.Item.Id))
                 {
-                    ItemId = item.Item.Id,
-                    Price = price
-                });
+                    result.Add(item);
+                }
             }
 
-            return prices;
+            return result;
+        }
+        private bool itemRemoved(Guid itemId, Order currentOrder, Order newOrder)
+        {           
+            return currentOrder.Items.Exists(x => x.Item.Id == itemId) && !newOrder.Items.Exists(x => x.Item.Id == itemId);
         }
     }
 }

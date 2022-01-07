@@ -14,5 +14,13 @@ namespace iParty.Business.Models.Orders
         {
             return Quantity * Price;
         }
+
+        public void CopyData(OrderItem source)
+        {
+            if (source == null) return;
+            
+            Item = source.Item;
+            Quantity = source.Quantity;
+        }
     }
 }

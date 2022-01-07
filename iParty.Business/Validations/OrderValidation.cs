@@ -6,6 +6,7 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Orders;
 using iParty.Business.Models.PaymentPlans;
 using System;
+using System.Linq;
 
 namespace iParty.Business.Validations
 {
@@ -68,6 +69,8 @@ namespace iParty.Business.Validations
             RuleFor(x => x.ExpirationDate).Equal(x => x.CalculateExpirationDate(x.DateTime)).WithMessage("A data/hora de expiração do pedido é inválida.");
 
             RuleFor(x => x.Items.Count).GreaterThan(0).WithMessage("O pedido precisa ter ao menos um item.");
+
+            RuleFor(x => itemsDuplicated(x)).Equal(false).WithMessage("O pedido informado possui items duplicados.");
         }        
 
         public ValidationResult CustomValidate(Order order)
@@ -97,6 +100,16 @@ namespace iParty.Business.Validations
                 .SupplierInfo
                 .PaymentPlans
                 .Exists(x => x.Id == paymentPlanId);
+        }
+
+        private bool itemsDuplicated(Order order)
+        {
+            var result = order.Items
+                .GroupBy(x => x.Item.Id)
+                .Where(g => g.Count() > 1)
+                .Select(x => x.Key);
+
+            return result.Count() > 0;
         }
     }
 }

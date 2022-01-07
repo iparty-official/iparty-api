@@ -76,7 +76,8 @@ namespace iParty.Api.Mappers.Orders
             {
                 Item = _autoMapper.Map<ItemForOrder>(item),
                 Quantity = dto.Quantity,
-                Unit = dto.Unit
+                Unit = item.Unit,
+                Price = item.Price
             };
 
             return result;
