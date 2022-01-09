@@ -70,7 +70,7 @@ namespace iParty.Business.Services.Orders
             var order = Get(orderId);
 
             if (order == null)
-                return GetFailureResult("Não foi possível localizar o pedido informado.");
+                return GetFailureResult("Não foi possível localizar o pedido informado.");           
 
             var result = _orderItemValidation.Validate(orderItem);
 
