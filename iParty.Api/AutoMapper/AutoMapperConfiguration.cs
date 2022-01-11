@@ -78,11 +78,17 @@ namespace iParty.Api.AutoMapper
 
             CreateMap<OrderItem, OrderItemView>().ReverseMap();
 
+            CreateMap<OrderItemForReview, OrderItemForReviewView>().ReverseMap();
+            
+
             CreateMap<Item, ItemSummarizedView>().ReverseMap();
             
             CreateMap<ItemForOrder, ItemSummarizedView>().ReverseMap();
             CreateMap<ItemForOrder, ItemDto>().ReverseMap();
             CreateMap<ItemForOrder, Item>().ReverseMap();
+
+            CreateMap<ItemForOrderItemForReview, ItemForOrderItemForReviewView>().ReverseMap();
+            
         }
     }
 }

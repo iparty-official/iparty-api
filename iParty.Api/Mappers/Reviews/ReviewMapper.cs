@@ -26,17 +26,23 @@ namespace iParty.Api.Mappers.Reviews
 
         public MapperResult<Review> Map(ReviewDto dto)
         {
-            var orderItem = getOrderItem(dto.OrderId, dto.OrderItemId);
+            var order = getOrder(dto.OrderId);
+            var orderItem = getOrderItem(order, dto.OrderItemId);
 
             if (!SuccessResult()) return GetResult();
 
             SetEntity(new Review
             {
-                Date = dto.Date,   
-                Description = dto.Description,  
+                Date = dto.Date,
+                Description = dto.Description,
                 Stars = dto.Stars,  
-                Time = dto.Time,    
-                OrderItem = orderItem
+                Time = dto.Time,
+                OrderItem = new OrderItemForReview
+                {
+                    OrderId = order.Id,
+                    Id = orderItem.Id,
+                    Item = new ItemForOrderItemForReview { Id = orderItem.Item.Id, Name = orderItem.Item.Name }
+                }
             });
 
             return GetResult();
@@ -49,7 +55,7 @@ namespace iParty.Api.Mappers.Reviews
 
         public List<ReviewView> Map(List<Review> reviews)
         {
-            var reviewsView = new List<ReviewView>(); 
+            var reviewsView = new List<ReviewView>();
 
             foreach (Review review in reviews)
             {
@@ -62,23 +68,12 @@ namespace iParty.Api.Mappers.Reviews
         private ReviewView mapToView(Review review)
         {
             if (review == null) return null;
-
-            return new ReviewView
-            {
-                Date = review.Date, 
-                Description = review.Description,  
-                Stars = review.Stars,   
-                Time = review.Time, 
-                OrderItem = _autoMapper.Map<OrderItemView>(review.OrderItem)                
-            };            
+            return _autoMapper.Map<ReviewView>(review);
         }
 
-        private OrderItem getOrderItem(Guid orderId, Guid orderItemId)
+        private OrderItem getOrderItem(Order order, Guid orderItemId)
         {
-            var order = getOrder(orderId);
-
             if (order == null) return null;
-
             return order.Items.FirstOrDefault(x => x.Id == orderItemId).IfNull(() => AddError("O item do pedido informado na avaliação não existe."));
         }
 
