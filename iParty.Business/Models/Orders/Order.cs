@@ -75,7 +75,7 @@ namespace iParty.Business.Models.Orders
         {
             foreach (var item in Items)
             {
-                item.Total = item.CalculateTotal();
+                item.TotalizeOrderItem();
             }                
 
             ItemsTotal = CalculateItemsTotal();

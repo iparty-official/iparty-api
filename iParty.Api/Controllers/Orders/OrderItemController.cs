@@ -7,7 +7,7 @@ using System;
 namespace iParty.Api.Controllers.Orders
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("order/{orderId}/item")]
     public class OrderItemController : Controller
     {
         private IOrderMapper _orderMapper;
@@ -30,6 +30,8 @@ namespace iParty.Api.Controllers.Orders
             {
                 var itemMapperResult = _orderItemMapper.Map(dto);
 
+                if (!itemMapperResult.Success) return BadRequest(itemMapperResult.Errors);
+
                 var result = _orderService.AddOrderItem(orderId, itemMapperResult.Entity);
 
                 if (!result.Success) return BadRequest(result.Errors);
@@ -51,6 +53,8 @@ namespace iParty.Api.Controllers.Orders
             try
             {
                 var itemMapperResult = _orderItemMapper.Map(dto);
+
+                if (!itemMapperResult.Success) return BadRequest(itemMapperResult.Errors);
 
                 itemMapperResult.Entity.Id = id;
 
