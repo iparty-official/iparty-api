@@ -9,8 +9,7 @@ namespace iParty.Api.Controllers.Orders
     [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
-    {
-        //TODO: Criar controller para manipulação dos itens
+    {        
         private IOrderMapper _orderMapper;
 
         private IOrderService _orderService;

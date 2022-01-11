@@ -9,6 +9,6 @@ namespace iParty.Business.Models.Review
         public DateTime Time { get; set; }
         public int Stars { get; set; }
         public string Description { get; set; }
-        public OrderItem OrderItem { get; set; } //TODO: Criar uma associação especifica. Ex.: OrderItemForReview
+        public OrderItemForReview OrderItem { get; set; }
     }
 }
