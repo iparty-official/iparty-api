@@ -1,11 +1,13 @@
 ﻿using iParty.Api.Dtos.Orders;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Orders
 {
+    [Authorize]
     [ApiController]
     [Route("order/{orderId}/item")]
     public class OrderItemController : Controller

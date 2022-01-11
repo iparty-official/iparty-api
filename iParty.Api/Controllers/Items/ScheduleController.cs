@@ -3,11 +3,13 @@ using iParty.Api.Dtos.Items;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Items;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Items
 {
+    [Authorize]
     [ApiController]
     [Route("item/{itemId}/schedule")]
     public class ItemScheduleController : ControllerBase

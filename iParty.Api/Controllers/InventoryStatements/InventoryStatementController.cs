@@ -1,12 +1,13 @@
 ﻿using iParty.Api.Dtos.InventoryStatements;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.InventoryStatements
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class InventoryStatementController : ControllerBase

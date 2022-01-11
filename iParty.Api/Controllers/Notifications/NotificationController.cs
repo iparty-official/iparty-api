@@ -3,12 +3,14 @@ using iParty.Api.Dtos.Notifications;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Notifications;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Notifications
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class NotificationController : ControllerBase

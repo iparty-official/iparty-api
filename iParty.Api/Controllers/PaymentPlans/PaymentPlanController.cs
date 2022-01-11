@@ -3,12 +3,14 @@ using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.PaymentPlans;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.PaymentPlans
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class PaymentPlanController : ControllerBase

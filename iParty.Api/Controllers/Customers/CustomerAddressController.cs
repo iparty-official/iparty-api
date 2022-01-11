@@ -1,11 +1,13 @@
 ﻿using iParty.Api.Dtos.Addresses;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Customers
 {
+    [Authorize]
     [ApiController]
     [Route("customer/{customerId}/address")]
     public class CustomerAddressController : ControllerBase

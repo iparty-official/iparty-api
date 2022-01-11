@@ -3,11 +3,13 @@ using iParty.Api.Dtos.People;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.People;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Suppliers
 {
+    [Authorize]
     [ApiController]
     [Route("supplier/{supplierId}/phone")]
     public class SupplierPhoneController : ControllerBase

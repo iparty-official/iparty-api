@@ -9,14 +9,11 @@ using System;
 namespace iParty.Business.Services.Cities
 {
     public class CityService : Service<City, IRepository<City>>, ICityService
-    {
-        private IFilterBuilder<City> _filterBuilder;
-
+    {        
         private ICityValidation _cityValidation;
 
-        public CityService(IRepository<City> rep, IFilterBuilder<City> filterBuilder, ICityValidation cityValidation) : base(rep)
-        {
-            _filterBuilder = filterBuilder;
+        public CityService(IRepository<City> rep, ICityValidation cityValidation) : base(rep)
+        {            
             _cityValidation = cityValidation;
         }
 

@@ -1,11 +1,13 @@
 ﻿using iParty.Api.Dtos.Items;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Items
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ItemController : ControllerBase

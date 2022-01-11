@@ -1,11 +1,13 @@
 ﻿using iParty.Api.Dtos.Reviews;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Reviews
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ReviewController : ControllerBase

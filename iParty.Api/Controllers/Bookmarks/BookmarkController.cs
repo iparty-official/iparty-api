@@ -1,12 +1,13 @@
 ﻿using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Bookmarks
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class BookmarkController : ControllerBase
@@ -89,7 +90,7 @@ namespace iParty.Api.Controllers.Bookmarks
                 return StatusCode(500, e.Message);
             }
         }
-
+                
         [HttpGet]
         public IActionResult Get()
         {

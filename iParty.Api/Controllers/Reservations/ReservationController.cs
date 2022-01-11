@@ -1,12 +1,13 @@
 ﻿using iParty.Api.Dtos.Reservations;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Reservations
 {   
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ReservationController : ControllerBase

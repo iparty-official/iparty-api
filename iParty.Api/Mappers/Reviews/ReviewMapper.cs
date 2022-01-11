@@ -5,9 +5,9 @@ using iParty.Api.Interfaces.Mapppers;
 using iParty.Api.Views.Orders;
 using iParty.Api.Views.Reviews;
 using iParty.Business.Infra.Extensions;
-using iParty.Business.Interfaces;
 using iParty.Business.Models.Orders;
 using iParty.Business.Models.Review;
+using iParty.Business.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace iParty.Api.Mappers.Reviews
 {
     public class ReviewMapper : BaseMapper<Review>, IReviewMapper
     {
-        private readonly IRepository<Order> _orderRepository;
+        private IRepository<Order> _orderRepository;
         private readonly IMapper _autoMapper;
         public ReviewMapper(IRepository<Order> orderRepository, IMapper autoMapper)
         {
@@ -26,20 +26,23 @@ namespace iParty.Api.Mappers.Reviews
 
         public MapperResult<Review> Map(ReviewDto dto)
         {
-            var orderItem = getOrderItem(dto.OrderId, dto.OrderItemId);
+            var order = getOrder(dto.OrderId);
+            var orderItem = getOrderItem(order, dto.OrderItemId);
 
-            if (!SuccessResult())
-            {
-                return GetResult();
-            }
+            if (!SuccessResult()) return GetResult();
 
             SetEntity(new Review
             {
                 Date = dto.Date,
                 Description = dto.Description,
-                Stars = dto.Stars,
+                Stars = dto.Stars,  
                 Time = dto.Time,
-                OrderItem = orderItem
+                OrderItem = new OrderItemForReview
+                {
+                    OrderId = order.Id,
+                    Id = orderItem.Id,
+                    Item = new ItemForOrderItemForReview { Id = orderItem.Item.Id, Name = orderItem.Item.Name }
+                }
             });
 
             return GetResult();
@@ -64,30 +67,13 @@ namespace iParty.Api.Mappers.Reviews
 
         private ReviewView mapToView(Review review)
         {
-            if (review == null)
-            {
-                return null;
-            }
-
-            return new ReviewView
-            {
-                Date = review.Date,
-                Description = review.Description,
-                Stars = review.Stars,
-                Time = review.Time,
-                OrderItem = _autoMapper.Map<OrderItemView>(review.OrderItem)
-            };
+            if (review == null) return null;
+            return _autoMapper.Map<ReviewView>(review);
         }
 
-        private OrderItem getOrderItem(Guid orderId, Guid orderItemId)
+        private OrderItem getOrderItem(Order order, Guid orderItemId)
         {
-            var order = getOrder(orderId);
-
-            if (order == null)
-            {
-                return null;
-            }
-
+            if (order == null) return null;
             return order.Items.FirstOrDefault(x => x.Id == orderItemId).IfNull(() => AddError("O item do pedido informado na avaliação não existe."));
         }
 
