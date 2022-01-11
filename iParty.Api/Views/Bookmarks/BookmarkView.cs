@@ -7,7 +7,7 @@ namespace iParty.Api.Views.Bookmarks
     public class BookmarkView : View
     {
         public PersonSummarizedView Customer { get; set; }
-        public ItemSummarizedView Item { get; set; }        
-        public DateTime DateTime { get; set; }        
+        public ItemSummarizedView Item { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

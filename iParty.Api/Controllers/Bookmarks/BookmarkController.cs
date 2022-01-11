@@ -11,13 +11,13 @@ namespace iParty.Api.Controllers.Bookmarks
     [Route("[controller]")]
     public class BookmarkController : ControllerBase
     {
-        private readonly IBookmarkService _serviceBookmark;        
+        private readonly IBookmarkService _serviceBookmark;
 
         private readonly IBookmarkMapper _bookmarkMapper;
 
         public BookmarkController(IBookmarkService serviceBookmark, IBookmarkMapper bookmarkMapper)
         {
-            _serviceBookmark = serviceBookmark;            
+            _serviceBookmark = serviceBookmark;
             _bookmarkMapper = bookmarkMapper;
         }
 
@@ -28,11 +28,17 @@ namespace iParty.Api.Controllers.Bookmarks
             {
                 var mapperResult = _bookmarkMapper.Map(dto);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
+                if (!mapperResult.Success)
+                {
+                    return BadRequest(mapperResult.Errors);
+                }
 
                 var result = _serviceBookmark.Create(mapperResult.Entity);
 
-                if (!result.Success) return BadRequest(result.Errors);
+                if (!result.Success)
+                {
+                    return BadRequest(result.Errors);
+                }
 
                 var view = _bookmarkMapper.Map(result.Entity);
 
@@ -42,7 +48,7 @@ namespace iParty.Api.Controllers.Bookmarks
             {
                 return StatusCode(500, e.Message);
             }
-        }        
+        }
 
         [Route("{id}")]
         [HttpDelete]
@@ -52,7 +58,10 @@ namespace iParty.Api.Controllers.Bookmarks
             {
                 var result = _serviceBookmark.Delete(id);
 
-                if (!result.Success) return BadRequest(result.Errors);
+                if (!result.Success)
+                {
+                    return BadRequest(result.Errors);
+                }
 
                 return Ok();
             }

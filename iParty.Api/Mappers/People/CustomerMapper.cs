@@ -14,23 +14,23 @@ using System.Linq;
 namespace iParty.Api.Mappers.People
 {
     public class CustomerMapper : BaseMapper<Person>, ICustomerMapper
-    {     
-        private IMapper _autoMapper;
+    {
+        private readonly IMapper _autoMapper;
 
-        private IAddressMapper _addressMapper;        
+        private readonly IAddressMapper _addressMapper;
 
         public CustomerMapper(IMapper autoMapper, IAddressMapper addressMapper)
-        {            
+        {
             _autoMapper = autoMapper;
             _addressMapper = addressMapper;
-        }        
+        }
 
         public MapperResult<Person> Map(CustomerDto dto)
         {
             var addresses = mapAddresses(dto);
 
             var person = new Person()
-            {                
+            {
                 User = dto.User,
                 Name = dto.Name,
                 Document = dto.Document,
@@ -40,17 +40,20 @@ namespace iParty.Api.Mappers.People
                 SupplierInfo = new Supplier() { PaymentPlans = new List<PaymentPlan>() },
                 Phones = dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList(),
                 Addresses = addresses
-            };                        
+            };
 
-            if (!SuccessResult()) return GetResult();           
+            if (!SuccessResult())
+            {
+                return GetResult();
+            }
 
             SetEntity(person);
 
             return GetResult();
-        }        
+        }
 
         public CustomerView Map(Person person)
-        {            
+        {
             return mapToView(person);
         }
 
@@ -59,7 +62,7 @@ namespace iParty.Api.Mappers.People
             var customers = new List<CustomerView>();
 
             foreach (var person in people)
-            {                                               
+            {
                 customers.Add(mapToView(person));
             }
 
@@ -68,7 +71,10 @@ namespace iParty.Api.Mappers.People
 
         private CustomerView mapToView(Person person)
         {
-            if (person == null) return null;
+            if (person == null)
+            {
+                return null;
+            }
 
             var customerView = new CustomerView()
             {
@@ -80,7 +86,7 @@ namespace iParty.Api.Mappers.People
                 BirthDate = person.CustomerInfo.BirthDate,
                 Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
                 Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList()
-            };            
+            };
 
             return customerView;
         }
@@ -93,13 +99,18 @@ namespace iParty.Api.Mappers.People
             {
                 foreach (var mapperResult in mapperResultList)
                 {
-                    foreach (var erro in mapperResult.Errors) AddError(erro);
-                }                    
+                    foreach (var erro in mapperResult.Errors)
+                    {
+                        AddError(erro);
+                    }
+                }
 
                 return mapperResultList.Select(x => x.Entity).ToList();
             }
             else
+            {
                 return new List<Address>();
+            }
         }
     }
 }

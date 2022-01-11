@@ -6,25 +6,25 @@ using iParty.Api.Views.Addresses;
 using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
+using iParty.Business.Interfaces;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Models.People;
-using iParty.Business.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace iParty.Api.Mappers.People
 {
     public class SupplierMapper : BaseMapper<Person>, ISupplierMapper
-    {       
-        private IMapper _autoMapper;
+    {
+        private readonly IMapper _autoMapper;
 
-        private IAddressMapper _addressMapper;
+        private readonly IAddressMapper _addressMapper;
 
-        private IRepository<PaymentPlan> _paymentPlanRepository;
+        private readonly IRepository<PaymentPlan> _paymentPlanRepository;
 
         public SupplierMapper(IMapper autoMapper, IAddressMapper addressMapper, IRepository<PaymentPlan> paymentPlanRepository)
-        {            
+        {
             _autoMapper = autoMapper;
             _addressMapper = addressMapper;
             _paymentPlanRepository = paymentPlanRepository;
@@ -47,17 +47,20 @@ namespace iParty.Api.Mappers.People
                 Addresses = addresses,
                 CustomerInfo = new Customer(),
                 SupplierInfo = new Supplier() { BusinessDescription = dto.BusinessDescription, PaymentPlans = paymentPlans }
-            };            
+            };
 
-            if (!SuccessResult()) return GetResult();            
+            if (!SuccessResult())
+            {
+                return GetResult();
+            }
 
             SetEntity(person);
 
             return GetResult();
-        }        
+        }
 
         public SupplierView Map(Person person)
-        {            
+        {
             return mapToView(person);
         }
 
@@ -66,7 +69,7 @@ namespace iParty.Api.Mappers.People
             var suplliers = new List<SupplierView>();
 
             foreach (var person in people)
-            {                               
+            {
                 suplliers.Add(mapToView(person));
             }
 
@@ -75,7 +78,10 @@ namespace iParty.Api.Mappers.People
 
         private SupplierView mapToView(Person person)
         {
-            if (person == null) return null;
+            if (person == null)
+            {
+                return null;
+            }
 
             var supplierView = new SupplierView()
             {
@@ -88,7 +94,7 @@ namespace iParty.Api.Mappers.People
                 Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
                 Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList(),
                 PaymentPlans = person.SupplierInfo.PaymentPlans.Select(x => _autoMapper.Map<PaymentPlanView>(x)).ToList()
-            };            
+            };
 
             return supplierView;
         }
@@ -101,13 +107,18 @@ namespace iParty.Api.Mappers.People
             {
                 foreach (var mapperResult in mapperResultList)
                 {
-                    foreach (var erro in mapperResult.Errors) AddError(erro);
+                    foreach (var erro in mapperResult.Errors)
+                    {
+                        AddError(erro);
+                    }
                 }
 
                 return mapperResultList.Select(x => x.Entity).ToList();
             }
             else
-                return new List<Address>();                                     
+            {
+                return new List<Address>();
+            }
         }
 
         private List<PaymentPlan> mapnPaymentPlans(SupplierDto dto)

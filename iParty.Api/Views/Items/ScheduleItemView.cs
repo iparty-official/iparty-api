@@ -2,7 +2,7 @@
 {
     public class ScheduleItemView : View
     {
-        public int InitialHour { get; set; }        
+        public int InitialHour { get; set; }
         public int FinalHour { get; set; }
     }
 }
