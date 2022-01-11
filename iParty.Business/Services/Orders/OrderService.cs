@@ -66,7 +66,9 @@ namespace iParty.Business.Services.Orders
         }        
 
         public ServiceResult<Order> AddOrderItem(Guid orderId, OrderItem orderItem)
-        {            
+        {
+            orderItem.TotalizeOrderItem();
+
             var order = Get(orderId);
 
             if (order == null)
@@ -81,13 +83,20 @@ namespace iParty.Business.Services.Orders
 
             order.TotalizeOrder();
 
+            result = _orderValidation.CustomValidate(order);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
+
             Rep.Update(orderId, order);
 
             return GetSuccessResult(order);
         }
 
         public ServiceResult<Order> ReplaceOrderItem(Guid orderId, Guid orderItemId, OrderItem orderItem)
-        {            
+        {
+            orderItem.TotalizeOrderItem();
+
             var order = Get(orderId);
 
             if (order == null)
@@ -101,6 +110,11 @@ namespace iParty.Business.Services.Orders
             order.ReplaceItem(orderItemId, orderItem);
 
             order.TotalizeOrder();
+
+            result = _orderValidation.CustomValidate(order);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(orderId, order);
 
@@ -116,7 +130,12 @@ namespace iParty.Business.Services.Orders
 
             order.RemoveItem(orderItemId);
 
-            order.TotalizeOrder();            
+            order.TotalizeOrder();
+
+            var result = _orderValidation.CustomValidate(order);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(orderId, order);
 

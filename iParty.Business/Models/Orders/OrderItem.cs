@@ -15,6 +15,11 @@ namespace iParty.Business.Models.Orders
             return Quantity * Price;
         }
 
+        public void TotalizeOrderItem()
+        {
+            Total = this.CalculateTotal();
+        }
+
         public void CopyData(OrderItem source)
         {
             if (source == null) return;

@@ -89,6 +89,6 @@ namespace iParty.Api.Controllers.Suppliers
                 return StatusCode(500, e.Message);
             }
 
-        }        
+        }
     }
 }
