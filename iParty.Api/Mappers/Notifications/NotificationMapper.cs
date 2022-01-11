@@ -6,6 +6,7 @@ using iParty.Business.Models.Notications;
 using iParty.Business.Models.People;
 using iParty.Business.Interfaces;
 using System;
+using iParty.Business.Models.Notifications;
 
 namespace iParty.Api.Mappers.Notifications
 {
@@ -28,7 +29,7 @@ namespace iParty.Api.Mappers.Notifications
             {
                 DateTime = DateTime.Now,
                 Text = dto.Text,
-                Destination = person
+                Destination = new PersonForNotification() { Id = person.Id, Name = person.Name },
             });
 
             return GetResult();

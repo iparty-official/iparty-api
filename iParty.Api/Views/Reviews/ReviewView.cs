@@ -9,6 +9,6 @@ namespace iParty.Api.Views.Reviews
         public DateTime Time { get; set; }
         public int Stars { get; set; }
         public string Description { get; set; }
-        public OrderItemView OrderItem { get; set; }
+        public OrderItemForReviewView OrderItem { get; set; }
     }
 }
