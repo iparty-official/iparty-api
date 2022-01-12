@@ -22,7 +22,7 @@ namespace iParty.Business.Validations
 
         private bool reviewAlreadyExistsForOrderItem(IRepository<Review> reviewRepository, IFilterBuilder<Review> reviewFilterBuilder, Review review)
         {
-            reviewFilterBuilder.Equal(x => x.OrderItem.Id, review.OrderItem.Id)
+            reviewFilterBuilder.Equal(x => x.OrderItem, review.OrderItem)
                                .Unequal(x => x.Id, review.Id);
             var teste = reviewRepository.Recover(reviewFilterBuilder);
 
