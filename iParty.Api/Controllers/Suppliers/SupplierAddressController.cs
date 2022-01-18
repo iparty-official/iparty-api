@@ -2,11 +2,13 @@
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Suppliers
 {
+    [Authorize]
     [ApiController]
     [Route("supplier/{supplierId}/address")]
     public class SupplierAddressController : ControllerBase

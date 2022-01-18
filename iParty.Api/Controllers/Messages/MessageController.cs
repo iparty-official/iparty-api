@@ -3,13 +3,14 @@ using iParty.Api.Dtos.Messages;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Messages
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class MessageController : ControllerBase

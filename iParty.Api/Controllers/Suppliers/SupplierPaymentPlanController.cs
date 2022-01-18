@@ -1,11 +1,13 @@
 ﻿using iParty.Api.Dtos;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Suppliers
 {
+    [Authorize]
     [ApiController]
     [Route("supplier/{supplierId}/paymentplan")]
     public class SupplierPaymentPlanController : ControllerBase

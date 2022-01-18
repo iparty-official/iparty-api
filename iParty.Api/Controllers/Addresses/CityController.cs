@@ -3,13 +3,15 @@ using iParty.Api.Dtos.Addresses;
 using iParty.Api.Views.Addresses;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Addresses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Addresses
 {
-    [ApiController]
+    [Authorize]
+    [ApiController]    
     [Route("[controller]")]
     public class CityController : ControllerBase
     {
@@ -50,6 +52,7 @@ namespace iParty.Api.Controllers.Addresses
         {            
             try
             {               
+                //TODO: Use recover before mapping. Do it in all controllers.
                 var city = _mapper.Map<City>(dto);
                 city.Id = id;
 
@@ -87,7 +90,7 @@ namespace iParty.Api.Controllers.Addresses
         }
 
         [Route("{id}")]
-        [HttpGet]
+        [HttpGet]        
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -104,7 +107,7 @@ namespace iParty.Api.Controllers.Addresses
             }
         }
         
-        [HttpGet]
+        [HttpGet]        
         public IActionResult Get()
         {
             try
