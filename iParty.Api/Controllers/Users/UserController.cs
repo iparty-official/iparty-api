@@ -10,8 +10,7 @@ using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Users
-{
-    [Authorize]
+{    
     [ApiController]    
     [Route("[controller]")]
     public class UserController : Controller
@@ -68,6 +67,7 @@ namespace iParty.Api.Controllers.Users
             }
         }
 
+        [Authorize]
         [Route("{id}/ChangePassword")]
         [HttpPut]
         public IActionResult ChangePassword([FromRoute] Guid id, [FromBody] ChangePasswordDto dto)
@@ -94,6 +94,7 @@ namespace iParty.Api.Controllers.Users
             }
         }
 
+        [Authorize]
         [Route("{id}")]
         [HttpDelete]
         public IActionResult Delete([FromRoute] Guid id)
@@ -113,6 +114,7 @@ namespace iParty.Api.Controllers.Users
 
         }
 
+        [Authorize]
         [Route("{id}")]
         [HttpGet]
         public IActionResult Get([FromRoute] Guid id)
@@ -131,6 +133,7 @@ namespace iParty.Api.Controllers.Users
             }
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {
