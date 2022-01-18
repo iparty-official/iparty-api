@@ -90,9 +90,12 @@ namespace iParty.Business.Services.Items
             if (!result.IsValid)
                 return GetFailureResult(result);
 
-            var replaceResult = replaceSchedule(item, scheduleId, schedule);
+            item.ReplaceSchedule(scheduleId, schedule);
 
-            if (!replaceResult.Success) return replaceResult;
+            result = _itemScheduleValidation.Validate(item);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(itemId, item);
 
@@ -106,9 +109,12 @@ namespace iParty.Business.Services.Items
             if (item == null)
                 return GetFailureResult("Não foi possível localizar o item informado.");
 
-            var removeResult = removeSchedule(item, scheduleId);
+            item.RemoveSchedule(scheduleId);
 
-            if (!removeResult.Success) return removeResult;
+            var result = _itemScheduleValidation.Validate(item);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(itemId, item);
 
@@ -144,45 +150,6 @@ namespace iParty.Business.Services.Items
             Rep.Update(itemId, item);
 
             return GetSuccessResult(item);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Item> replaceSchedule(Item item, Guid scheduleId, Schedule newSchedule)
-        {
-            var currentSchedule = item.Schedules.Find(x => x.Id == scheduleId);
-
-            if (currentSchedule == null)
-                return GetFailureResult("Não foi possível localizar a agenda informada");
-
-            var index = item.Schedules.IndexOf(currentSchedule);
-
-            item.Schedules.Remove(currentSchedule);
-
-            newSchedule.Id = scheduleId;
-
-            item.Schedules.Insert(index, newSchedule);
-
-            var result = _itemScheduleValidation.Validate(item);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            return GetSuccessResult(item);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Item> removeSchedule(Item item, Guid scheduleId)
-        {
-            var currentSchedule = item.Schedules.Find(x => x.Id == scheduleId);
-
-            if (currentSchedule == null)
-                return GetFailureResult("Não foi possível localizar a agenda informada");
-
-            var index = item.Schedules.IndexOf(currentSchedule);
-
-            item.Schedules.Remove(currentSchedule);
-
-            return GetSuccessResult(item);
-        }
+        }        
     }
 }
