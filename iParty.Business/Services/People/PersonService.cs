@@ -110,9 +110,12 @@ namespace iParty.Business.Services.People
             if (!result.IsValid)
                 return GetFailureResult(result);
 
-            var replaceResult = replacePhone(person, phoneId, phone);
+            person.ReplacePhone(phoneId, phone);
 
-            if (!replaceResult.Success) return replaceResult;
+            result = _personPhoneValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(personId, person);
 
@@ -126,9 +129,12 @@ namespace iParty.Business.Services.People
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");                        
 
-            var removeResult = removePhone(person, phoneId);
+            person.RemovePhone(phoneId);
 
-            if (!removeResult.Success) return removeResult;
+            var result = _personPhoneValidation.Validate(person);
+
+            if (!result.IsValid)
+                return GetFailureResult(result);
 
             Rep.Update(personId, person);
 
@@ -176,9 +182,7 @@ namespace iParty.Business.Services.People
             if (!result.IsValid)
                 return GetFailureResult(result);
 
-            var replaceResult = replaceAddress(person, addressId, address);
-
-            if (!replaceResult.Success) return replaceResult;
+            person.ReplaceAddress(addressId, address);            
 
             Rep.Update(personId, person);
 
@@ -192,9 +196,7 @@ namespace iParty.Business.Services.People
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var removeResult = removeAddress(person, addressId);
-
-            if (!removeResult.Success) return removeResult;
+            person.RemoveAddress(addressId);            
 
             Rep.Update(personId, person);
 
@@ -230,101 +232,11 @@ namespace iParty.Business.Services.People
             if (person == null)
                 return GetFailureResult("Não foi possível localizar a pessoa informada.");
 
-            var removeResult = removePaymentPlan(person, paymentPlanId);
-
-            if (!removeResult.Success) return removeResult;
+            person.RemovePaymentPlan(paymentPlanId);            
 
             Rep.Update(personId, person);
 
             return GetSuccessResult(person);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Person> replacePhone(Person person, Guid phoneId, Phone newPhone)
-        {
-            var currentPhone = person.Phones.Find(x => x.Id == phoneId);
-
-            if (currentPhone == null)
-                return GetFailureResult("Não foi possível localizar o telefone informado");
-
-            var index = person.Phones.IndexOf(currentPhone);
-
-            person.Phones.Remove(currentPhone);
-
-            newPhone.Id = phoneId;
-
-            person.Phones.Insert(index, newPhone);
-
-            var result = _personPhoneValidation.Validate(person);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            return GetSuccessResult(person);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Person> removePhone(Person person, Guid phoneId)
-        {
-            var currentPhone = person.Phones.Find(x => x.Id == phoneId);
-
-            if (currentPhone == null)
-                return GetFailureResult("Não foi possível localizar o telefone informado");
-
-            var index = person.Phones.IndexOf(currentPhone);
-
-            person.Phones.Remove(currentPhone);
-
-            return GetSuccessResult(person);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Person> replaceAddress(Person person, Guid addressId, Address newAddress)
-        {
-            var currentAddress = person.Addresses.Find(x => x.Id == addressId);
-
-            if (currentAddress == null)
-                return GetFailureResult("Não foi possível localizar o endereço informado");
-
-            var index = person.Addresses.IndexOf(currentAddress);
-
-            person.Addresses.Remove(currentAddress);
-
-            newAddress.Id = addressId;
-
-            person.Addresses.Insert(index, newAddress);
-
-            return GetSuccessResult(person);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Person> removeAddress(Person person, Guid addressId)
-        {
-            var currentAddress = person.Addresses.Find(x => x.Id == addressId);
-
-            if (currentAddress == null)
-                return GetFailureResult("Não foi possível localizar o endereço informado");
-
-            var index = person.Addresses.IndexOf(currentAddress);
-
-            person.Addresses.Remove(currentAddress);
-
-            return GetSuccessResult(person);
-        }
-
-        //TODO: Move to entity
-        private ServiceResult<Person> removePaymentPlan(Person person, Guid paymentPlanId)
-        {
-            var currentPaymentPlan = person.SupplierInfo.PaymentPlans.Find(x => x.Id == paymentPlanId);
-
-            if (currentPaymentPlan == null)
-                return GetFailureResult("Não foi possível localizar o plano de pagamento informado");
-
-            var index = person.SupplierInfo.PaymentPlans.IndexOf(currentPaymentPlan);
-
-            person.SupplierInfo.PaymentPlans.Remove(currentPaymentPlan);
-
-            return GetSuccessResult(person);
-        }
+        }       
     }
 }
