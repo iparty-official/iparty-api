@@ -18,11 +18,11 @@ namespace iParty.Business.Infra
             var entity = Get(id);
 
             if (entity == null)
-                return GetFailureResult("Não foi possível localizar o registro informado.");                
+                return ServiceResult<TEntity>.FailureResult("Não foi possível localizar o registro informado.");                
 
             Rep.Delete(id);
 
-            return GetSuccessResult(entity);
+            return ServiceResult<TEntity>.SuccessResult(entity);
         }
 
         public virtual TEntity Get(Guid id)

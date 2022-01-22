@@ -1,49 +1,45 @@
 ﻿using iParty.Business.Infra;
-using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Cities
 {
-    public class CityService : Service<City, IRepository<City>>, ICityService
-    {        
-        private ICityValidation _cityValidation;
+    public class CityService : ICityService
+    {
+        private BasicService<City> _basicService;
 
-        public CityService(IRepository<City> rep, ICityValidation cityValidation) : base(rep)
-        {            
-            _cityValidation = cityValidation;
+        public CityService(IRepository<City> repository, ICityValidation cityValidation)
+        {
+            _basicService = new BasicService<City>(repository, cityValidation);
         }
 
         public ServiceResult<City> Create(City city)
-        {                       
-            var result = _cityValidation.Validate(city);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);           
-
-            Rep.Create(city);
-
-            return GetSuccessResult(city);
+        {
+            return _basicService.Create(city);
         }
 
         public ServiceResult<City> Update(Guid id, City city)
         {
-            var currentCity = Get(city.Id);
+            return _basicService.Update(id, city);
+        }
 
-            if (currentCity == null)
-                return GetFailureResult("Não foi possível localizar a cidade informada.");            
+        public ServiceResult<City> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            var result = _cityValidation.Validate(city);
+        public City Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, city);
-
-            return GetSuccessResult(city);
-        }      
+        public List<City> Get()
+        {
+            return _basicService.Get();
+        }
     }
 }

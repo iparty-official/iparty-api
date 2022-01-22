@@ -5,56 +5,60 @@ using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Users;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace iParty.Business.Services.Users
 {
-    public class UserService : Service<User, IRepository<User>>, IUserService
+    public class UserService : IUserService
     {        
         private IUserValidation _userValidation;
 
         private IFilterBuilder<User> _filterBuilder;
 
-        public UserService(IRepository<User> rep, IUserValidation userValidation, IFilterBuilder<User> filterBuilder) : base(rep)
+        private IRepository<User> _repository;
+
+        private BasicService<User> _basicService;
+
+        public UserService(IRepository<User> repository, IUserValidation userValidation, IFilterBuilder<User> filterBuilder)
         {
             _userValidation = userValidation;
             _filterBuilder = filterBuilder;
+            _repository = repository;
+            _basicService = new BasicService<User>(repository, userValidation);
         }
 
         public ServiceResult<User> Create(User user)
         {
             user.Role = UserRole.Customer;
+
             user.Password = GeneratePasswordHash(user.EmailAddress, user.Password);
 
-            var result = _userValidation.Validate(user);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Create(user);
-
-            return GetSuccessResult(user);
+            return _basicService.Create(user);
         }
 
         public ServiceResult<User> Update(Guid id, User user)
         {
-            var currentUser = Get(user.Id);
-
-            if (currentUser == null)
-                return GetFailureResult("Não foi possível localizar o usuário informado.");
-
             user.Password = GeneratePasswordHash(user.EmailAddress, user.Password);
 
-            var result = _userValidation.Validate(user);
+            return _basicService.Update(id, user);            
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
+        public ServiceResult<User> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            Rep.Update(id, user);
+        public User Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            return GetSuccessResult(user);
+        public List<User> Get()
+        {
+            return _basicService.Get();
         }
 
         public User Get(string emailAddress, string password)
@@ -65,7 +69,7 @@ namespace iParty.Business.Services.Users
                 .Equal(x => x.EmailAddress, emailAddress)
                 .Equal(x => x.Password, hash);
 
-            return Rep.Recover(_filterBuilder).FirstOrDefault();
+            return _repository.Recover(_filterBuilder).FirstOrDefault();
         }
 
         public ServiceResult<User> UpgradeToSupplier(Guid id, User user)
@@ -73,18 +77,18 @@ namespace iParty.Business.Services.Users
             var currentUser = Get(user.Id);
 
             if (currentUser == null)
-                return GetFailureResult("Não foi possível localizar o usuário informado.");
+                return ServiceResult<User>.FailureResult("Não foi possível localizar o usuário informado.");
 
             currentUser.Role = UserRole.Supplier;
 
             var result = _userValidation.Validate(user);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<User>.FailureResult(result);
 
-            Rep.Update(id, user);
+            _repository.Update(id, user);
 
-            return GetSuccessResult(user);
+            return ServiceResult<User>.SuccessResult(user);
         }
 
         public string GeneratePasswordHash(string emailAddress, string password)

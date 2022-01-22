@@ -5,27 +5,33 @@ using iParty.Business.Models.InventoryStatements;
 using iParty.Business.Models.Items;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.InventoryStatements
 {
-    public class InventoryStatementService : Service<InventoryStatement, IRepository<InventoryStatement>>, IInventoryStatementService
+    public class InventoryStatementService : IInventoryStatementService
     {
-        private IInventoryStatementValidation _inventoryStatementValidation;
+        private BasicService<InventoryStatement> _basicService;
 
         private IItemService _itemService;
 
-        public InventoryStatementService(IRepository<InventoryStatement> rep, IInventoryStatementValidation inventoryStatementValidation, IItemService itemService) : base(rep)
-        {
-            _inventoryStatementValidation = inventoryStatementValidation;
+        private IRepository<InventoryStatement> _repository;
+
+        private IInventoryStatementValidation _inventoryStatementValidation;
+
+        public InventoryStatementService(IRepository<InventoryStatement> repository, IInventoryStatementValidation inventoryStatementValidation, IItemService itemService)
+        {            
             _itemService = itemService;
+
+            _basicService = new BasicService<InventoryStatement>(repository, inventoryStatementValidation);
         }
 
         public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement)
-        {            
+        {           
             var result = _inventoryStatementValidation.Validate(inventoryStatement);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<InventoryStatement>.FailureResult(result);
 
             ServiceResult<Item> itemUpdateResult;
 
@@ -37,17 +43,17 @@ namespace iParty.Business.Services.InventoryStatements
             if (!itemUpdateResult.Success)
                 return new ServiceResult<InventoryStatement>() { Success = false, Errors = itemUpdateResult.Errors };
 
-            Rep.Create(inventoryStatement);
+            _repository.Create(inventoryStatement);
 
-            return GetSuccessResult(inventoryStatement);
+            return ServiceResult<InventoryStatement>.SuccessResult(inventoryStatement);
         }
 
-        public override ServiceResult<InventoryStatement> Delete(Guid id)
+        public ServiceResult<InventoryStatement> Delete(Guid id)
         {
             var inventoryStatement = Get(id);
 
             if (inventoryStatement == null)
-                return GetFailureResult("Não foi possível localizar o registro informado.");
+                return ServiceResult<InventoryStatement>.FailureResult("Não foi possível localizar o registro informado.");
 
             ServiceResult<Item> itemUpdateResult;
 
@@ -59,9 +65,19 @@ namespace iParty.Business.Services.InventoryStatements
             if (!itemUpdateResult.Success)
                 return new ServiceResult<InventoryStatement>() { Success = false, Errors = itemUpdateResult.Errors };
 
-            Rep.Delete(id);
+            _repository.Delete(id);
 
-            return GetSuccessResult(inventoryStatement);                                    
+            return ServiceResult<InventoryStatement>.SuccessResult(inventoryStatement);                                    
+        }
+
+        public InventoryStatement Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
+
+        public List<InventoryStatement> Get()
+        {
+            return _basicService.Get();
         }
     }
 }

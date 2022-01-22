@@ -3,28 +3,37 @@ using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Bookmark;
+using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Bookmarks
 {
-    public class BookmarkService : Service<Bookmark, IRepository<Bookmark>>, IBookmarkService
+    public class BookmarkService : IBookmarkService
     {
-        private IBookmarkValidation _bookmarkValidation;
+        private BasicService<Bookmark> _basicService;        
 
-        public BookmarkService(IRepository<Bookmark> rep, IBookmarkValidation bookmarkValidation) : base(rep)
+        public BookmarkService(IRepository<Bookmark> repository, IBookmarkValidation bookmarkValidation)
         {
-            _bookmarkValidation = bookmarkValidation;
+            _basicService = new BasicService<Bookmark>(repository, bookmarkValidation);
         }
 
         public ServiceResult<Bookmark> Create(Bookmark bookmark)
         {
-            var result = _bookmarkValidation.Validate(bookmark);
+            return _basicService.Create(bookmark);
+        }
+        public ServiceResult<Bookmark> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
+        public Bookmark Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            Rep.Create(bookmark);
-
-            return GetSuccessResult(bookmark);
-        }        
+        public List<Bookmark> Get()
+        {
+            return _basicService.Get();
+        }
     }
 }

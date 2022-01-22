@@ -5,43 +5,13 @@ using System.Linq;
 
 namespace iParty.Business.Infra
 {
-    public abstract class BaseService<TEntity, TRepository> 
-        where TEntity : IEntity, new()
-        where TRepository : IRepository<TEntity>
+    public abstract class BaseService<TEntity, TRepository> where TEntity : IEntity, new() where TRepository : IRepository<TEntity>
     {
         protected BaseService(TRepository rep)
         {
             Rep = rep;
         }
 
-        protected TRepository Rep { get; private set; }        
-
-        protected ServiceResult<TEntity> GetSuccessResult(TEntity entity)
-        {
-            return new ServiceResult<TEntity>()
-            {
-                Success = true,
-                Errors = new List<string>(),
-                Entity = entity
-            };
-        }
-
-        protected ServiceResult<TEntity> GetFailureResult(ValidationResult validationResult)
-        {
-            return new ServiceResult<TEntity>()
-            {
-                Success = false,
-                Errors = validationResult.Errors.Select(p => p.ErrorMessage).ToList(),                
-            };
-        }        
-
-        protected ServiceResult<TEntity> GetFailureResult(string errorMessage)
-        {
-            return new ServiceResult<TEntity>()
-            {
-                Success = false,
-                Errors = new List<string>() { errorMessage },
-            };
-        }
+        protected TRepository Rep { get; private set; }
     }
 }

@@ -51,8 +51,7 @@ namespace iParty.Api.Controllers.Addresses
         public IActionResult Update([FromRoute] Guid id, [FromBody] CityDto dto)
         {            
             try
-            {               
-                //TODO: Use recover before mapping. Do it in all controllers.
+            {                               
                 var city = _mapper.Map<City>(dto);
                 city.Id = id;
 

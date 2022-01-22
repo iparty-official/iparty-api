@@ -4,44 +4,42 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Review;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Reviews
 {
-    public class ReviewService : Service<Review, IRepository<Review>>, IReviewService
+    public class ReviewService : IReviewService
     {
-        private readonly IReviewValidation _reviewValidation;
-        public ReviewService(IRepository<Review> rep, IReviewValidation reviewValidation) : base(rep)
+        private BasicService<Review> _basicService;
+
+        public ReviewService(IRepository<Review> repository, IReviewValidation reviewValidation)
         {
-            _reviewValidation = reviewValidation;
+            _basicService = new BasicService<Review>(repository, reviewValidation);
         }
 
         public ServiceResult<Review> Create(Review review)
         {
-            var result = _reviewValidation.Validate(review);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Create(review);
-
-            return GetSuccessResult(review);
+            return _basicService.Create(review);
         }
 
         public ServiceResult<Review> Update(Guid id, Review review)
         {
-            var currentReview = Get(id);
+            return _basicService.Update(id, review);
+        }
 
-            if (currentReview == null)
-                return GetFailureResult("Não foi possível localizar a avaliação informada.");
+        public ServiceResult<Review> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            var result = _reviewValidation.Validate(review);
+        public Review Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, review);
-
-            return GetSuccessResult(review);
+        public List<Review> Get()
+        {
+            return _basicService.Get();
         }
     }
 }

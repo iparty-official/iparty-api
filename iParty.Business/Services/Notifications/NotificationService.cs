@@ -3,28 +3,43 @@ using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
 using iParty.Business.Interfaces;
+using System.Collections.Generic;
+using System;
 
 namespace iParty.Business.Services.Notifications
 {
-    public class NotificationService : Service<Notification, IRepository<Notification>>, INotificationService
+    public class NotificationService : INotificationService
     {
-        private INotificationValidation _notificationValidation;
+        private BasicService<Notification> _basicService;
 
-        public NotificationService(IRepository<Notification> rep, INotificationValidation notificationValidation) : base(rep)
+        public NotificationService(IRepository<Notification> repository, INotificationValidation notificationValidation)
         {
-            _notificationValidation = notificationValidation;
+            _basicService = new BasicService<Notification>(repository, notificationValidation);
         }
 
         public ServiceResult<Notification> Create(Notification notification)
         {
-            var result = _notificationValidation.Validate(notification);
+            return _basicService.Create(notification);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
+        public ServiceResult<Notification> Update(Guid id, Notification notification)
+        {
+            return _basicService.Update(id, notification);
+        }
 
-            Rep.Create(notification);
+        public ServiceResult<Notification> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            return GetSuccessResult(notification);
-        }      
+        public Notification Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
+
+        public List<Notification> Get()
+        {
+            return _basicService.Get();
+        }
     }
 }
