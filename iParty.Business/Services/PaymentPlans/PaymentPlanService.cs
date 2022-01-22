@@ -4,45 +4,45 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.PaymentPlans
 {
-    public class PaymentPlanService : Service<PaymentPlan, IRepository<PaymentPlan>>, IPaymentPlanService
+    public class PaymentPlanService : IPaymentPlanService
     {
+        private BasicService<PaymentPlan> _basicService;
+
         private IPaymentPlanValidation _paymentPlanValidation;
 
-        public PaymentPlanService(IRepository<PaymentPlan> rep, IPaymentPlanValidation paymentPlanValidation) : base(rep)
+        public PaymentPlanService(IRepository<PaymentPlan> repository, IPaymentPlanValidation paymentPlanValidation)
         {
             _paymentPlanValidation = paymentPlanValidation;
+            _basicService = new BasicService<PaymentPlan>(repository, paymentPlanValidation);
         }
 
         public ServiceResult<PaymentPlan> Create(PaymentPlan paymentPlan)
         {
-            var result = _paymentPlanValidation.Validate(paymentPlan);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Create(paymentPlan);
-
-            return GetSuccessResult(paymentPlan);
+            return _basicService.Create(paymentPlan);
         }
 
         public ServiceResult<PaymentPlan> Update(Guid id, PaymentPlan paymentPlan)
         {
-            var currentPaymentPlan = Get(id);
+            return _basicService.Update(id, paymentPlan);
+        }
 
-            if (currentPaymentPlan == null)
-                return GetFailureResult("Não foi possível localizar a forma de pagamento informada.");
+        public ServiceResult<PaymentPlan> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            var result = _paymentPlanValidation.Validate(paymentPlan);
+        public PaymentPlan Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, paymentPlan);
-
-            return GetSuccessResult(paymentPlan);
+        public List<PaymentPlan> Get()
+        {
+            return _basicService.Get();
         }
     }
 }

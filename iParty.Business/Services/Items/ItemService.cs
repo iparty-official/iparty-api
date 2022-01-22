@@ -4,54 +4,51 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Items;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Items
 {  
-    public class ItemService : Service<Item, IRepository<Item>>, IItemService
-    {                
-        private IItemValidation _itemValidation;
+    public class ItemService : IItemService
+    {
+        private BasicService<Item> _basicService;
+
+        private IRepository<Item> _repository;
 
         private IScheduleValidation _scheduleValidation;
 
         private IItemScheduleValidation _itemScheduleValidation;
 
-        public ItemService(IRepository<Item> rep,                           
-                           IItemValidation itemValidation,
-                           IScheduleValidation scheduleValidation,
-                           IItemScheduleValidation itemScheduleValidation) : base(rep)
-        {            
-            _itemValidation = itemValidation;
+        public ItemService(IRepository<Item> repository, IItemValidation itemValidation, IScheduleValidation scheduleValidation, IItemScheduleValidation itemScheduleValidation)
+        {
+            _repository = repository;
             _scheduleValidation = scheduleValidation;
             _itemScheduleValidation = itemScheduleValidation;
+            _basicService = new BasicService<Item>(repository, itemValidation);
         }
 
         public ServiceResult<Item> Create(Item item)
         {
-            var result = _itemValidation.CustomValidate(item);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);            
-                            
-            Rep.Create(item);
-
-            return GetSuccessResult(item);
+            return _basicService.Create(item);
         }
 
         public ServiceResult<Item> Update(Guid id, Item item)
         {
-            var currentItem = Get(id);
+            return _basicService.Update(id, item);
+        }
 
-            if (currentItem == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+        public ServiceResult<Item> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            var result = _itemValidation.Validate(item);
+        public Item Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, item);
-
-            return GetSuccessResult(item);
+        public List<Item> Get()
+        {
+            return _basicService.Get();
         }
 
         public ServiceResult<Item> AddSchedule(Guid itemId, Schedule schedule)
@@ -59,23 +56,23 @@ namespace iParty.Business.Services.Items
             var item = Get(itemId);
 
             if (item == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+                return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
             var result = _scheduleValidation.Validate(schedule);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<Item>.FailureResult(result);
 
             item.Schedules.Add(schedule);
 
             result = _itemScheduleValidation.Validate(item);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<Item>.FailureResult(result);
 
-            Rep.Update(itemId, item);
+            _repository.Update(itemId, item);
 
-            return GetSuccessResult(item);
+            return ServiceResult<Item>.SuccessResult(item);
         }
 
         public ServiceResult<Item> ReplaceSchedule(Guid itemId, Guid scheduleId, Schedule schedule)
@@ -83,23 +80,23 @@ namespace iParty.Business.Services.Items
             var item = Get(itemId);
 
             if (item == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+                return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
             var result = _scheduleValidation.Validate(schedule);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<Item>.FailureResult(result);
 
             item.ReplaceSchedule(scheduleId, schedule);
 
             result = _itemScheduleValidation.Validate(item);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<Item>.FailureResult(result);
 
-            Rep.Update(itemId, item);
+            _repository.Update(itemId, item);
 
-            return GetSuccessResult(item);
+            return ServiceResult<Item>.SuccessResult(item);
         }
 
         public ServiceResult<Item> RemoveSchedule(Guid itemId, Guid scheduleId)
@@ -107,18 +104,18 @@ namespace iParty.Business.Services.Items
             var item = Get(itemId);
 
             if (item == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+                return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
             item.RemoveSchedule(scheduleId);
 
             var result = _itemScheduleValidation.Validate(item);
 
             if (!result.IsValid)
-                return GetFailureResult(result);
+                return ServiceResult<Item>.FailureResult(result);
 
-            Rep.Update(itemId, item);
+            _repository.Update(itemId, item);
 
-            return GetSuccessResult(item);
+            return ServiceResult<Item>.SuccessResult(item);
         }
 
         public ServiceResult<Item> IncreaseAvailableQuantity(Guid itemId, decimal quantity)
@@ -126,13 +123,13 @@ namespace iParty.Business.Services.Items
             var item = Get(itemId);
 
             if (item == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+                return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
             item.ProductInfo.AvailableQuantity += quantity;
 
-            Rep.Update(itemId, item);
+            _repository.Update(itemId, item);
 
-            return GetSuccessResult(item);
+            return ServiceResult<Item>.SuccessResult(item);
         }
 
         public ServiceResult<Item> DecreaseAvailableQuantity(Guid itemId, decimal quantity)
@@ -140,16 +137,16 @@ namespace iParty.Business.Services.Items
             var item = Get(itemId);
 
             if (item == null)
-                return GetFailureResult("Não foi possível localizar o item informado.");
+                return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
             if ((item.ProductInfo.AvailableQuantity - quantity) < 0)
-                return GetFailureResult("Não foi possível diminuir o estoque do item, pois sua quantidade ficaria negativa.");
+                return ServiceResult<Item>.FailureResult("Não foi possível diminuir o estoque do item, pois sua quantidade ficaria negativa.");
 
             item.ProductInfo.AvailableQuantity -= quantity;
 
-            Rep.Update(itemId, item);
+            _repository.Update(itemId, item);
 
-            return GetSuccessResult(item);
+            return ServiceResult<Item>.SuccessResult(item);
         }        
     }
 }

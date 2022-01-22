@@ -4,45 +4,42 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Messages;
 using iParty.Business.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Business.Services.Messages
 {
-    public class MessageService : Service<Message, IRepository<Message>>, IMessageService
+    public class MessageService : IMessageService
     {
-        private IMessageValidation _messageValidation;
+        private BasicService<Message> _basicService;
 
-        public MessageService(IRepository<Message> rep, IMessageValidation messageValidation) : base(rep)
+        public MessageService(IRepository<Message> repository, IMessageValidation messageValidation)
         {
-            _messageValidation = messageValidation;
+            _basicService = new BasicService<Message>(repository, messageValidation);
         }
 
         public ServiceResult<Message> Create(Message message)
         {
-            var result = _messageValidation.Validate(message);
-
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Create(message);
-
-            return GetSuccessResult(message);
+            return _basicService.Create(message);
         }
 
         public ServiceResult<Message> Update(Guid id, Message message)
         {
-            var currentMessage = Get(id);
+            return _basicService.Update(id, message);
+        }
 
-            if (currentMessage == null)
-                return GetFailureResult("Não foi possível localizar a mensagem informada.");
+        public ServiceResult<Message> Delete(Guid id)
+        {
+            return _basicService.Delete(id);
+        }
 
-            var result = _messageValidation.Validate(message);
+        public Message Get(Guid id)
+        {
+            return _basicService.Get(id);
+        }
 
-            if (!result.IsValid)
-                return GetFailureResult(result);
-
-            Rep.Update(id, message);
-
-            return GetSuccessResult(message);
+        public List<Message> Get()
+        {
+            return _basicService.Get();
         }
     }
 }
