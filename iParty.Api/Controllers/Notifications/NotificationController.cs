@@ -2,7 +2,11 @@
 using iParty.Api.Dtos.Notifications;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Notifications;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
+using iParty.Business.Models.Notications;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,14 +19,15 @@ namespace iParty.Api.Controllers.Notifications
     [Route("[controller]")]
     public class NotificationController : ControllerBase
     {
-        private readonly INotificationService _notificationService;
+        private readonly BasicService<Notification> _notificationService;
         private readonly IMapper _autoMapper;
         private readonly INotificationMapper _notificationMapper;
-        public NotificationController(INotificationService serviceNotification,
-                                      IMapper autoMapper, 
-                                      INotificationMapper notificationMapper)
+        public NotificationController(IMapper autoMapper, 
+                                      INotificationMapper notificationMapper,                                      
+                                      IRepository<Notification> repository,
+                                      INotificationValidation validation)
         {
-            _notificationService = serviceNotification;
+            _notificationService = new BasicService<Notification>(repository, validation);
             _autoMapper = autoMapper;
             _notificationMapper = notificationMapper;
         }

@@ -1,6 +1,10 @@
 ﻿using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
+using iParty.Business.Models.Bookmark;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,14 +16,14 @@ namespace iParty.Api.Controllers.Bookmarks
     [Route("[controller]")]
     public class BookmarkController : ControllerBase
     {
-        private readonly IBookmarkService _serviceBookmark;
+        private readonly BasicService<Bookmark> _serviceBookmark;
 
         private readonly IBookmarkMapper _bookmarkMapper;
 
-        public BookmarkController(IBookmarkService serviceBookmark, IBookmarkMapper bookmarkMapper)
+        public BookmarkController(IBookmarkMapper bookmarkMapper, IRepository<Bookmark> repository, IBookmarkValidation validation)
         {
-            _serviceBookmark = serviceBookmark;
-            _bookmarkMapper = bookmarkMapper;
+            _serviceBookmark = new BasicService<Bookmark>(repository, validation);
+            _bookmarkMapper = bookmarkMapper;            
         }
 
         [HttpPost]

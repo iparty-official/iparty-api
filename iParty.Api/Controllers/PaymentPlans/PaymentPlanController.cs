@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Views.PaymentPlans;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.PaymentPlans;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,10 +20,10 @@ namespace iParty.Api.Controllers.PaymentPlans
     {
         private readonly IMapper _autoMapper;
 
-        private readonly IPaymentPlanService _paymentPlanService;
-        public PaymentPlanController(IPaymentPlanService paymentPlanService, IMapper autoMapper)
+        private readonly BasicService<PaymentPlan> _paymentPlanService;
+        public PaymentPlanController(IMapper autoMapper, IPaymentPlanValidation validation, IRepository<PaymentPlan> repository)
         {
-            _paymentPlanService = paymentPlanService;
+            _paymentPlanService = new BasicService<PaymentPlan>(repository, validation);
             _autoMapper = autoMapper;
         }
 
