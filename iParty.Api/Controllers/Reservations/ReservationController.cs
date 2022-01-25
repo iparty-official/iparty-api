@@ -1,6 +1,10 @@
 ﻿using iParty.Api.Dtos.Reservations;
 using iParty.Api.Interfaces.Mappers;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
+using iParty.Business.Models.Reservation;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,13 +16,13 @@ namespace iParty.Api.Controllers.Reservations
     [Route("[controller]")]
     public class ReservationController : ControllerBase
     {
-        private readonly IReservationService _serviceReservation;
+        private readonly BasicService<Reservation> _serviceReservation;
 
         private readonly IReservationMapper _reservationMapper;
 
-        public ReservationController(IReservationService serviceReservation, IReservationMapper reservationMapper)
+        public ReservationController(IReservationMapper reservationMapper, IReservationValidation validation, IRepository<Reservation> repository)
         {
-            _serviceReservation = serviceReservation;
+            _serviceReservation = new BasicService<Reservation>(repository, validation);
             _reservationMapper = reservationMapper;
         }
 

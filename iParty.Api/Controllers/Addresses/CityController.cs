@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Views.Addresses;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,13 +18,13 @@ namespace iParty.Api.Controllers.Addresses
     [Route("[controller]")]
     public class CityController : ControllerBase
     {
-        private readonly ICityService _cityService;
+        private readonly BasicService<City> _cityService;
 
         private readonly IMapper _mapper;
 
-        public CityController(ICityService serviceCity, IMapper mapper)
+        public CityController(IMapper mapper, IRepository<City> repository, ICityValidation validation)
         {
-            _cityService = serviceCity;
+            _cityService = new BasicService<City>(repository, validation);
             _mapper = mapper;
         }
 
@@ -51,8 +54,7 @@ namespace iParty.Api.Controllers.Addresses
         public IActionResult Update([FromRoute] Guid id, [FromBody] CityDto dto)
         {            
             try
-            {               
-                //TODO: Use recover before mapping. Do it in all controllers.
+            {                               
                 var city = _mapper.Map<City>(dto);
                 city.Id = id;
 

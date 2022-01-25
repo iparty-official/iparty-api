@@ -1,6 +1,10 @@
 ﻿using iParty.Api.Dtos.Reviews;
 using iParty.Api.Interfaces.Mapppers;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
+using iParty.Business.Models.Review;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,12 +17,12 @@ namespace iParty.Api.Controllers.Reviews
     public class ReviewController : ControllerBase
     {
         private readonly IReviewMapper _reviewMapper;
-        private readonly IReviewService _reviewService;
+        private readonly BasicService<Review> _reviewService;
 
-        public ReviewController(IReviewMapper reviewMapper, IReviewService reviewService)
+        public ReviewController(IReviewMapper reviewMapper, IRepository<Review> repository, IReviewValidation validation)
         {
             _reviewMapper = reviewMapper;
-            _reviewService = reviewService;
+            _reviewService = new BasicService<Review>(repository, validation);
         }
 
         [HttpPost]

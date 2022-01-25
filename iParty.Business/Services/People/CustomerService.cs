@@ -24,7 +24,7 @@ namespace iParty.Business.Services.People
                 .Equal(x => x.Id, id)
                 .Equal(x => x.SupplierOrCustomer, SupplierOrCustomer.Customer);
 
-            return Rep.Recover(PersonFilterBuilder).FirstOrDefault();
+            return Repository.Recover(PersonFilterBuilder).FirstOrDefault();
         }
 
         public override List<Person> Get()
@@ -33,7 +33,7 @@ namespace iParty.Business.Services.People
 
             PersonFilterBuilder.Equal(x => x.SupplierOrCustomer, SupplierOrCustomer.Customer);
 
-            return Rep.Recover(PersonFilterBuilder);
+            return Repository.Recover(PersonFilterBuilder);
         }
     }
 }

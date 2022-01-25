@@ -2,7 +2,11 @@
 using iParty.Api.Dtos.Messages;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
+using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
+using iParty.Business.Interfaces.Validations;
+using iParty.Business.Models.Messages;
+using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,15 +19,15 @@ namespace iParty.Api.Controllers.Messages
     [Route("[controller]")]
     public class MessageController : ControllerBase
     {
-        private readonly IMessageService _serviceMessage;
+        private BasicService<Message> _serviceMessage;
 
         private readonly IMapper _autoMapper;
 
         private readonly IMessageMapper _messageMapper;
 
-        public MessageController(IMessageService serviceMessage, IMapper autoMapper, IMessageMapper messageMapper)
+        public MessageController(IMapper autoMapper, IMessageMapper messageMapper, IRepository<Message> repository, IMessageValidation validation)
         {
-            _serviceMessage = serviceMessage;
+            _serviceMessage = new BasicService<Message>(repository, validation);
             _autoMapper = autoMapper;
             _messageMapper = messageMapper;
         }
