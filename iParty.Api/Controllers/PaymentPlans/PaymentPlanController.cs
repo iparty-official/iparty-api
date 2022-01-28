@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Views.PaymentPlans;
+using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
@@ -48,15 +49,13 @@ namespace iParty.Api.Controllers.PaymentPlans
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] PaymentPlanDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] PaymentPlanDto dto)
         {
             try
             {
-                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
-
-                paymentPlan.Id = id;
+                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto).SetIdAndVersion(id, version);                
 
                 var result = _paymentPlanService.Update(id, paymentPlan);
 

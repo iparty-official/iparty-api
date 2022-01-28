@@ -131,6 +131,7 @@ namespace iParty.Api.Mappers.Orders
             var orderView = new OrderView()
             {
                 Id = order.Id,
+                Version = order.Version,
                 DateTime = order.DateTime,
                 Customer = customer,
                 Supplier = supplier,

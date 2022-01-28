@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Dtos.People;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -45,17 +46,15 @@ namespace iParty.Api.Controllers.Customers
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] CustomerDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CustomerDto dto)
         {
             try
             {
-                var mapperResult = _customerMapper.Map(dto);
+                var mapperResult = _customerMapper.Map(dto).SetIdAndVersion(id, version);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _customerService.Update(id, mapperResult.Entity);
 

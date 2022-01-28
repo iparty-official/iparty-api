@@ -90,6 +90,7 @@ namespace iParty.Api.Mappers.Orders
             var orderItemView = new OrderItemView()
             { 
                 Id = orderItem.Id,
+                Version = orderItem.Version,
                 Item = _autoMapper.Map<ItemSummarizedView>(orderItem.Item),
                 Price = orderItem.Price,
                 Unit = orderItem.Unit,

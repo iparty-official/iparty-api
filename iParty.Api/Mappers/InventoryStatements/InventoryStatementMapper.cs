@@ -67,6 +67,7 @@ namespace iParty.Api.Mappers.InventoryStatements
             var inventoryStatementView = new InventoryStatementView()
             {
                 Id = inventoryStatement.Id,
+                Version = inventoryStatement.Version,
                 DataTime = inventoryStatement.DateTime,
                 InOrOut = inventoryStatement.InOrOut,
                 Product = product,

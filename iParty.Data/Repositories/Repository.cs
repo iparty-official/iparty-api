@@ -59,9 +59,18 @@ namespace iParty.Data.Repositories
 
         public void Update(Guid id, TEntity entity)
         {
-            entity.Id = id;
+            entity.Id = id;            
 
             var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
+
+            if (RecoverById(id).Version != entity.Version)
+            {
+                throw new Exception("O registro já foi alterado por outro usuário.");
+            }
+            else
+            {
+                entity.Version = Guid.NewGuid();
+            }
            
             _collection.ReplaceOne(filter, entity);
         }
@@ -81,12 +90,7 @@ namespace iParty.Data.Repositories
 
             var filterDefinition = translateToFilterDefinition(filters);
 
-            filterDefinition &= Builders<TEntity>.Filter.Eq(x => x.Removed, false);
-
-            var serializerRegistry = _database.Settings.SerializerRegistry;
-            var fileInfoSerializer = serializerRegistry.GetSerializer<TEntity>();
-            var renderedFilter = filterDefinition.Render(fileInfoSerializer, serializerRegistry);
-            Console.WriteLine(renderedFilter);
+            filterDefinition &= Builders<TEntity>.Filter.Eq(x => x.Removed, false);            
 
             return _collection.Find(filterDefinition).ToList();
         }

@@ -76,6 +76,7 @@ namespace iParty.Api.Mappers.Items
             var itemView = new ItemView()
             {
                 Id = item.Id,
+                Version = item.Version,
                 Supplier = supplier,
                 SKU = item.SKU,
                 Name = item.Name,

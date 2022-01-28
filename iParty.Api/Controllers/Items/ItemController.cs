@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Dtos.Items;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -45,17 +46,15 @@ namespace iParty.Api.Controllers.Items
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] ItemDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ItemDto dto)
         {
             try
             {
-                var mapperResult = _itemMapper.Map(dto);
+                var mapperResult = _itemMapper.Map(dto).SetIdAndVersion(id, version);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _itemService.Update(id, mapperResult.Entity);
 

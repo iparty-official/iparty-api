@@ -43,7 +43,7 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
-        public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
+        public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromRoute] Guid version)
         {
             try
             {
