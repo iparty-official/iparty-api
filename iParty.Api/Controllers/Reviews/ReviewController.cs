@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Dtos.Reviews;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
@@ -48,17 +49,15 @@ namespace iParty.Api.Controllers.Reviews
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] ReviewDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ReviewDto dto)
         {
             try
             {
-                var mapperResult = _reviewMapper.Map(dto);
+                var mapperResult = _reviewMapper.Map(dto).SetIdAndVersion(id, version);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _reviewService.Update(id, mapperResult.Entity);
 

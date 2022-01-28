@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Dtos.Orders;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -54,11 +55,9 @@ namespace iParty.Api.Controllers.Orders
         {
             try
             {
-                var itemMapperResult = _orderItemMapper.Map(dto);
+                var itemMapperResult = _orderItemMapper.Map(dto).SetId(id);
 
-                if (!itemMapperResult.Success) return BadRequest(itemMapperResult.Errors);
-
-                itemMapperResult.Entity.Id = id;
+                if (!itemMapperResult.Success) return BadRequest(itemMapperResult.Errors);                
 
                 var result = _orderService.ReplaceOrderItem(orderId, id, itemMapperResult.Entity);
 

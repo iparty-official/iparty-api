@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Dtos.Orders;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -45,17 +46,15 @@ namespace iParty.Api.Controllers.Orders
             }            
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] OrderDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] OrderDto dto)
         {
             try
             {
-                var mapperResult = _orderMapper.Map(dto);
+                var mapperResult = _orderMapper.Map(dto).SetIdAndVersion(id, version);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _orderService.Update(id, mapperResult.Entity);
 

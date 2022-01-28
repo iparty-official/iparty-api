@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Messages;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
 using iParty.Business.Interfaces;
@@ -55,17 +56,15 @@ namespace iParty.Api.Controllers.Messages
             }
         }
 
-        [Route("{id}")]
+        [Route("{id}/{version}")]
         [HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] MessageDto dto)
+        public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] MessageDto dto)
         {            
             try
             {
-                var mapperResult = _messageMapper.Map(dto);
+                var mapperResult = _messageMapper.Map(dto).SetIdAndVersion(id, version);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _serviceMessage.Update(id, mapperResult.Entity);
 

@@ -86,6 +86,7 @@ namespace iParty.Api.Mappers.People
             var supplierView = new SupplierView()
             {
                 Id = person.Id,
+                Version = person.Version,
                 User = person.User,
                 Name = person.Name,
                 Document = person.Document,

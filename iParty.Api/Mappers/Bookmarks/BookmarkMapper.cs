@@ -71,6 +71,7 @@ namespace iParty.Api.Infra.Bookmarks
             var bookmarkView = new BookmarkView()
             {
                 Id = entity.Id,
+                Version = entity.Version,
                 Customer = _autoMapper.Map<PersonSummarizedView>(entity.Customer),
                 Item = _autoMapper.Map<ItemSummarizedView>(entity.Item),
                 DateTime = entity.DateTime

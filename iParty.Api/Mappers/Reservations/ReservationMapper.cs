@@ -73,6 +73,7 @@ namespace iParty.Api.Infra.Reservations
             var reservationView = new ReservationView()
             {
                 Id = entity.Id,
+                Version = entity.Version,
                 Date = entity.Date,
                 InitialHour = entity.InitialHour,
                 FinalHour = entity.FinalHour,

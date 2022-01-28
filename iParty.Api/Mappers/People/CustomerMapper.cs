@@ -79,6 +79,7 @@ namespace iParty.Api.Mappers.People
             var customerView = new CustomerView()
             {
                 Id = person.Id,
+                Version = person.Version,
                 User = person.User,
                 Name = person.Name,
                 Document = person.Document,

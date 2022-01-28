@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Addresses;
+using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -58,11 +59,9 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var mapperResult = _addressMapper.Map(dto);
+                var mapperResult = _addressMapper.Map(dto).SetId(id);
 
-                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);
-
-                mapperResult.Entity.Id = id;
+                if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
                 var result = _supplierService.ReplaceAddress(supplierId, id, mapperResult.Entity);
 

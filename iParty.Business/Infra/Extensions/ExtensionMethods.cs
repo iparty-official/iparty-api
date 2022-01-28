@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParty.Business.Interfaces;
+using System;
 
 namespace iParty.Business.Infra.Extensions
 {
@@ -28,6 +29,21 @@ namespace iParty.Business.Infra.Extensions
         public static DateTime EndOfDay(this DateTime @this)
         {
             return new DateTime(@this.Year, @this.Month, @this.Day).AddDays(1).Subtract(new TimeSpan(0, 0, 0, 0, 1));
+        }
+
+        public static T SetIdAndVersion<T>(this T entity, Guid id, Guid version) where T : IEntity
+        {
+            entity.Id = id;
+            entity.Version = version;
+
+            return entity;
+        }
+
+        public static T SetVersion<T>(this T entity, Guid version) where T : IEntity
+        {            
+            entity.Version = version;
+
+            return entity;
         }
     }
 }
