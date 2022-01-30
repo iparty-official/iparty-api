@@ -4,7 +4,13 @@ namespace iParty.Business.Models.Notifications
 {
     public class PersonForNotification
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public PersonForNotification() { }
+        public PersonForNotification(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
     }
 }

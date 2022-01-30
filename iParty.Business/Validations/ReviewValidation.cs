@@ -2,7 +2,6 @@
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Orders;
 using iParty.Business.Models.Review;
 using System;
 
@@ -13,7 +12,7 @@ namespace iParty.Business.Validations
         public ReviewValidation(IRepository<Review> reviewRepository,
                                 IFilterBuilder<Review> reviewFilterBuilder)
         {
-            RuleFor(p => p.Date).GreaterThan(DateTime.MinValue).WithMessage("A data da avaliação não foi informada.");
+            RuleFor(p => p.DateTime).GreaterThan(DateTime.MinValue).WithMessage("A data da avaliação não foi informada.");
             RuleFor(p => p.Description).NotEmpty().WithMessage("A descrição da avaliação não foi informada.");
             RuleFor(p => p.Stars).InclusiveBetween(1, 5).WithMessage("As quantidades de estrelas precisam estar entre 1 e 5.");
             RuleFor(p => reviewAlreadyExistsForOrderItem(reviewRepository, reviewFilterBuilder, p)).Equal(false).WithMessage("Já existe uma avaliação para este item do pedido.");

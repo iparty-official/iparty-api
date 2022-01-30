@@ -1,7 +1,6 @@
 ﻿using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Bookmark;
 using iParty.Business.Services;

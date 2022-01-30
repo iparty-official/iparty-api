@@ -31,19 +31,19 @@ namespace iParty.Api.Mappers.Items
 
             if (!SuccessResult()) return GetResult();
 
-            var item = new Item()
-            {
-                SKU = dto.SKU,
-                Supplier = supplier,
-                Name = dto.Name,
-                Details = dto.Details,
-                Photo = dto.Photo,
-                Price = dto.Price,
-                Unit = dto.Unit,
-                ProductOrService = dto.ProductOrService,
-                ProductInfo = new Product() { AvailableQuantity = dto.AvailableQuantity, ForRentOrSale = dto.ForRentOrSale },
-                Schedules = dto.Schedules.Select(x => _autoMapper.Map<Schedule>(x)).ToList()
-            };            
+            var item = new Item
+            (                
+                supplier,
+                dto.SKU,
+                dto.Name,
+                dto.Details,
+                dto.Photo,
+                dto.Price,
+                dto.Unit,
+                dto.ProductOrService,
+                new Product(dto.AvailableQuantity, dto.ForRentOrSale),
+                dto.Schedules.Select(x => _autoMapper.Map<Schedule>(x)).ToList()
+            );            
 
             SetEntity(item);
 

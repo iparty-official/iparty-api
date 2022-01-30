@@ -25,12 +25,7 @@ namespace iParty.Api.Mappers.Notifications
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Notification
-            {
-                DateTime = DateTime.Now,
-                Text = dto.Text,
-                Destination = new PersonForNotification() { Id = person.Id, Name = person.Name },
-            });
+            SetEntity(new Notification(DateTime.Now, new PersonForNotification(person.Id, person.Name), dto.Text));
 
             return GetResult();
         }        

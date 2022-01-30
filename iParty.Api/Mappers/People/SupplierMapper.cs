@@ -36,18 +36,17 @@ namespace iParty.Api.Mappers.People
 
             var paymentPlans = mapnPaymentPlans(dto);
 
-            var person = new Person()
-            {
-                User = dto.User,
-                Name = dto.Name,
-                Document = dto.Document,
-                Photo = dto.Photo,
-                SupplierOrCustomer = SupplierOrCustomer.Supplier,
-                Phones = dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList(),
-                Addresses = addresses,
-                CustomerInfo = new Customer(),
-                SupplierInfo = new Supplier() { BusinessDescription = dto.BusinessDescription, PaymentPlans = paymentPlans }
-            };
+            var person = new Person(
+                dto.User,
+                dto.Name,
+                dto.Document,
+                dto.Photo,
+                SupplierOrCustomer.Supplier,
+                new Customer(null),
+                new Supplier(dto.BusinessDescription, paymentPlans),
+                addresses, 
+                dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList()                                               
+            );
 
             if (!SuccessResult())
             {

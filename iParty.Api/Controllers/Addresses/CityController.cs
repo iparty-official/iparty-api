@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Views.Addresses;
-using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Services;
@@ -55,8 +53,10 @@ namespace iParty.Api.Controllers.Addresses
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CityDto dto)
         {            
             try
-            {                               
-                var city = _mapper.Map<City>(dto).SetIdAndVersion(id, version);
+            {
+                var city = _mapper.Map<City>(dto);
+                    
+                city.DefineIdAndVersion(id, version);
 
                 var result = _cityService.Update(id, city);
 

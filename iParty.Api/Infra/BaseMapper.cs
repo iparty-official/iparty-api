@@ -2,7 +2,7 @@
 
 namespace iParty.Api.Infra
 {
-    public abstract class BaseMapper<TEntity> where TEntity : IEntity, new()
+    public abstract class BaseMapper<TEntity> where TEntity : IEntity
     {
         private readonly MapperResult<TEntity> _mapperResult;   
         public BaseMapper()
@@ -17,7 +17,7 @@ namespace iParty.Api.Infra
 
         protected void SetEntity(TEntity entity)
         {
-            _mapperResult.Entity = entity;
+            _mapperResult.DefineEntity(entity);
         }
 
         protected void AddError(string error)

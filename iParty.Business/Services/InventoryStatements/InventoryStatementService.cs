@@ -24,6 +24,10 @@ namespace iParty.Business.Services.InventoryStatements
             _itemService = itemService;
 
             _basicService = new BasicService<InventoryStatement>(repository, inventoryStatementValidation);
+
+            _inventoryStatementValidation = inventoryStatementValidation;
+
+            _repository = repository;
         }
 
         public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement)
@@ -41,7 +45,7 @@ namespace iParty.Business.Services.InventoryStatements
                 itemUpdateResult = _itemService.DecreaseAvailableQuantity(inventoryStatement.Product.Id, inventoryStatement.Quantity);
 
             if (!itemUpdateResult.Success)
-                return new ServiceResult<InventoryStatement>() { Success = false, Errors = itemUpdateResult.Errors };
+                return ServiceResult<InventoryStatement>.FailureResult(itemUpdateResult.Errors);
 
             _repository.Create(inventoryStatement);
 
@@ -63,7 +67,7 @@ namespace iParty.Business.Services.InventoryStatements
                 itemUpdateResult = _itemService.IncreaseAvailableQuantity(inventoryStatement.Product.Id, inventoryStatement.Quantity);
 
             if (!itemUpdateResult.Success)
-                return new ServiceResult<InventoryStatement>() { Success = false, Errors = itemUpdateResult.Errors };
+                return ServiceResult<InventoryStatement>.FailureResult(itemUpdateResult.Errors);
 
             _repository.Delete(id);
 

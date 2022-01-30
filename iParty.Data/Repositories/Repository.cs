@@ -58,20 +58,16 @@ namespace iParty.Data.Repositories
         }
 
         public void Update(Guid id, TEntity entity)
-        {
-            entity.Id = id;            
-
+        {            
             var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
             if (RecoverById(id).Version != entity.Version)
             {
                 throw new Exception("O registro já foi alterado por outro usuário.");
             }
-            else
-            {
-                entity.Version = Guid.NewGuid();
-            }
-           
+
+            entity.DefineIdAndVersion(id, Guid.NewGuid());
+
             _collection.ReplaceOne(filter, entity);
         }
 

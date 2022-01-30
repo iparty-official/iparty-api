@@ -6,7 +6,6 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Api.Views.Addresses;
 using iParty.Api.Views.Orders;
-using iParty.Api.Views.PaymentPlans;
 using iParty.Api.Views.People;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
@@ -62,16 +61,16 @@ namespace iParty.Api.Mappers.Orders
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Order() {                
-                Supplier = _autoMapper.Map<PersonForOrder>(supplier),
-                Customer = _autoMapper.Map<PersonForOrder>(customer),
-                ShippingAddress = shippingAddress,
-                Freight = dto.Freight,
-                PaymentPlan = paymentPlanForOrder,
-                Notes = dto.Notes,
-                PartyDate = dto.PartyDate,
-                Items = items
-            });
+            SetEntity(new Order(
+                _autoMapper.Map<PersonForOrder>(supplier),
+                _autoMapper.Map<PersonForOrder>(customer),
+                shippingAddress,
+                dto.Freight,
+                paymentPlanForOrder,
+                dto.Notes,
+                dto.PartyDate,
+                items)
+            );
             
             return GetResult();
         }
@@ -80,20 +79,14 @@ namespace iParty.Api.Mappers.Orders
         {
             var paymentPlan = _paymentPlanRepository.RecoverById(dto.PaymentPlanId).IfNull(() => { AddError("O plano de pagamento informado não existe."); });
 
-            if (paymentPlan == null) return null;       
-
-            var paymentPlanForOrder = new PaymentPlanForOrder() { Id = paymentPlan.Id };
-
-            paymentPlanForOrder.Installments = dto.Installments;
+            if (paymentPlan == null) return null;
 
             var installment = paymentPlan.Instalments.Where(x => x.Quantity == dto.Installments).FirstOrDefault();
 
             if (installment == null)
                 AddError("O plano de pagamento informado não aceita a quantidade de parcelas que foi informada.");
-            else 
-                paymentPlanForOrder.Fee = installment.Fee;
-
-            return paymentPlanForOrder;
+           
+            return new PaymentPlanForOrder(paymentPlan.PaymentMethod, dto.Installments, installment.Fee);
 
         }
 

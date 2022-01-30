@@ -52,7 +52,7 @@ namespace iParty.Api.Controllers.Items
         {
             try
             {
-                var mapperResult = _itemMapper.Map(dto).SetIdAndVersion(id, version);
+                var mapperResult = _itemMapper.Map(dto).DefineIdAndVersion(id, version);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 

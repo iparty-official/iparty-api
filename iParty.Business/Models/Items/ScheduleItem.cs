@@ -1,8 +1,14 @@
 ﻿namespace iParty.Business.Models.Items
 {
     public class ScheduleItem: Entity
-    {        
-        public int InitialHour { get; set; }
-        public int FinalHour { get; set; }
+    {
+        public ScheduleItem() { }
+        public ScheduleItem(int initialHour, int finalHour)
+        {
+            InitialHour = initialHour;
+            FinalHour = finalHour;
+        }
+        public int InitialHour { get; private set; }
+        public int FinalHour { get; private set; }
     }
 }

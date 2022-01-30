@@ -6,8 +6,15 @@ namespace iParty.Business.Models.Bookmark
 {
     public class Bookmark: Entity
     {
-        public Person Customer { get; set; }
-        public Item Item{ get; set; }
-        public DateTime DateTime { get; set; }
+        public Bookmark() { }
+        public Bookmark(Person customer, Item item, DateTime dateTime)
+        {
+            Customer = customer;
+            Item = item;
+            DateTime = dateTime;
+        }
+        public Person Customer { get; private set; }
+        public Item Item{ get; private set; }
+        public DateTime DateTime { get; private set; }
     }
 }

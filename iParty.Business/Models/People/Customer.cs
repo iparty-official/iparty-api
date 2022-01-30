@@ -4,6 +4,11 @@ namespace iParty.Business.Models.People
 {
     public class Customer
     {
-        public DateTime? BirthDate { get; set; }
+        public Customer() { }
+        public Customer(DateTime? birthDate)
+        {
+            BirthDate = birthDate;
+        }
+        public DateTime? BirthDate { get; private set; }
     }
 }

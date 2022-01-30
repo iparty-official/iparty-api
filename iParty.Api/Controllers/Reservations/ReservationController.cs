@@ -1,7 +1,6 @@
 ﻿using iParty.Api.Dtos.Reservations;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Reservation;
 using iParty.Business.Services;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace iParty.Api.Controllers.Reservations
-{   
+{
     [Authorize]
     [ApiController]
     [Route("[controller]")]

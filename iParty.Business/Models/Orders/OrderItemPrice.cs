@@ -4,8 +4,13 @@ namespace iParty.Business.Models.Orders
 {
     public class OrderItemPrice
     {
-        public Guid OrderItemId { get; set; }
-
-        public decimal Price { get; set; }
+        public OrderItemPrice() { }
+        public OrderItemPrice(Guid orderItemId, decimal price)
+        {
+            OrderItemId = orderItemId;
+            Price = price;
+        }
+        public Guid OrderItemId { get; private set; }
+        public decimal Price { get; private set; }
     }
 }

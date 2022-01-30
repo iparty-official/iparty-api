@@ -2,7 +2,6 @@
 using iParty.Api.Dtos.Reviews;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
-using iParty.Api.Views.Orders;
 using iParty.Api.Views.Reviews;
 using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Orders;
@@ -31,19 +30,11 @@ namespace iParty.Api.Mappers.Reviews
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Review
-            {
-                Date = dto.Date,
-                Description = dto.Description,
-                Stars = dto.Stars,  
-                Time = dto.Time,
-                OrderItem = new OrderItemForReview
-                {
-                    OrderId = order.Id,
-                    Id = orderItem.Id,
-                    Item = new ItemForOrderItemForReview { Id = orderItem.Item.Id, Name = orderItem.Item.Name }
-                }
-            });
+            SetEntity(new Review(
+                dto.Date,
+                dto.Stars,
+                dto.Description,                               
+                new OrderItemForReview(order.Id, orderItem.Id, new ItemForOrderItemForReview(orderItem.Item.Id, orderItem.Item.Name))));
 
             return GetResult();
         }

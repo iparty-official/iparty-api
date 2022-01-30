@@ -12,8 +12,6 @@ namespace iParty.Business.Interfaces.Services
 
         public User Get(string emailAddress, string password);
 
-        public ServiceResult<User> UpgradeToSupplier(Guid id, User user);
-
-        public string GeneratePasswordHash(string emailAddress, string password);        
+        public ServiceResult<User> UpgradeToSupplier(Guid id, User user);        
     }
 }

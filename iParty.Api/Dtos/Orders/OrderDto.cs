@@ -1,5 +1,4 @@
 ﻿using iParty.Api.Dtos.Addresses;
-using iParty.Business.Models.PaymentPlans;
 using System;
 using System.Collections.Generic;
 

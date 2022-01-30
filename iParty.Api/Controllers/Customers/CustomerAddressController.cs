@@ -55,7 +55,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var mapperResult = _addressMapper.Map(dto).SetId(id);
+                var mapperResult = _addressMapper.Map(dto).DefineId(id);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 

@@ -1,5 +1,4 @@
-﻿using iParty.Business.Models.Items;
-using System;
+﻿using System;
 
 namespace iParty.Api.Dtos.Orders
 {
