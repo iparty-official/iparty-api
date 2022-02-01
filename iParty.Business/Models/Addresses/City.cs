@@ -2,8 +2,15 @@
 {
     public class City: Entity
     {
-        public int IbgeNumber { get; set; }
-        public string Name { get; set; }
-        public UfEnum State { get; set; }
+        public City() { }
+        public City(int ibgeNumber, string name, UfEnum state)
+        {
+            IbgeNumber = ibgeNumber;
+            Name = name;
+            State = state;
+        }
+        public int IbgeNumber { get; private set; }
+        public string Name { get; private set; }
+        public UfEnum State { get; private set; }
     }
 }

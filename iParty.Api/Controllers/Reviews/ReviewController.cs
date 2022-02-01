@@ -2,7 +2,6 @@
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Review;
 using iParty.Business.Services;
@@ -55,7 +54,7 @@ namespace iParty.Api.Controllers.Reviews
         {
             try
             {
-                var mapperResult = _reviewMapper.Map(dto).SetIdAndVersion(id, version);
+                var mapperResult = _reviewMapper.Map(dto).DefineIdAndVersion(id, version);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 

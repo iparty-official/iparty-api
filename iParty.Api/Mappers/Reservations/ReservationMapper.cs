@@ -32,16 +32,7 @@ namespace iParty.Api.Infra.Reservations
                 return GetResult();
             }
 
-            SetEntity(new Reservation()
-            {
-                Date = dto.Date,
-                InitialHour = dto.InitialHour,
-                FinalHour = dto.FinalHour,
-                Item = item,
-                ReservationReason = dto.ReservationReason,
-                OrderItem = null
-
-            });
+            SetEntity(new Reservation(dto.Date, dto.InitialHour, dto.FinalHour, item, null, dto.ReservationReason));
 
             return GetResult();
         }

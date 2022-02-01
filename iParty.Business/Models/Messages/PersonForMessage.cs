@@ -4,7 +4,13 @@ namespace iParty.Business.Models.Messages
 {
     public class PersonForMessage
     {
-        public Guid Id { get; set; }        
-        public string Name { get; set; }
+        public PersonForMessage() { }
+        public PersonForMessage(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+        public Guid Id { get; private set; }        
+        public string Name { get; private set; }
     }
 }

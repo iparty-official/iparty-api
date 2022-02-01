@@ -23,14 +23,7 @@ namespace iParty.Api.Mappers.Addresses
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Address()
-            {
-                ZipCode = dto.ZipCode,
-                Street = dto.Street,
-                Number = dto.Number,
-                District = dto.District,
-                City = city
-            });
+            SetEntity(new Address(dto.ZipCode, dto.Street, dto.Number, dto.District, city));
 
             return GetResult();
         }

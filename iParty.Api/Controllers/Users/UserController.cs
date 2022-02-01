@@ -78,7 +78,7 @@ namespace iParty.Api.Controllers.Users
 
                 if (user == null) return BadRequest("Usuário não encontrado.");
 
-                user.Password = dto.Password;
+                user.DefineUserPassword(dto.Password);
 
                 var result = _userService.Update(id, user);
 

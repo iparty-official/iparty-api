@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.People;
-using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
-using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Authorization;
@@ -56,7 +54,9 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var phone = _autoMapper.Map<Phone>(dto).SetId(id);
+                var phone = _autoMapper.Map<Phone>(dto);
+                
+                phone.DefineId(id);
 
                 var result = _customerService.ReplacePhone(customerId, id, phone);
 

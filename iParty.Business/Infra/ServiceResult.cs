@@ -7,9 +7,9 @@ namespace iParty.Business.Infra
 {
     public class ServiceResult<TEntity> where TEntity : IEntity
     {
-        public bool Success { get; set; }
-        public List<string> Errors { get; set; }
-        public TEntity Entity { get; set; }
+        public bool Success { get; private set; }
+        public List<string> Errors { get; private set; }
+        public TEntity Entity { get; private set; }
         public static ServiceResult<TEntity> SuccessResult(TEntity entity)
         {
             return new ServiceResult<TEntity>()
@@ -35,6 +35,15 @@ namespace iParty.Business.Infra
             {
                 Success = false,
                 Errors = new List<string>() { errorMessage },
+            };
+        }
+
+        public static ServiceResult<TEntity> FailureResult(List<string> errors)
+        {
+            return new ServiceResult<TEntity>()
+            {
+                Success = false,
+                Errors = errors,
             };
         }
     }

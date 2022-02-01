@@ -1,9 +1,15 @@
 ﻿namespace iParty.Business.Models.People
 {
     public class Phone: Entity
-    {        
-        public string Prefix { get; set; }
-        public string Number { get; set; }
+    {
+        public Phone() { }
+        public Phone(string prefix, string number)
+        {
+            Prefix = prefix;
+            Number = number;
+        }
+        public string Prefix { get; private set; }
+        public string Number { get; private set; }
 
     }
 }

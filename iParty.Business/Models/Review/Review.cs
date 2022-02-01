@@ -1,14 +1,20 @@
-﻿using iParty.Business.Models.Orders;
-using System;
+﻿using System;
 
 namespace iParty.Business.Models.Review
 {
     public class Review: Entity
     {
-        public DateTime Date { get; set; }
-        public DateTime Time { get; set; }
-        public int Stars { get; set; }
-        public string Description { get; set; }
-        public OrderItemForReview OrderItem { get; set; }
+        public Review() { }
+        public Review(DateTime dateTime, int stars, string description, OrderItemForReview orderItem)
+        {
+            DateTime = dateTime;
+            Stars = stars;
+            Description = description;
+            OrderItem = orderItem;
+        }
+        public DateTime DateTime { get; private set; }       
+        public int Stars { get; private set; }
+        public string Description { get; private set; }
+        public OrderItemForReview OrderItem { get; private set; }
     }
 }

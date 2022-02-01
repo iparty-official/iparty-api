@@ -3,7 +3,6 @@ using iParty.Api.Dtos.Notifications;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Notifications;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Notications;
 using iParty.Business.Services;

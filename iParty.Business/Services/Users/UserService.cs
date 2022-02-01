@@ -7,8 +7,6 @@ using iParty.Business.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace iParty.Business.Services.Users
 {
@@ -32,16 +30,16 @@ namespace iParty.Business.Services.Users
 
         public ServiceResult<User> Create(User user)
         {
-            user.Role = UserRole.Customer;
+            user.DefineUserRole(UserRole.Customer);
 
-            user.Password = GeneratePasswordHash(user.EmailAddress, user.Password);
+            user.DefineUserPassword(user.Password);
 
             return _basicService.Create(user);
         }
 
         public ServiceResult<User> Update(Guid id, User user)
         {
-            user.Password = GeneratePasswordHash(user.EmailAddress, user.Password);
+            user.DefineUserPassword(user.Password);
 
             return _basicService.Update(id, user);            
         }
@@ -63,7 +61,7 @@ namespace iParty.Business.Services.Users
 
         public User Get(string emailAddress, string password)
         {
-            var hash = GeneratePasswordHash(emailAddress, password);
+            var hash = User.GeneratePasswordHash(emailAddress, password);
 
             _filterBuilder
                 .Equal(x => x.EmailAddress, emailAddress)
@@ -79,7 +77,7 @@ namespace iParty.Business.Services.Users
             if (currentUser == null)
                 return ServiceResult<User>.FailureResult("Não foi possível localizar o usuário informado.");
 
-            currentUser.Role = UserRole.Supplier;
+            currentUser.DefineUserRole(UserRole.Supplier);
 
             var result = _userValidation.Validate(user);
 
@@ -89,20 +87,6 @@ namespace iParty.Business.Services.Users
             _repository.Update(id, user);
 
             return ServiceResult<User>.SuccessResult(user);
-        }
-
-        public string GeneratePasswordHash(string emailAddress, string password)
-        {
-            byte[] data = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(emailAddress + password));
-
-            var sBuilder = new StringBuilder();
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-
-            return sBuilder.ToString();
-        }
+        }        
     }
 }

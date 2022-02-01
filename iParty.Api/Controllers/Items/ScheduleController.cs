@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.Items;
-using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
-using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Items;
 using Microsoft.AspNetCore.Authorization;
@@ -56,7 +54,9 @@ namespace iParty.Api.Controllers.Items
         {
             try
             {
-                var schedule = _autoMapper.Map<Schedule>(dto).SetId(id);
+                var schedule = _autoMapper.Map<Schedule>(dto);
+                
+                schedule.DefineId(id);
 
                 var result = _itemService.ReplaceSchedule(itemId, id, schedule);
 

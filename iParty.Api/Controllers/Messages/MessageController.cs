@@ -4,7 +4,6 @@ using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.Messages;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Messages;
 using iParty.Business.Services;
@@ -62,7 +61,7 @@ namespace iParty.Api.Controllers.Messages
         {            
             try
             {
-                var mapperResult = _messageMapper.Map(dto).SetIdAndVersion(id, version);
+                var mapperResult = _messageMapper.Map(dto).DefineIdAndVersion(id, version);
 
                 if (!mapperResult.Success) return BadRequest(mapperResult.Errors);                
 
