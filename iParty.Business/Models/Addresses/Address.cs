@@ -1,11 +1,9 @@
-﻿using iParty.Business.Models.Cities;
-
-namespace iParty.Business.Models.Addresses
+﻿namespace iParty.Business.Models.Addresses
 {
     public class Address: Entity
     {
         public Address() { }
-        public Address(string zipCode, string street, int number, string district, City city)
+        public Address(string zipCode, string street, int number, string district, CityForAddress city)
         {
             ZipCode = zipCode;
             Street = street;
@@ -17,6 +15,6 @@ namespace iParty.Business.Models.Addresses
         public string Street { get; private set; }
         public int Number { get; private set; }
         public string District { get; private set; }
-        public City City { get; private set; }
+        public CityForAddress City { get; private set; }
     }
 }

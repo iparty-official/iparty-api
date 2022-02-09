@@ -1,5 +1,4 @@
-﻿using iParty.Business.Models.Addresses;
-using iParty.Business.Models.Cities;
+﻿using iParty.Business.Models.Cities;
 
 namespace iParty.Api.Views.Cities
 {

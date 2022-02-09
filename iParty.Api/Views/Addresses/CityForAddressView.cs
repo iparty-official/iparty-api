@@ -1,10 +1,9 @@
 ﻿using iParty.Business.Models.Cities;
 
-namespace iParty.Api.Dtos.Cities
+namespace iParty.Api.Views.Addresses
 {
-    public class CityDto
-    {
-        public int IbgeNumber { get; set; }
+    public class CityForAddressView : View
+    {     
         public string Name { get; set; }
         public UfEnum State { get; set; }
     }

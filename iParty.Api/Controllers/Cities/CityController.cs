@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.Addresses;
 using iParty.Api.Dtos.Cities;
-using iParty.Api.Views.Addresses;
 using iParty.Api.Views.Cities;
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Addresses;
 using iParty.Business.Models.Cities;
 using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;

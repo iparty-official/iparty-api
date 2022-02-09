@@ -7,14 +7,14 @@ namespace iParty.Api.Infra
     public class MapperResult<TEntity> where TEntity : IEntity
     {
         public MapperResult()
-        {
-
+        {            
+            Errors = new List<string>();
         }
 
         public MapperResult(TEntity entity, List<string> errors)
         {
             Entity = entity;
-            Errors = errors;            
+            Errors = errors;
         }
 
         public bool Success => !Errors.Any();
