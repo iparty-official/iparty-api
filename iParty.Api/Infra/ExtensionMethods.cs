@@ -5,7 +5,7 @@ namespace iParty.Api.Infra
 {
     public static class ExtensionMethods
     {
-        public static MapperResult<T> DefineIdAndVersion<T>(this MapperResult<T> mapperResult, Guid id, Guid version) where T : IIdentifiable
+        public static MapperResult<T> DefineIdAndVersion<T>(this MapperResult<T> mapperResult, Guid id, Guid version) where T : IVersionable
         {
             if (mapperResult.Entity != null)
             {
