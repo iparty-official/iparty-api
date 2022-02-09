@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace iParty.Api.Infra
 {
-    public class MapperResult<TEntity> where TEntity : IEntity
+    public class MapperResult<TEntity> where TEntity : IIdentifiable
     {
         public MapperResult()
         {            

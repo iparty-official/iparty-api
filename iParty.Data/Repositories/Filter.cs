@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
-    public class Filter<TEntity> : IFilter<TEntity> where TEntity : IEntity
+    public class Filter<TEntity> : IFilter<TEntity> where TEntity : IIdentifiable
     {
         public Filter(Expression<Func<TEntity, object>> field, FilterOperatorEnum @operator, object value)
         {

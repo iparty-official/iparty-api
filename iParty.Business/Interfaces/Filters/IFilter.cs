@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace iParty.Business.Interfaces.Filters
 {
-    public interface IFilter<TEntity> where TEntity : IEntity
+    public interface IFilter<TEntity> where TEntity : IIdentifiable
     {        
         public Expression<Func<TEntity, object>> Field { get; }
         public object Value { get; }

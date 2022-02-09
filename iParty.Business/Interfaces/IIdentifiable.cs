@@ -2,7 +2,7 @@
 
 namespace iParty.Business.Interfaces
 {
-    public interface IEntity
+    public interface IIdentifiable
     {       
         public Guid Id { get; }
 

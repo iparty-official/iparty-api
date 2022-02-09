@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : IEntity
+    public interface IRepository<TEntity> where TEntity : IIdentifiable
     {
         public void Create(TEntity entity);
 

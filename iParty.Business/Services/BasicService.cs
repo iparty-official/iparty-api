@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Services
 {
-    public class BasicService<TEntity> where TEntity : IEntity
+    public class BasicService<TEntity> where TEntity : IIdentifiable
     {
         private IRepository<TEntity> _repository;
 

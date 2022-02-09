@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace iParty.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : IEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : IIdentifiable
     {
         private IMongoCollection<TEntity> _collection { get; set; }
         private IMongoDatabase _database { get; set; }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace iParty.Business.Interfaces.Services
 {
-    public interface IService<TEntity> where TEntity : IEntity
+    public interface IService<TEntity> where TEntity : IIdentifiable
     {
         ServiceResult<TEntity> Delete(Guid id);
         TEntity Get(Guid id);
