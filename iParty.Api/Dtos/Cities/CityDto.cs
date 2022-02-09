@@ -1,6 +1,7 @@
 ﻿using iParty.Business.Models.Addresses;
+using iParty.Business.Models.Cities;
 
-namespace iParty.Api.Dtos.Addresses
+namespace iParty.Api.Dtos.Cities
 {
     public class CityDto
     {

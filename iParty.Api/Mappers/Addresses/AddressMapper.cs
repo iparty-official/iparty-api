@@ -5,6 +5,7 @@ using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
 using System.Collections.Generic;
+using iParty.Business.Models.Cities;
 
 namespace iParty.Api.Mappers.Addresses
 {

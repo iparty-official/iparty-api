@@ -1,6 +1,7 @@
 ﻿using iParty.Business.Models.Addresses;
+using iParty.Business.Models.Cities;
 
-namespace iParty.Api.Views.Addresses
+namespace iParty.Api.Views.Cities
 {
     public class CityView : View
     {

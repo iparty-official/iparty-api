@@ -1,4 +1,4 @@
-﻿namespace iParty.Business.Models.Addresses
+﻿namespace iParty.Business.Models.Cities
 {
     public class City: Entity
     {

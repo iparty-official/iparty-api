@@ -1,4 +1,6 @@
-﻿namespace iParty.Api.Views.Addresses
+﻿using iParty.Api.Views.Cities;
+
+namespace iParty.Api.Views.Addresses
 {
     public class AddressView : View
     {

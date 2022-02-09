@@ -1,4 +1,6 @@
-﻿namespace iParty.Business.Models.Addresses
+﻿using iParty.Business.Models.Cities;
+
+namespace iParty.Business.Models.Addresses
 {
     public class Address: Entity
     {
