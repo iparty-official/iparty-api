@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace iParty.Business.Interfaces.Filters
 {
-    public interface IFilterBuilder<TEntity> where TEntity : IIdentifiable
+    public interface IFilterBuilder<TEntity> where TEntity : IEntity
     {
         public void Clear();
 

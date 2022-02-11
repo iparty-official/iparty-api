@@ -1,10 +1,11 @@
 ﻿using iParty.Business.Interfaces.Filters;
+using iParty.Business.Models;
 using System;
 using System.Collections.Generic;
 
 namespace iParty.Business.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : IIdentifiable
+    public interface IRepository<TEntity> where TEntity : IEntity
     {
         public void Create(TEntity entity);
 

@@ -2,7 +2,7 @@
 
 namespace iParty.Api.Infra
 {
-    public abstract class BaseMapper<TEntity> where TEntity : IIdentifiable
+    public abstract class BaseMapper<TEntity> where TEntity : IEntity
     {
         private readonly MapperResult<TEntity> _mapperResult;   
         public BaseMapper()

@@ -3,7 +3,7 @@ using System;
 
 namespace iParty.Business.Models
 {
-    public abstract class Entity: IIdentifiable, IVersionable, IRemoveble
+    public abstract class Entity: IEntity
     {
         protected Entity()
         {

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace iParty.Data.Repositories
 {
-    public class FilterBuilder<TEntity> : IFilterBuilder<TEntity> where TEntity : IIdentifiable
+    public class FilterBuilder<TEntity> : IFilterBuilder<TEntity> where TEntity : IEntity
     {
         private List<IFilter<TEntity>> _filters;
 

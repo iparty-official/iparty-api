@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace iParty.Business.Infra
 {
-    public class ServiceResult<TEntity> where TEntity : IIdentifiable
+    public class ServiceResult<TEntity> where TEntity : IEntity
     {
         public bool Success { get; private set; }
         public List<string> Errors { get; private set; }
