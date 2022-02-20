@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using iParty.Api.Dtos.Addresses;
-using iParty.Api.Views.Addresses;
-using iParty.Business.Infra.Extensions;
+using iParty.Api.Dtos.Cities;
+using iParty.Api.Views.Cities;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Addresses;
+using iParty.Business.Models.Cities;
 using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
-namespace iParty.Api.Controllers.Addresses
+namespace iParty.Api.Controllers.Cities
 {
     [Authorize]
     [ApiController]    
@@ -55,8 +53,10 @@ namespace iParty.Api.Controllers.Addresses
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CityDto dto)
         {            
             try
-            {                               
-                var city = _mapper.Map<City>(dto).SetIdAndVersion(id, version);
+            {
+                var city = _mapper.Map<City>(dto);
+                    
+                city.DefineIdAndVersion(id, version);
 
                 var result = _cityService.Update(id, city);
 

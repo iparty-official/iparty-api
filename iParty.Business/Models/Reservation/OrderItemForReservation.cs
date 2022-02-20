@@ -4,8 +4,13 @@ namespace iParty.Business.Models.Reservation
 {
     public class OrderItemForReservation
     {
-        public Guid OrderId { get; set; }
-
-        public Guid OrderItemId { get; set; }
+        public OrderItemForReservation() { }
+        public OrderItemForReservation(Guid orderId, Guid orderItemId)
+        {
+            OrderId = orderId;
+            OrderItemId = orderItemId;
+        }
+        public Guid OrderId { get; private set; }
+        public Guid OrderItemId { get; private set; }
     }
 }

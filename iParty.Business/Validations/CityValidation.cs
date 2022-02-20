@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using iParty.Business.Interfaces.Filters;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
+using iParty.Business.Models.Cities;
 
 namespace iParty.Business.Validations
 {

@@ -25,14 +25,13 @@ namespace iParty.Api.Infra.Messages
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity (new Message()
-            {
-                DateTime = DateTime.Now,
-                From = new PersonForMessage() { Id = from.Id, Name = from.Name },
-                To = new PersonForMessage() { Id = to.Id, Name = to.Name },
-                Text = dto.Text,
-                Order = null
-            });
+            SetEntity (new Message(
+                new PersonForMessage(from.Id, from.Name),
+                new PersonForMessage(to.Id, to.Name),
+                dto.Text,
+                DateTime.Now,
+                null
+                ));
 
             return GetResult();
         }        

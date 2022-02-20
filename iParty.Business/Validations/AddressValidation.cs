@@ -3,6 +3,7 @@ using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
 using System.Linq;
+using iParty.Business.Models.Cities;
 
 namespace iParty.Business.Validations
 {

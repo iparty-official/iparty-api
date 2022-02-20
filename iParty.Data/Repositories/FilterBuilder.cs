@@ -22,28 +22,28 @@ namespace iParty.Data.Repositories
 
         public IFilterBuilder<TEntity> Equal(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.Equal, Value = value });
+            _filters.Add(new Filter<TEntity>(field, FilterOperatorEnum.Equal, value));
 
             return this;
         }
 
         public IFilterBuilder<TEntity> Unequal(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.Unequal, Value = value });
+            _filters.Add(new Filter<TEntity>(field, FilterOperatorEnum.Unequal, value));
 
             return this;
         }
 
         public IFilterBuilder<TEntity> GreaterThan(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.GreaterThan, Value = value });
+            _filters.Add(new Filter<TEntity>(field, FilterOperatorEnum.GreaterThan, value));
 
             return this;
         }
 
         public IFilterBuilder<TEntity> LessThan(Expression<Func<TEntity, object>> field, object value)
         {
-            _filters.Add(new Filter<TEntity>() { Field = field, Operator = FilterOperatorEnum.LessThan, Value = value });
+            _filters.Add(new Filter<TEntity>(field, FilterOperatorEnum.LessThan, value));
 
             return this;
         }

@@ -1,5 +1,4 @@
-﻿using iParty.Api.Views.Orders;
-using System;
+﻿using System;
 
 namespace iParty.Api.Views.Reviews
 {

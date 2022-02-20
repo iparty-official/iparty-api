@@ -1,4 +1,5 @@
 ﻿using iParty.Business.Interfaces.Filters;
+using iParty.Business.Models;
 using System;
 using System.Collections.Generic;
 

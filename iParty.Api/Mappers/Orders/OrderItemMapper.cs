@@ -72,13 +72,7 @@ namespace iParty.Api.Mappers.Orders
 
             if (!result.Success) return result;
 
-            result.Entity = new OrderItem()
-            {
-                Item = _autoMapper.Map<ItemForOrder>(item),
-                Quantity = dto.Quantity,
-                Unit = item.Unit,
-                Price = item.Price
-            };
+            result.DefineEntity(new OrderItem(_autoMapper.Map<ItemForOrder>(item), item.Unit, dto.Quantity, item.Price));
 
             return result;
         }

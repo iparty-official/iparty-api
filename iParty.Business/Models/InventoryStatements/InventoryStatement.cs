@@ -4,10 +4,18 @@ using System;
 namespace iParty.Business.Models.InventoryStatements
 {
     public class InventoryStatement: Entity
-    {        
-        public Item Product { get; set; }
-        public decimal Quantity { get; set; }
-        public InOrOut InOrOut { get; set; }
-        public DateTime DateTime { get; set; }
+    {
+        public InventoryStatement() { }
+        public InventoryStatement(Item product, decimal quantity, InOrOut inOrOut, DateTime dateTime)
+        {
+            Product = product;
+            Quantity = quantity;
+            InOrOut = inOrOut;
+            DateTime = dateTime;
+        }
+        public Item Product { get; private set; }
+        public decimal Quantity { get; private set; }
+        public InOrOut InOrOut { get; private set; }
+        public DateTime DateTime { get; private set; }
     }
 }

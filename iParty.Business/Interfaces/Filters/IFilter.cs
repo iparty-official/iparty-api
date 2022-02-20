@@ -5,9 +5,9 @@ namespace iParty.Business.Interfaces.Filters
 {
     public interface IFilter<TEntity> where TEntity : IEntity
     {        
-        public Expression<Func<TEntity, object>> Field { get; set; }
-        public object Value { get; set; }
-        public FilterOperatorEnum Operator { get; set; }
+        public Expression<Func<TEntity, object>> Field { get; }
+        public object Value { get; }
+        public FilterOperatorEnum Operator { get; }
 
         public string GetFieldName(Expression<Func<TEntity, object>> field);
     }

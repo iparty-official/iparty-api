@@ -5,11 +5,21 @@ namespace iParty.Business.Models.Reservation
 {
     public class Reservation: Entity
     {
-        public DateTime Date { get; set; }
-        public int InitialHour { get; set; }
-        public int FinalHour { get; set; }
-        public Item Item { get; set; }
-        public OrderItemForReservation OrderItem { get; set; }
-        public ReservationReason ReservationReason { get; set; }
+        public Reservation() { }
+        public Reservation(DateTime date, int initialHour, int finalHour, Item item, OrderItemForReservation orderItem, ReservationReason reservationReason)
+        {
+            Date = date;
+            InitialHour = initialHour;
+            FinalHour = finalHour;
+            Item = item;
+            OrderItem = orderItem;
+            ReservationReason = reservationReason;
+        }
+        public DateTime Date { get; private set; }
+        public int InitialHour { get; private set; }
+        public int FinalHour { get; private set; }
+        public Item Item { get; private set; }
+        public OrderItemForReservation OrderItem { get; private set; }
+        public ReservationReason ReservationReason { get; private set; }
     }
 }

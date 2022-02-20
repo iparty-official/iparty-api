@@ -55,7 +55,7 @@ namespace iParty.Api.Controllers.Orders
         {
             try
             {
-                var itemMapperResult = _orderItemMapper.Map(dto).SetId(id);
+                var itemMapperResult = _orderItemMapper.Map(dto).DefineId(id);
 
                 if (!itemMapperResult.Success) return BadRequest(itemMapperResult.Errors);                
 

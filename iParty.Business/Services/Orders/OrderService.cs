@@ -2,11 +2,9 @@
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
-using iParty.Business.Models.Items;
 using iParty.Business.Models.Orders;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace iParty.Business.Services.Orders
 {

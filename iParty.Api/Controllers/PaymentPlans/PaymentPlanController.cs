@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.PaymentPlans;
 using iParty.Api.Views.PaymentPlans;
-using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
-using iParty.Business.Interfaces.Services;
 using iParty.Business.Interfaces.Validations;
 using iParty.Business.Models.PaymentPlans;
 using iParty.Business.Services;
@@ -55,7 +53,9 @@ namespace iParty.Api.Controllers.PaymentPlans
         {
             try
             {
-                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto).SetIdAndVersion(id, version);                
+                var paymentPlan = _autoMapper.Map<PaymentPlan>(dto);
+                
+                paymentPlan.DefineIdAndVersion(id, version);                
 
                 var result = _paymentPlanService.Update(id, paymentPlan);
 

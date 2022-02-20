@@ -29,18 +29,18 @@ namespace iParty.Api.Mappers.People
         {
             var addresses = mapAddresses(dto);
 
-            var person = new Person()
-            {
-                User = dto.User,
-                Name = dto.Name,
-                Document = dto.Document,
-                Photo = dto.Photo,
-                SupplierOrCustomer = SupplierOrCustomer.Customer,
-                CustomerInfo = new Customer() { BirthDate = dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate },
-                SupplierInfo = new Supplier() { PaymentPlans = new List<PaymentPlan>() },
-                Phones = dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList(),
-                Addresses = addresses
-            };
+            var person = new Person
+            (
+                dto.User,
+                dto.Name,
+                dto.Document,
+                dto.Photo,
+                SupplierOrCustomer.Customer,
+                new Customer(dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate),
+                new Supplier(String.Empty, new List<PaymentPlan>()),
+                addresses,
+                dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList()                
+            );
 
             if (!SuccessResult())
             {

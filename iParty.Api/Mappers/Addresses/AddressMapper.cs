@@ -5,6 +5,7 @@ using iParty.Business.Infra.Extensions;
 using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
 using System.Collections.Generic;
+using iParty.Business.Models.Cities;
 
 namespace iParty.Api.Mappers.Addresses
 {
@@ -23,14 +24,7 @@ namespace iParty.Api.Mappers.Addresses
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Address()
-            {
-                ZipCode = dto.ZipCode,
-                Street = dto.Street,
-                Number = dto.Number,
-                District = dto.District,
-                City = city
-            });
+            SetEntity(new Address(dto.ZipCode, dto.Street, dto.Number, dto.District, null));
 
             return GetResult();
         }

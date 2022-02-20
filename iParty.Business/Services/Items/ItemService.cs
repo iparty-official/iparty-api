@@ -125,7 +125,7 @@ namespace iParty.Business.Services.Items
             if (item == null)
                 return ServiceResult<Item>.FailureResult("Não foi possível localizar o item informado.");
 
-            item.ProductInfo.AvailableQuantity += quantity;
+            item.ProductInfo.IncreaseQauntity(quantity);
 
             _repository.Update(itemId, item);
 
@@ -142,7 +142,7 @@ namespace iParty.Business.Services.Items
             if ((item.ProductInfo.AvailableQuantity - quantity) < 0)
                 return ServiceResult<Item>.FailureResult("Não foi possível diminuir o estoque do item, pois sua quantidade ficaria negativa.");
 
-            item.ProductInfo.AvailableQuantity -= quantity;
+            item.ProductInfo.DecreaseQauntity(quantity);
 
             _repository.Update(itemId, item);
 

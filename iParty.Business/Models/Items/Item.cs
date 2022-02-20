@@ -6,17 +6,30 @@ namespace iParty.Business.Models.Items
 {
     public class Item: Entity
     {
-        public Person Supplier { get; set; }
-        public string SKU { get; set; }
-        public string Name { get; set; }
-        public string Details { get; set; }
-        public object Photo { get; set; }
-        public decimal Price { get; set; }
-        public MeasurementUnit Unit { get; set; }
-        public ProductOrService ProductOrService { get; set; }
-        public Product ProductInfo { get; set; }
-        public List<Schedule> Schedules { get; set; }
-        
+        public Item() { }
+        public Item(Person supplier, string sKU, string name, string details, object photo, decimal price, MeasurementUnit unit, ProductOrService productOrService, Product productInfo, List<Schedule> schedules)
+        {
+            Supplier = supplier;
+            SKU = sKU;
+            Name = name;
+            Details = details;
+            Photo = photo;
+            Price = price;
+            Unit = unit;
+            ProductOrService = productOrService;
+            ProductInfo = productInfo;
+            Schedules = schedules;
+        }
+        public Person Supplier { get; private set; }
+        public string SKU { get; private set; }
+        public string Name { get; private set; }
+        public string Details { get; private set; }
+        public object Photo { get; private set; }
+        public decimal Price { get; private set; }
+        public MeasurementUnit Unit { get; private set; }
+        public ProductOrService ProductOrService { get; private set; }
+        public Product ProductInfo { get; private set; }
+        public List<Schedule> Schedules { get; private set; }        
         public void ReplaceSchedule(Guid scheduleId, Schedule newSchedule)
         {
             var currentSchedule = Schedules.Find(x => x.Id == scheduleId);
@@ -28,11 +41,10 @@ namespace iParty.Business.Models.Items
 
             Schedules.Remove(currentSchedule);
 
-            newSchedule.Id = scheduleId;
+            newSchedule.DefineIdAndVersion(scheduleId, Guid.NewGuid());
 
             Schedules.Insert(index, newSchedule);            
         }
-
         public void RemoveSchedule(Guid scheduleId)
         {
             var currentSchedule = Schedules.Find(x => x.Id == scheduleId);
@@ -43,6 +55,6 @@ namespace iParty.Business.Models.Items
             var index = Schedules.IndexOf(currentSchedule);
 
             Schedules.Remove(currentSchedule);            
-        }
+        }     
     }
 }

@@ -1,5 +1,4 @@
 ﻿using iParty.Business.Models.Addresses;
-using iParty.Business.Models.PaymentPlans;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +7,36 @@ namespace iParty.Business.Models.Orders
 {
     public class Order: Entity
     {
-        public DateTime DateTime { get; set; }
-        public PersonForOrder Supplier { get; set; }
-        public PersonForOrder Customer { get; set; }
-        public Address ShippingAddress { get; set; }
-        public decimal Freight { get; set; }
-        public decimal PaymentPlanFee { get; set; }
-        public decimal ItemsTotal { get; set; }
-        public decimal OrderTotal { get; set; }
-        public PaymentPlanForOrder PaymentPlan { get; set; }        
-        public string Notes { get; set; }
-        public OrderStatus Status { get; set; }
-        public DateTime PartyDate { get; set; }
-        public DateTime ExpirationDate { get; set; }
-        public List<OrderItem> Items { get; set; }
-
+        public Order() { }
+        public Order(PersonForOrder supplier, PersonForOrder customer, Address shippingAddress, decimal freight, PaymentPlanForOrder paymentPlan, string notes, DateTime partyDate, List<OrderItem> items)
+        {            
+            Supplier = supplier;
+            Customer = customer;
+            ShippingAddress = shippingAddress;
+            Freight = freight;            
+            PaymentPlan = paymentPlan;
+            Notes = notes;            
+            PartyDate = partyDate;            
+            Items = items;
+        }
+        public DateTime DateTime { get; private set; }
+        public PersonForOrder Supplier { get; private set; }
+        public PersonForOrder Customer { get; private set; }
+        public Address ShippingAddress { get; private set; }
+        public decimal Freight { get; private set; }
+        public decimal PaymentPlanFee { get; private set; }
+        public decimal ItemsTotal { get; private set; }
+        public decimal OrderTotal { get; private set; }
+        public PaymentPlanForOrder PaymentPlan { get; private set; }        
+        public string Notes { get; private set; }
+        public OrderStatus Status { get; private set; }
+        public DateTime PartyDate { get; private set; }
+        public DateTime ExpirationDate { get; private set; }
+        public List<OrderItem> Items { get; private set; }
         public DateTime CalculateExpirationDate(DateTime baseDateTime)
         {
             return baseDateTime.AddDays(7);
         }
-
         public void SetDefaultValuesForNewOrder()
         {
             DateTime = DateTime.Now;
@@ -36,7 +45,6 @@ namespace iParty.Business.Models.Orders
 
             Status = OrderStatus.Draft;
         }
-
         public void CopyHeaderData(Order source)
         {
             Supplier = source.Supplier;
@@ -47,7 +55,6 @@ namespace iParty.Business.Models.Orders
             Notes = source.Notes;
             PartyDate = source.PartyDate;            
         }
-
         public void CopyItemsData(Order newOrder)
         {
             foreach (var item in Items)
@@ -55,22 +62,18 @@ namespace iParty.Business.Models.Orders
                 item.CopyData(newOrder.Items.Find(x => x.Item.Id == item.Item.Id));
             }
         }
-
         public decimal CalculateItemsTotal()
         {
             return Items.Sum(x => x.Total);
         }
-
         public decimal CalculatePaymentPlanFee()
         {
             return Math.Round((this.ItemsTotal + this.Freight) * PaymentPlan.Fee / 100, 2);
         }        
-
         public decimal CalculateOrderTotal()
         {
             return CalculateItemsTotal() + Freight + PaymentPlanFee;
         }
-
         public void TotalizeOrder()
         {
             foreach (var item in Items)
@@ -84,7 +87,6 @@ namespace iParty.Business.Models.Orders
 
             OrderTotal = CalculateOrderTotal();
         }
-
         public void ReplaceItem(Guid currentOrderItemId, OrderItem newOrderItem)
         {
             var currentOrderItem = Items.Find(x => x.Id == currentOrderItemId);
@@ -96,11 +98,10 @@ namespace iParty.Business.Models.Orders
 
             Items.Remove(currentOrderItem);
 
-            newOrderItem.Id = currentOrderItemId;
+            newOrderItem.DefineIdAndVersion(currentOrderItemId, Guid.NewGuid());
 
             Items.Insert(index, newOrderItem);            
         }
-
         internal void RemoveItem(Guid orderItemId)
         {
             var currentOrderItem = Items.Find(x => x.Id == orderItemId);
