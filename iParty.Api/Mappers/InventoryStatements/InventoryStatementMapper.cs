@@ -30,7 +30,7 @@ namespace iParty.Api.Mappers.InventoryStatements
 
             if (!SuccessResult()) return GetResult();            
 
-            SetEntity(new InventoryStatement(product, dto.Quantity, dto.InOrOut, dto.DataTime));
+            SetEntity(new InventoryStatement(new ItemForInventoryStatement(product.Id, product.SKU, product.Name, product.Unit), dto.Quantity, dto.InOrOut, dto.DataTime));
 
             return GetResult();
         }

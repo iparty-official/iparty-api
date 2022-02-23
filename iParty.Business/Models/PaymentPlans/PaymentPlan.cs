@@ -4,7 +4,7 @@ namespace iParty.Business.Models.PaymentPlans
 {
     public class PaymentPlan: Entity
     {
-        public PaymentPlan() { }
+        public PaymentPlan(): base() { }
         public PaymentPlan(PaymentMethod paymentMethod, decimal minInstallmentValue, List<PaymentPlanInstalment> instalments)
         {
             PaymentMethod = paymentMethod;

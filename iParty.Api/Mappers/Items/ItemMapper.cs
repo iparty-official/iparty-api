@@ -33,7 +33,7 @@ namespace iParty.Api.Mappers.Items
 
             var item = new Item
             (                
-                supplier,
+                new PersonForItem(supplier.Id, supplier.Name, supplier.SupplierOrCustomer),
                 dto.SKU,
                 dto.Name,
                 dto.Details,

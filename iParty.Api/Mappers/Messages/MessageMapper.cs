@@ -30,7 +30,7 @@ namespace iParty.Api.Infra.Messages
                 new PersonForMessage(to.Id, to.Name),
                 dto.Text,
                 DateTime.Now,
-                null
+                dto.OrderId
                 ));
 
             return GetResult();
