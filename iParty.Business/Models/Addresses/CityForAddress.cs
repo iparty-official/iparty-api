@@ -6,6 +6,10 @@ namespace iParty.Business.Models.Addresses
 {
     public class CityForAddress
     {
+        public CityForAddress()
+        {
+        }
+
         public CityForAddress(Guid id, string name, UfEnum state)
         {
             Id = id;

@@ -24,7 +24,7 @@ namespace iParty.Api.Mappers.Addresses
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Address(dto.ZipCode, dto.Street, dto.Number, dto.District, null));
+            SetEntity(new Address(dto.ZipCode, dto.Street, dto.Number, dto.District, new CityForAddress(city.Id, city.Name, city.State)));
 
             return GetResult();
         }
