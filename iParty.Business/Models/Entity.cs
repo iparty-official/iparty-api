@@ -40,7 +40,7 @@ namespace iParty.Business.Models
 
         public void Remove()
         {
-            this.Removed = false;
+            this.Removed = true;
         }
     }
 }

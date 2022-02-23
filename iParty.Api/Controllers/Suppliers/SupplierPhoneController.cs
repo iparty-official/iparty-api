@@ -54,9 +54,7 @@ namespace iParty.Api.Controllers.Suppliers
         {
             try
             {
-                var phone = _autoMapper.Map<Phone>(dto);
-                
-                phone.DefineId(id);
+                var phone = _autoMapper.Map<Phone>(dto);                               
 
                 var result = _supplierService.ReplacePhone(supplierId, id, phone);
 

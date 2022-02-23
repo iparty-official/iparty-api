@@ -4,7 +4,7 @@ namespace iParty.Business.Models.Orders
 {
     public class OrderItem: Entity
     {
-        public OrderItem() { }
+        public OrderItem() : base() { }
         public OrderItem(ItemForOrder item, MeasurementUnit unit, int quantity, decimal price)
         {
             Item = item;

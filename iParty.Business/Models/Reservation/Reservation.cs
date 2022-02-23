@@ -5,7 +5,7 @@ namespace iParty.Business.Models.Reservation
 {
     public class Reservation: Entity
     {
-        public Reservation() { }
+        public Reservation() : base() { }
         public Reservation(DateTime date, int initialHour, int finalHour, Item item, OrderItemForReservation orderItem, ReservationReason reservationReason)
         {
             Date = date;

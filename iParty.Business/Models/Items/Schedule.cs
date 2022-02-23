@@ -5,7 +5,7 @@ namespace iParty.Business.Models.Items
 {
     public class Schedule : Entity
     {
-        public Schedule() { }
+        public Schedule() : base() { }
         public Schedule(DayOfWeek dayOfWeek, List<ScheduleItem> items)
         {
             DayOfWeek = dayOfWeek;

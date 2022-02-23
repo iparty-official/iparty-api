@@ -5,7 +5,7 @@ namespace iParty.Business.Models.Users
 {
     public class User : Entity
     {
-        public User(){}
+        public User() : base() {}
         
         public User(string emailAddress, string password, UserRole role, bool confirmedEmail)
         {
@@ -20,12 +20,12 @@ namespace iParty.Business.Models.Users
         public UserRole Role { get; private set; }
         public bool ConfirmedEmail { get; private set; }
 
-        public void DefineUserRole(UserRole role)
+        public void ChangeUserRole(UserRole role)
         {
             this.Role = role;
         }
 
-        public void DefineUserPassword(string unhashedPassword)
+        public void ChangeUserPassword(string unhashedPassword)
         {
             this.Password = GeneratePasswordHash(this.EmailAddress, unhashedPassword);
         }

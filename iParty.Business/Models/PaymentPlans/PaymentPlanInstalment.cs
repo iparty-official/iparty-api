@@ -2,7 +2,7 @@
 {
     public class PaymentPlanInstalment: Entity
     {
-        public PaymentPlanInstalment() { }
+        public PaymentPlanInstalment(): base() { }
         public PaymentPlanInstalment(int quantity, decimal fee)
         {
             Quantity = quantity;

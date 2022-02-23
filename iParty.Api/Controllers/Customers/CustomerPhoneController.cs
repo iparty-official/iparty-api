@@ -54,9 +54,7 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var phone = _autoMapper.Map<Phone>(dto);
-                
-                phone.DefineId(id);
+                var phone = _autoMapper.Map<Phone>(dto);                               
 
                 var result = _customerService.ReplacePhone(customerId, id, phone);
 

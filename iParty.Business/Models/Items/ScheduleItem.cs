@@ -2,7 +2,7 @@
 {
     public class ScheduleItem: Entity
     {
-        public ScheduleItem() { }
+        public ScheduleItem() : base() { }
         public ScheduleItem(int initialHour, int finalHour)
         {
             InitialHour = initialHour;

@@ -37,7 +37,7 @@ namespace iParty.Api.Infra.Bookmarks
 
             if (!SuccessResult()) return GetResult();
 
-            SetEntity(new Bookmark(customer, item, DateTime.Now));
+            SetEntity(new Bookmark(new PersonForBookmark(customer.Id, customer.Name), new ItemForBookmark(item.Id, item.SKU, item.Name, item.Photo), DateTime.Now));
 
             return GetResult();
         }

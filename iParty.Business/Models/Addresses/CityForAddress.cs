@@ -1,5 +1,4 @@
-﻿using iParty.Business.Interfaces;
-using iParty.Business.Models.Cities;
+﻿using iParty.Business.Models.Cities;
 using System;
 
 namespace iParty.Business.Models.Addresses

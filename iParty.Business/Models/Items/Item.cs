@@ -6,11 +6,11 @@ namespace iParty.Business.Models.Items
 {
     public class Item: Entity
     {
-        public Item() { }
-        public Item(Person supplier, string sKU, string name, string details, object photo, decimal price, MeasurementUnit unit, ProductOrService productOrService, Product productInfo, List<Schedule> schedules)
+        public Item() : base() { }
+        public Item(PersonForItem supplier, string sku, string name, string details, object photo, decimal price, MeasurementUnit unit, ProductOrService productOrService, Product productInfo, List<Schedule> schedules)
         {
             Supplier = supplier;
-            SKU = sKU;
+            SKU = sku;
             Name = name;
             Details = details;
             Photo = photo;
@@ -20,7 +20,7 @@ namespace iParty.Business.Models.Items
             ProductInfo = productInfo;
             Schedules = schedules;
         }
-        public Person Supplier { get; private set; }
+        public PersonForItem Supplier { get; private set; }
         public string SKU { get; private set; }
         public string Name { get; private set; }
         public string Details { get; private set; }

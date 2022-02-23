@@ -6,7 +6,7 @@ namespace iParty.Business.Models.People
 {
     public class Person: Entity
     {
-        public Person() { }
+        public Person() : base() { }
         public Person(object user, string name, string document, object photo, SupplierOrCustomer supplierOrCustomer, Customer customerInfo, Supplier supplierInfo, List<Address> addresses, List<Phone> phones)
         {
             User = user;
@@ -26,7 +26,7 @@ namespace iParty.Business.Models.People
         public SupplierOrCustomer SupplierOrCustomer { get; private set; }        
         public Customer CustomerInfo { get; private set; }        
         public Supplier SupplierInfo { get; private set; }        
-        public List<Address> Addresses { get; private set; }
+        public List<Address> Addresses { get; private set; } //TODO: Rever
         public List<Phone> Phones { get; private set; }
         public void ReplacePhone(Guid phoneId, Phone newPhone)
         {
@@ -37,9 +37,7 @@ namespace iParty.Business.Models.People
 
             var index = Phones.IndexOf(currentPhone);
 
-            Phones.Remove(currentPhone);
-
-            newPhone.DefineIdAndVersion(phoneId, Guid.NewGuid());
+            Phones.Remove(currentPhone);            
 
             Phones.Insert(index, newPhone);            
         }       
@@ -63,9 +61,7 @@ namespace iParty.Business.Models.People
 
             var index = Addresses.IndexOf(currentAddress);
 
-            Addresses.Remove(currentAddress);
-
-            newAddress.DefineIdAndVersion(addressId, Guid.NewGuid());
+            Addresses.Remove(currentAddress);            
 
             Addresses.Insert(index, newAddress);            
         }
