@@ -31,7 +31,7 @@ namespace iParty.Business.Services.InventoryStatements
         }
 
         public ServiceResult<InventoryStatement> Create(InventoryStatement inventoryStatement)
-        {           
+        {            
             var result = _inventoryStatementValidation.Validate(inventoryStatement);
 
             if (!result.IsValid)

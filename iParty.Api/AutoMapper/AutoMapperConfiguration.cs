@@ -35,11 +35,14 @@ namespace iParty.Api.AutoMapper
     {
         public AutoMapperConfiguration()
         {
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<Address, AddressView>().ReverseMap();
+
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<City, CityView>().ReverseMap();
 
             CreateMap<CityForAddress, CityDto>().ReverseMap();
-            CreateMap<CityForAddress, CityForAddressView>().ReverseMap();
+            CreateMap<CityForAddress, CityView>().ReverseMap();
 
             CreateMap<Person, PersonDto>().ReverseMap();
             CreateMap<Person, PersonView>().ReverseMap();

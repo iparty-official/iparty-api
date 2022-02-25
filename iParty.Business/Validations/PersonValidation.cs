@@ -74,7 +74,7 @@ namespace iParty.Business.Validations
             }
 
             foreach (var address in person.Addresses)
-            {
+            {                
                 result = _addressValidation.Validate(address);
 
                 if (!result.IsValid) return result;

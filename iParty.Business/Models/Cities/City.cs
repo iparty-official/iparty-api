@@ -2,7 +2,7 @@
 {
     public class City: Entity
     {
-        public City() { }
+        public City() : base() { }
         public City(int ibgeNumber, string name, UfEnum state)
         {
             IbgeNumber = ibgeNumber;

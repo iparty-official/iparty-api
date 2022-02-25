@@ -5,7 +5,7 @@ namespace iParty.Business.Models.Notications
 {
     public class Notification: Entity
     {
-        public Notification() { }
+        public Notification() : base() { }
         public Notification(DateTime dateTime, PersonForNotification destination, string text)
         {
             DateTime = dateTime;

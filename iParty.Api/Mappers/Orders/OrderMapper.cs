@@ -86,7 +86,7 @@ namespace iParty.Api.Mappers.Orders
             if (installment == null)
                 AddError("O plano de pagamento informado não aceita a quantidade de parcelas que foi informada.");
            
-            return new PaymentPlanForOrder(paymentPlan.PaymentMethod, dto.Installments, installment.Fee);
+            return new PaymentPlanForOrder(paymentPlan.Id, paymentPlan.PaymentMethod, dto.Installments, installment.Fee);
 
         }
 

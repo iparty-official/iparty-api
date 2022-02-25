@@ -110,7 +110,7 @@ namespace iParty.Api.Mappers.People
             }
             else
             {
-                return new List<Address>();
+                return mapperResultList.Select(x => x.Entity).ToList();
             }
         }
     }

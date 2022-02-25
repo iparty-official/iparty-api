@@ -30,16 +30,16 @@ namespace iParty.Business.Services.Users
 
         public ServiceResult<User> Create(User user)
         {
-            user.DefineUserRole(UserRole.Customer);
+            user.ChangeUserRole(UserRole.Customer);
 
-            user.DefineUserPassword(user.Password);
+            user.ChangeUserPassword(user.Password);
 
             return _basicService.Create(user);
         }
 
         public ServiceResult<User> Update(Guid id, User user)
         {
-            user.DefineUserPassword(user.Password);
+            user.ChangeUserPassword(user.Password);
 
             return _basicService.Update(id, user);            
         }
@@ -77,7 +77,7 @@ namespace iParty.Business.Services.Users
             if (currentUser == null)
                 return ServiceResult<User>.FailureResult("Não foi possível localizar o usuário informado.");
 
-            currentUser.DefineUserRole(UserRole.Supplier);
+            currentUser.ChangeUserRole(UserRole.Supplier);
 
             var result = _userValidation.Validate(user);
 

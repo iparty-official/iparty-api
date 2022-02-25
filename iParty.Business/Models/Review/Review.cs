@@ -4,7 +4,7 @@ namespace iParty.Business.Models.Review
 {
     public class Review: Entity
     {
-        public Review() { }
+        public Review() : base() { }
         public Review(DateTime dateTime, int stars, string description, OrderItemForReview orderItem)
         {
             DateTime = dateTime;

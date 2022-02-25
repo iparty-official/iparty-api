@@ -7,7 +7,7 @@ namespace iParty.Business.Models.Orders
 {
     public class Order: Entity
     {
-        public Order() { }
+        public Order() : base() { }
         public Order(PersonForOrder supplier, PersonForOrder customer, Address shippingAddress, decimal freight, PaymentPlanForOrder paymentPlan, string notes, DateTime partyDate, List<OrderItem> items)
         {            
             Supplier = supplier;
@@ -22,7 +22,7 @@ namespace iParty.Business.Models.Orders
         public DateTime DateTime { get; private set; }
         public PersonForOrder Supplier { get; private set; }
         public PersonForOrder Customer { get; private set; }
-        public Address ShippingAddress { get; private set; }
+        public Address ShippingAddress { get; private set; } //TODO: Rever
         public decimal Freight { get; private set; }
         public decimal PaymentPlanFee { get; private set; }
         public decimal ItemsTotal { get; private set; }

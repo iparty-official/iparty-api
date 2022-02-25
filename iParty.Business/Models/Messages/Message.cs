@@ -5,20 +5,20 @@ namespace iParty.Business.Models.Messages
 {
     public class Message: Entity
     {
-        public Message() { }
-        public Message(PersonForMessage from, PersonForMessage to, string text, DateTime dateTime, Order order)
+        public Message() : base() { }
+        public Message(PersonForMessage from, PersonForMessage to, string text, DateTime dateTime, Guid? orderId)
         {
             From = from;
             To = to;
             Text = text;
             DateTime = dateTime;
-            Order = order;
+            OrderId = orderId;
         }
         public PersonForMessage From { get; private set; }
         public PersonForMessage To { get; private set; }
         public string Text { get; private set; }
         public DateTime DateTime { get; private set; }         
-        public Order Order { get; private set; }
+        public Guid? OrderId { get; private set; }
 
     }
 }
