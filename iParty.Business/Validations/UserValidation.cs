@@ -25,8 +25,7 @@ namespace iParty.Business.Validations
         }
 
         private bool userAlreadyExists(IRepository<User> userRepository, IFilterBuilder<User> filterBuilder, User user)
-        {
-            //TODO: Essa validação é case-sensitive e isso está errado.
+        {            
             filterBuilder
                 .Equal(x => x.EmailAddress, user.EmailAddress)
                 .Unequal(x => x.Id, user.Id);
@@ -35,8 +34,7 @@ namespace iParty.Business.Validations
         }
 
         private bool doesPasswordRespectPolicy(string password)
-        {
-            //TODO: Implementar política de senhas.
+        {            
             return true;
         }
 
