@@ -22,7 +22,7 @@ namespace iParty.Business.Models.Orders
         public DateTime DateTime { get; private set; }
         public PersonForOrder Supplier { get; private set; }
         public PersonForOrder Customer { get; private set; }
-        public Address ShippingAddress { get; private set; } //TODO: Rever
+        public Address ShippingAddress { get; private set; }
         public decimal Freight { get; private set; }
         public decimal PaymentPlanFee { get; private set; }
         public decimal ItemsTotal { get; private set; }

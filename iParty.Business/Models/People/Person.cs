@@ -26,7 +26,7 @@ namespace iParty.Business.Models.People
         public SupplierOrCustomer SupplierOrCustomer { get; private set; }        
         public Customer CustomerInfo { get; private set; }        
         public Supplier SupplierInfo { get; private set; }        
-        public List<Address> Addresses { get; private set; } //TODO: Rever
+        public List<Address> Addresses { get; private set; }
         public List<Phone> Phones { get; private set; }
         public void ReplacePhone(Guid phoneId, Phone newPhone)
         {
