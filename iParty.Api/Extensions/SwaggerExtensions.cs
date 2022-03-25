@@ -3,16 +3,31 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace iParty.Api.Extensions
 {
     public static class SwaggerExtensions
-    {
+    {        
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "iParty.Api", Version = "v1" });
+                c.EnableAnnotations();
+
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "iParty API",
+                    Description = "This is an API for a future mobile app called iParty. The purpose of the app is to connect event sector suppliers to people who want to promote an event like weddings, anniversaries, and ceremonies in general.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Oséias da Silva Martins",
+                        Url = new Uri("https://github.com/ozmartins/iParty"),
+                        Email = "oseias.silva.martins@gmail.com"
+                    },                    
+                });
+
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
@@ -20,6 +35,7 @@ namespace iParty.Api.Extensions
                     In = ParameterLocation.Header,
                     Scheme = "bearer"
                 });
+                
                 c.OperationFilter<AuthenticationRequirementsOperationFilter>();
             });
 
