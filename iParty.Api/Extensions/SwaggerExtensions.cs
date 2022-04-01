@@ -22,9 +22,9 @@ namespace iParty.Api.Extensions
                     Description = "This is an API for a future mobile app called iParty. The purpose of the app is to connect event sector suppliers to people who want to promote an event like weddings, anniversaries, and ceremonies in general.",
                     Contact = new OpenApiContact
                     {
-                        Name = "Oséias da Silva Martins",
+                        Name = "Haiti Naspolini Neto e Oséias da Silva Martins",
                         Url = new Uri("https://github.com/ozmartins/iParty"),
-                        Email = "oseias.silva.martins@gmail.com"
+                        Email = "haitineto@gmail.com;oseias.silva.martins@gmail.com"
                     },                    
                 });
 

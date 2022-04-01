@@ -1,10 +1,13 @@
-﻿using iParty.Api.Dtos.Orders;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.Orders;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mapppers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.Orders;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Orders
 {
@@ -24,6 +27,10 @@ namespace iParty.Api.Controllers.Orders
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(OrderView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Create([FromBody] OrderDto dto)
         {                        
             try
@@ -48,6 +55,10 @@ namespace iParty.Api.Controllers.Orders
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(OrderView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] OrderDto dto)
         {
             try
@@ -72,6 +83,10 @@ namespace iParty.Api.Controllers.Orders
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -91,6 +106,9 @@ namespace iParty.Api.Controllers.Orders
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(OrderView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -108,6 +126,9 @@ namespace iParty.Api.Controllers.Orders
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<OrderView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Get()
         {
             try

@@ -2,9 +2,11 @@
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
+using iParty.Api.Views.Addresses;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 
 namespace iParty.Api.Controllers.Suppliers
@@ -14,23 +16,24 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("supplier/{supplierId}/address")]
     public class SupplierAddressController : ControllerBase
     {
-        private readonly ISupplierService _supplierService;
-
-        private readonly IMapper _autoMapper;
+        private readonly ISupplierService _supplierService;        
 
         private readonly ISupplierMapper _supplierMapper;
 
         private readonly IAddressMapper _addressMapper;
 
-        public SupplierAddressController(ISupplierService supplierService, IMapper autoMapper, ISupplierMapper supplierMapper, IAddressMapper addressMapper)
+        public SupplierAddressController(ISupplierService supplierService, ISupplierMapper supplierMapper, IAddressMapper addressMapper)
         {
-            _supplierService = supplierService;
-            _autoMapper = autoMapper;
+            _supplierService = supplierService;          
             _supplierMapper = supplierMapper;
             _addressMapper = addressMapper;
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(AddressView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierAddressConstant.CreateSummary, Description = SupplierAddressConstant.CreateDescription, Tags = new[] { SupplierAddressConstant.Tag })]
         public IActionResult Create([FromRoute] Guid supplierId, [FromBody] AddressDto dto)
         {
             try
@@ -55,6 +58,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpPut]
+        [ProducesResponseType(typeof(AddressView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierAddressConstant.UpdateSummary, Description = SupplierAddressConstant.UpdateDescription, Tags = new[] { SupplierAddressConstant.Tag })]
         public IActionResult Update([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromBody] AddressDto dto)
         {
             try
@@ -79,6 +86,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierAddressConstant.DeleteSummary, Description = SupplierAddressConstant.DeleteDescription, Tags = new[] { SupplierAddressConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
         {
             try

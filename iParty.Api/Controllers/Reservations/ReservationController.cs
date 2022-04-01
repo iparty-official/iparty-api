@@ -7,6 +7,9 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Views.Reservations;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Reservations
 {
@@ -26,6 +29,10 @@ namespace iParty.Api.Controllers.Reservations
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ReservationView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Create([FromBody] ReservationDto dto)
         {
             try
@@ -50,6 +57,10 @@ namespace iParty.Api.Controllers.Reservations
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -69,6 +80,9 @@ namespace iParty.Api.Controllers.Reservations
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(ReservationView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -86,6 +100,9 @@ namespace iParty.Api.Controllers.Reservations
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<ReservationView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Get()
         {
             try

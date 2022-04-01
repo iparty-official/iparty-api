@@ -1,4 +1,5 @@
-﻿using iParty.Api.Dtos.Bookmarks;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Validations;
@@ -7,7 +8,6 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.Bookmarks;
 using System.Collections.Generic;
 

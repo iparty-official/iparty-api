@@ -1,9 +1,12 @@
-﻿using iParty.Api.Dtos.InventoryStatements;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.InventoryStatements;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.InventoryStatements;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.InventoryStatements
 {
@@ -23,6 +26,10 @@ namespace iParty.Api.Controllers.InventoryStatements
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(InventoryStatementView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Create([FromBody] InventoryStatementDto dto)
         {
             try
@@ -47,6 +54,10 @@ namespace iParty.Api.Controllers.InventoryStatements
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -66,6 +77,9 @@ namespace iParty.Api.Controllers.InventoryStatements
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(InventoryStatementView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -83,6 +97,9 @@ namespace iParty.Api.Controllers.InventoryStatements
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<InventoryStatementView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Get()
         {
             try
