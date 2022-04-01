@@ -44,4 +44,4 @@ Now, the app is running and you can try it accessing the URL https://localhost:5
 
 ## Documentation
 
-To see API documentation, please click in this link https://iparty-api.herokuapp.com/swagger/index.html
+To see API documentation, please click on this link https://iparty-api.herokuapp.com/swagger/index.html
