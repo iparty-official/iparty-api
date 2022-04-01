@@ -1,10 +1,13 @@
-﻿using iParty.Api.Dtos.Items;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.Items;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.Items;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Items
 {
@@ -24,6 +27,10 @@ namespace iParty.Api.Controllers.Items
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ItemView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Create([FromBody] ItemDto dto)
         {
             try
@@ -48,6 +55,10 @@ namespace iParty.Api.Controllers.Items
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(ItemView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ItemDto dto)
         {
             try
@@ -72,6 +83,10 @@ namespace iParty.Api.Controllers.Items
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -91,6 +106,9 @@ namespace iParty.Api.Controllers.Items
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(ItemView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -108,6 +126,9 @@ namespace iParty.Api.Controllers.Items
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<ItemView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Get()
         {
             try

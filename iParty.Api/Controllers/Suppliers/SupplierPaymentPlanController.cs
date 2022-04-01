@@ -4,6 +4,8 @@ using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Views.PaymentPlans;
 
 namespace iParty.Api.Controllers.Suppliers
 {
@@ -23,6 +25,10 @@ namespace iParty.Api.Controllers.Suppliers
         }
         
         [HttpPost]
+        [ProducesResponseType(typeof(PaymentPlanView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.CreateSummary, Description = SupplierPaymentPlanConstant.CreateDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
         public IActionResult Create([FromRoute] Guid supplierId, [FromBody] GuidDto dto)
         {
             try
@@ -43,6 +49,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.CreateSummary, Description = SupplierPaymentPlanConstant.CreateDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromRoute] Guid version)
         {
             try

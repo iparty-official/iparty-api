@@ -1,10 +1,13 @@
 ﻿using iParty.Api.Dtos.People;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
+using iParty.Api.Views.People;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Suppliers
 {
@@ -24,6 +27,10 @@ namespace iParty.Api.Controllers.Suppliers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(SupplierView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Create([FromBody] SupplierDto dto)
         {
             try
@@ -48,6 +55,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(SupplierView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] SupplierDto dto)
         {
             try
@@ -72,6 +83,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -91,6 +106,9 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(SupplierView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -108,6 +126,9 @@ namespace iParty.Api.Controllers.Suppliers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<SupplierView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Get()
         {
             try
