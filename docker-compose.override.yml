@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  iparty.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - CONNECTION_STRING=mongodb+srv://iparty:admin@iparty.mdem9.mongodb.net/iParty?retryWrites=true&w=majority
+      - DATABASE_ALIAS=iParty
+      - TOKEN_SECRET=fedaf7d8863b48e197b9287d492b708e
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
