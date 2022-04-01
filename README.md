@@ -7,7 +7,7 @@ This is an API for a future mobile app called iParty. The purpose of the app is 
  - [Libraries](#libraries)
  - [Production](#production)
  - [Running locally](#running-locally)
- - [Quick Reference](#quick-reference)
+ - [Documentation](#documentation)
 
 ## Libraries
 
@@ -41,3 +41,7 @@ docker compose up -d
 ```
 
 Now, the app is running and you can try it accessing the URL https://localhost:5001
+
+## Documentation
+
+To see API documentation, please click in this link https://iparty-api.herokuapp.com/swagger/index.html
