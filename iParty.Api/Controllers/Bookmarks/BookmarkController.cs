@@ -7,6 +7,9 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Views.Bookmarks;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Bookmarks
 {
@@ -15,6 +18,8 @@ namespace iParty.Api.Controllers.Bookmarks
     [Route("[controller]")]
     public class BookmarkController : ControllerBase
     {
+        
+
         private readonly BasicService<Bookmark> _serviceBookmark;
 
         private readonly IBookmarkMapper _bookmarkMapper;
@@ -25,7 +30,11 @@ namespace iParty.Api.Controllers.Bookmarks
             _bookmarkMapper = bookmarkMapper;            
         }
 
-        [HttpPost]
+        [HttpPost]        
+        [ProducesResponseType(typeof(BookmarkView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = BookmarkConstant.CreateSummary, Description = BookmarkConstant.CreateDescription, Tags = new[] { BookmarkConstant.Tag })]
         public IActionResult Create([FromBody] BookmarkDto dto)
         {
             try
@@ -56,6 +65,10 @@ namespace iParty.Api.Controllers.Bookmarks
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = BookmarkConstant.DeleteSummary, Description = BookmarkConstant.DeleteDescription, Tags = new[] { BookmarkConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -78,6 +91,9 @@ namespace iParty.Api.Controllers.Bookmarks
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(BookmarkView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = BookmarkConstant.GetByIdSummary, Description = BookmarkConstant.GetByIdDescription, Tags = new[] { BookmarkConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -95,6 +111,9 @@ namespace iParty.Api.Controllers.Bookmarks
         }
                 
         [HttpGet]
+        [ProducesResponseType(typeof(List<BookmarkView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = BookmarkConstant.GetAllSummary, Description = BookmarkConstant.GetAllDescription, Tags = new[] { BookmarkConstant.Tag })]
         public IActionResult Get()
         {
             try
