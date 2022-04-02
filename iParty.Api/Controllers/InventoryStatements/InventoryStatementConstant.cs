@@ -4,11 +4,10 @@
     {
         public const string Tag = "Inventory Statement";
 
-        public const string CreateSummary = "Create a city in the system.";
-        public const string UpdateSummary = "Update a city in the system.";
-        public const string DeleteSummary = "Remove a city from the system.";
-        public const string GetByIdSummary = "Get a specific city from the system.";
-        public const string GetAllSummary = "Get all the the cities from the system.";
+        public const string CreateSummary = "Create an inventory statement entry in the system.";        
+        public const string DeleteSummary = "Remove an inventory statement entry from the system.";
+        public const string GetByIdSummary = "Get a specific inventory statement entry from the system.";
+        public const string GetAllSummary = "Get all the the inventory statement entries from the system.";
 
         public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
         public const string DeleteDescription = "Please, don't call this method. I'm begging you.";

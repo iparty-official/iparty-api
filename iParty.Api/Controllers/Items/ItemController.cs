@@ -58,7 +58,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(ItemView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
+        [SwaggerOperation(Summary = ItemConstant.UpdateSummary, Description = ItemConstant.UpdateDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ItemDto dto)
         {
             try
@@ -86,7 +86,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
+        [SwaggerOperation(Summary = ItemConstant.DeleteSummary, Description = ItemConstant.DeleteDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -108,7 +108,7 @@ namespace iParty.Api.Controllers.Items
         [HttpGet]
         [ProducesResponseType(typeof(ItemView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
+        [SwaggerOperation(Summary = ItemConstant.GetByIdSummary, Description = ItemConstant.GetByIdDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace iParty.Api.Controllers.Items
         [HttpGet]
         [ProducesResponseType(typeof(List<ItemView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
+        [SwaggerOperation(Summary = ItemConstant.GetAllSummary, Description = ItemConstant.GetAllDescription, Tags = new[] { ItemConstant.Tag })]
         public IActionResult Get()
         {
             try

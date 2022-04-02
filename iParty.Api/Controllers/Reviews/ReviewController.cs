@@ -60,7 +60,7 @@ namespace iParty.Api.Controllers.Reviews
         [ProducesResponseType(typeof(ReviewView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReviewConstant.CreateSummary, Description = ReviewConstant.CreateDescription, Tags = new[] { ReviewConstant.Tag })]
+        [SwaggerOperation(Summary = ReviewConstant.UpdateSummary, Description = ReviewConstant.UpdateDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ReviewDto dto)
         {
             try
@@ -88,7 +88,7 @@ namespace iParty.Api.Controllers.Reviews
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReviewConstant.CreateSummary, Description = ReviewConstant.CreateDescription, Tags = new[] { ReviewConstant.Tag })]
+        [SwaggerOperation(Summary = ReviewConstant.DeleteSummary, Description = ReviewConstant.DeleteDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -110,7 +110,7 @@ namespace iParty.Api.Controllers.Reviews
         [HttpGet]
         [ProducesResponseType(typeof(ReviewView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReviewConstant.CreateSummary, Description = ReviewConstant.CreateDescription, Tags = new[] { ReviewConstant.Tag })]
+        [SwaggerOperation(Summary = ReviewConstant.GetByIdSummary, Description = ReviewConstant.GetByIdDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -130,7 +130,7 @@ namespace iParty.Api.Controllers.Reviews
         [HttpGet]
         [ProducesResponseType(typeof(List<ReviewView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReviewConstant.CreateSummary, Description = ReviewConstant.CreateDescription, Tags = new[] { ReviewConstant.Tag })]
+        [SwaggerOperation(Summary = ReviewConstant.GetAllSummary, Description = ReviewConstant.GetAllDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Get()
         {
             try

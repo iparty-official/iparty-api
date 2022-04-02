@@ -60,7 +60,7 @@ namespace iParty.Api.Controllers.Reservations
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
+        [SwaggerOperation(Summary = ReservationConstant.DeleteSummary, Description = ReservationConstant.DeleteDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -82,7 +82,7 @@ namespace iParty.Api.Controllers.Reservations
         [HttpGet]
         [ProducesResponseType(typeof(ReservationView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
+        [SwaggerOperation(Summary = ReservationConstant.GetByIdSummary, Description = ReservationConstant.GetByIdDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -102,7 +102,7 @@ namespace iParty.Api.Controllers.Reservations
         [HttpGet]
         [ProducesResponseType(typeof(List<ReservationView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ReservationConstant.CreateSummary, Description = ReservationConstant.CreateDescription, Tags = new[] { ReservationConstant.Tag })]
+        [SwaggerOperation(Summary = ReservationConstant.GetAllSummary, Description = ReservationConstant.GetAllDescription, Tags = new[] { ReservationConstant.Tag })]
         public IActionResult Get()
         {
             try

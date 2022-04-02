@@ -59,7 +59,7 @@ namespace iParty.Api.Controllers.Customers
         [ProducesResponseType(typeof(PhoneView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerPhoneConstant.CreateSummary, Description = CustomerPhoneConstant.CreateDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerPhoneConstant.UpdateSummary, Description = CustomerPhoneConstant.UpdateDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
         public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] PhoneDto dto)
         {
             try
@@ -85,7 +85,7 @@ namespace iParty.Api.Controllers.Customers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerPhoneConstant.CreateSummary, Description = CustomerPhoneConstant.CreateDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerPhoneConstant.DeleteSummary, Description = CustomerPhoneConstant.DeleteDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid customerId, [FromRoute] Guid id)
         {
             try

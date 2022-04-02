@@ -58,7 +58,7 @@ namespace iParty.Api.Controllers.Customers
         [ProducesResponseType(typeof(CustomerView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerConstant.CreateSummary, Description = CustomerConstant.CreateDescription, Tags = new[] { CustomerConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerConstant.UpdateSummary, Description = CustomerConstant.UpdateDescription, Tags = new[] { CustomerConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CustomerDto dto)
         {
             try
@@ -86,7 +86,7 @@ namespace iParty.Api.Controllers.Customers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerConstant.CreateSummary, Description = CustomerConstant.CreateDescription, Tags = new[] { CustomerConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerConstant.DeleteSummary, Description = CustomerConstant.DeleteDescription, Tags = new[] { CustomerConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -108,7 +108,7 @@ namespace iParty.Api.Controllers.Customers
         [HttpGet]
         [ProducesResponseType(typeof(CustomerView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerConstant.CreateSummary, Description = CustomerConstant.CreateDescription, Tags = new[] { CustomerConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerConstant.GetByIdSummary, Description = CustomerConstant.GetByIdDescription, Tags = new[] { CustomerConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace iParty.Api.Controllers.Customers
         [HttpGet]
         [ProducesResponseType(typeof(List<CustomerView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CustomerConstant.CreateSummary, Description = CustomerConstant.CreateDescription, Tags = new[] { CustomerConstant.Tag })]
+        [SwaggerOperation(Summary = CustomerConstant.GetAllSummary, Description = CustomerConstant.GetAllDescription, Tags = new[] { CustomerConstant.Tag })]
         public IActionResult Get()
         {
             try

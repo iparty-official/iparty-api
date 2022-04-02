@@ -58,7 +58,7 @@ namespace iParty.Api.Controllers.Cities
         [ProducesResponseType(typeof(CityView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        [SwaggerOperation(Summary = CityConstant.UpdateSummary, Description = CityConstant.UpdateDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CityDto dto)
         {            
             try
@@ -86,7 +86,7 @@ namespace iParty.Api.Controllers.Cities
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        [SwaggerOperation(Summary = CityConstant.DeleteSummary, Description = CityConstant.DeleteDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -108,7 +108,7 @@ namespace iParty.Api.Controllers.Cities
         [HttpGet]
         [ProducesResponseType(typeof(CityView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        [SwaggerOperation(Summary = CityConstant.GetByIdSummary, Description = CityConstant.GetByIdDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace iParty.Api.Controllers.Cities
         [HttpGet]
         [ProducesResponseType(typeof(List<CityView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        [SwaggerOperation(Summary = CityConstant.GetAllSummary, Description = CityConstant.GetAllDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Get()
         {
             try

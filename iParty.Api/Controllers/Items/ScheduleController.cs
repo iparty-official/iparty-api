@@ -59,7 +59,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(ScheduleView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ScheduleConstant.CreateSummary, Description = ScheduleConstant.CreateDescription, Tags = new[] { ScheduleConstant.Tag })]
+        [SwaggerOperation(Summary = ScheduleConstant.UpdateSummary, Description = ScheduleConstant.UpdateDescription, Tags = new[] { ScheduleConstant.Tag })]
         public IActionResult Update([FromRoute] Guid itemId, [FromRoute] Guid id, [FromBody] ScheduleDto dto)
         {
             try
@@ -87,7 +87,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = ScheduleConstant.CreateSummary, Description = ScheduleConstant.CreateDescription, Tags = new[] { ScheduleConstant.Tag })]
+        [SwaggerOperation(Summary = ScheduleConstant.DeleteSummary, Description = ScheduleConstant.DeleteDescription, Tags = new[] { ScheduleConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid itemId, [FromRoute] Guid id)
         {
             try

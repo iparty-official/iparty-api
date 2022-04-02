@@ -4,7 +4,7 @@
     {
         public const string Tag = "Bookmark";
 
-        public const string CreateSummary = "Create a bookmark for the user.";        
+        public const string CreateSummary = "Creates a bookmark for the user.";
         public const string DeleteSummary = "Remove a user's bookmark.";
         public const string GetByIdSummary = "Get a specific bookmark of an user.";
         public const string GetAllSummary = "Get all the user's bookmarks.";

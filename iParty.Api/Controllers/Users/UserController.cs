@@ -29,8 +29,7 @@ namespace iParty.Api.Controllers.Users
         [HttpPost]
         [ProducesResponseType(typeof(UserView), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Create([FromBody] UserDto dto)
         {
             try
@@ -55,8 +54,7 @@ namespace iParty.Api.Controllers.Users
         [HttpPost]
         [ProducesResponseType(typeof(LoginView), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Login([FromBody] UserDto dto)
         {
             try
@@ -81,8 +79,7 @@ namespace iParty.Api.Controllers.Users
         [HttpPut]
         [ProducesResponseType(typeof(UserView), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult ChangePassword([FromRoute] Guid id, [FromBody] ChangePasswordDto dto)
         {
             try
@@ -112,8 +109,7 @@ namespace iParty.Api.Controllers.Users
         [HttpDelete]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]       
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -135,8 +131,7 @@ namespace iParty.Api.Controllers.Users
         [Route("{id}")]
         [HttpGet]
         [ProducesResponseType(typeof(UserView), 200)]        
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]       
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -156,8 +151,7 @@ namespace iParty.Api.Controllers.Users
         [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<UserView>), 200)]        
-        [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = UserConstant.CreateSummary, Description = UserConstant.CreateDescription, Tags = new[] { UserConstant.Tag })]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Get()
         {
             try

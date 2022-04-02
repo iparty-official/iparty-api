@@ -85,7 +85,7 @@ namespace iParty.Api.Controllers.Suppliers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierPhoneConstant.CreateSummary, Description = SupplierPhoneConstant.CreateDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.DeleteSummary, Description = SupplierPhoneConstant.DeleteDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
         {
             try

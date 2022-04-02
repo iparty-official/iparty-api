@@ -60,7 +60,7 @@ namespace iParty.Api.Controllers.Orders
         [ProducesResponseType(typeof(OrderItemView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderItemConstant.CreateSummary, Description = OrderItemConstant.CreateDescription, Tags = new[] { OrderItemConstant.Tag })]
+        [SwaggerOperation(Summary = OrderItemConstant.UpdateSummary, Description = OrderItemConstant.UpdateDescription, Tags = new[] { OrderItemConstant.Tag })]
         public IActionResult Update([FromRoute] Guid orderId, [FromRoute] Guid id, [FromBody] OrderItemDto dto)
         {
             try
@@ -88,7 +88,7 @@ namespace iParty.Api.Controllers.Orders
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderItemConstant.CreateSummary, Description = OrderItemConstant.CreateDescription, Tags = new[] { OrderItemConstant.Tag })]
+        [SwaggerOperation(Summary = OrderItemConstant.DeleteSummary, Description = OrderItemConstant.DeleteDescription, Tags = new[] { OrderItemConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid orderId, [FromRoute] Guid id)
         {
             try
