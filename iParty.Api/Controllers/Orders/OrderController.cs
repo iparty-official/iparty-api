@@ -58,7 +58,7 @@ namespace iParty.Api.Controllers.Orders
         [ProducesResponseType(typeof(OrderView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
+        [SwaggerOperation(Summary = OrderConstant.UpdateSummary, Description = OrderConstant.UpdateDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] OrderDto dto)
         {
             try
@@ -86,7 +86,7 @@ namespace iParty.Api.Controllers.Orders
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
+        [SwaggerOperation(Summary = OrderConstant.DeleteSummary, Description = OrderConstant.DeleteDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -108,7 +108,7 @@ namespace iParty.Api.Controllers.Orders
         [HttpGet]
         [ProducesResponseType(typeof(OrderView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
+        [SwaggerOperation(Summary = OrderConstant.GetByIdSummary, Description = OrderConstant.GetByIdDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace iParty.Api.Controllers.Orders
         [HttpGet]
         [ProducesResponseType(typeof(List<OrderView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = OrderConstant.CreateSummary, Description = OrderConstant.CreateDescription, Tags = new[] { OrderConstant.Tag })]
+        [SwaggerOperation(Summary = OrderConstant.GetAllSummary, Description = OrderConstant.GetAllDescription, Tags = new[] { OrderConstant.Tag })]
         public IActionResult Get()
         {
             try

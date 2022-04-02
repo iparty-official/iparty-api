@@ -57,7 +57,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        [SwaggerOperation(Summary = InventoryStatementConstant.DeleteSummary, Description = InventoryStatementConstant.DeleteDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -79,7 +79,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [HttpGet]
         [ProducesResponseType(typeof(InventoryStatementView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        [SwaggerOperation(Summary = InventoryStatementConstant.GetByIdSummary, Description = InventoryStatementConstant.GetByIdDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -99,7 +99,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [HttpGet]
         [ProducesResponseType(typeof(List<InventoryStatementView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        [SwaggerOperation(Summary = InventoryStatementConstant.GetAllSummary, Description = InventoryStatementConstant.GetAllDescription, Tags = new[] { InventoryStatementConstant.Tag })]
         public IActionResult Get()
         {
             try

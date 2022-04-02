@@ -65,7 +65,7 @@ namespace iParty.Api.Controllers.Messages
         [ProducesResponseType(typeof(MessageView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = MessageConstant.CreateSummary, Description = MessageConstant.CreateDescription, Tags = new[] { MessageConstant.Tag })]
+        [SwaggerOperation(Summary = MessageConstant.UpdateSummary, Description = MessageConstant.UpdateDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] MessageDto dto)
         {            
             try
@@ -93,7 +93,7 @@ namespace iParty.Api.Controllers.Messages
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = MessageConstant.CreateSummary, Description = MessageConstant.CreateDescription, Tags = new[] { MessageConstant.Tag })]
+        [SwaggerOperation(Summary = MessageConstant.DeleteSummary, Description = MessageConstant.DeleteDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -115,7 +115,7 @@ namespace iParty.Api.Controllers.Messages
         [HttpGet]
         [ProducesResponseType(typeof(MessageView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = MessageConstant.CreateSummary, Description = MessageConstant.CreateDescription, Tags = new[] { MessageConstant.Tag })]
+        [SwaggerOperation(Summary = MessageConstant.GetByIdSummary, Description = MessageConstant.GetByIdDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -135,7 +135,7 @@ namespace iParty.Api.Controllers.Messages
         [HttpGet]
         [ProducesResponseType(typeof(List<MessageView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = MessageConstant.CreateSummary, Description = MessageConstant.CreateDescription, Tags = new[] { MessageConstant.Tag })]
+        [SwaggerOperation(Summary = MessageConstant.GetAllSummary, Description = MessageConstant.GetAllDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Get()
         {
             try

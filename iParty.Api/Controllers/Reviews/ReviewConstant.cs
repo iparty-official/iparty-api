@@ -4,11 +4,11 @@
     {
         public const string Tag = "Review";
 
-        public const string CreateSummary = "Create a city in the system.";
-        public const string UpdateSummary = "Update a city in the system.";
-        public const string DeleteSummary = "Remove a city from the system.";
-        public const string GetByIdSummary = "Get a specific city from the system.";
-        public const string GetAllSummary = "Get all the the cities from the system.";
+        public const string CreateSummary = "Create an order's review.";
+        public const string UpdateSummary = "Update an order's review.";
+        public const string DeleteSummary = "Remove an order's review.";
+        public const string GetByIdSummary = "Get an order's review.";
+        public const string GetAllSummary = "Get all the reviews to an specific supplier.";
 
         public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
         public const string DeleteDescription = "Please, don't call this method. I'm begging you.";

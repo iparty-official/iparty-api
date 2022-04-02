@@ -52,7 +52,7 @@ namespace iParty.Api.Controllers.Suppliers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.CreateSummary, Description = SupplierPaymentPlanConstant.CreateDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.DeleteSummary, Description = SupplierPaymentPlanConstant.DeleteDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromRoute] Guid version)
         {
             try

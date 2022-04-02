@@ -58,7 +58,7 @@ namespace iParty.Api.Controllers.Suppliers
         [ProducesResponseType(typeof(SupplierView), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierConstant.UpdateSummary, Description = SupplierConstant.UpdateDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] SupplierDto dto)
         {
             try
@@ -86,7 +86,7 @@ namespace iParty.Api.Controllers.Suppliers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierConstant.DeleteSummary, Description = SupplierConstant.DeleteDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -108,7 +108,7 @@ namespace iParty.Api.Controllers.Suppliers
         [HttpGet]
         [ProducesResponseType(typeof(SupplierView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierConstant.GetByIdSummary, Description = SupplierConstant.GetByIdDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace iParty.Api.Controllers.Suppliers
         [HttpGet]
         [ProducesResponseType(typeof(List<SupplierView>), 200)]        
         [ProducesResponseType(typeof(string), 500)]
-        [SwaggerOperation(Summary = SupplierConstant.CreateSummary, Description = SupplierConstant.CreateDescription, Tags = new[] { SupplierConstant.Tag })]
+        [SwaggerOperation(Summary = SupplierConstant.GetAllSummary, Description = SupplierConstant.GetAllDescription, Tags = new[] { SupplierConstant.Tag })]
         public IActionResult Get()
         {
             try
