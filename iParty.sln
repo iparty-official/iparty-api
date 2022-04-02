@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParty.Business", "iParty.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParty.Data", "iParty.Data\iParty.Data.csproj", "{33E2A2D9-83A4-4260-B4CA-7202D8354CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iParty.Test", "iParty.Test\iParty.Test.csproj", "{A74EC00F-2A9C-474D-98D4-5100B1AAECCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParty.Test", "iParty.Test\iParty.Test.csproj", "{A74EC00F-2A9C-474D-98D4-5100B1AAECCB}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4896A762-DB94-455F-9DF3-3315A8C17FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A74EC00F-2A9C-474D-98D4-5100B1AAECCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74EC00F-2A9C-474D-98D4-5100B1AAECCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74EC00F-2A9C-474D-98D4-5100B1AAECCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4896A762-DB94-455F-9DF3-3315A8C17FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4896A762-DB94-455F-9DF3-3315A8C17FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4896A762-DB94-455F-9DF3-3315A8C17FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4896A762-DB94-455F-9DF3-3315A8C17FF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
