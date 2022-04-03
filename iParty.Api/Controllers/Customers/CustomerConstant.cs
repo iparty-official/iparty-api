@@ -4,16 +4,16 @@
     {
         public const string Tag = "Customer";
 
-        public const string CreateSummary = "Create a customer in the system.";
-        public const string UpdateSummary = "Update a customer in the system.";
-        public const string DeleteSummary = "Remove a customer from the system.";
-        public const string GetByIdSummary = "Get a specific customer from the system.";
-        public const string GetAllSummary = "Get all the the customers from the system.";
+        public const string CreateSummary = "It creates a customer.";
+        public const string UpdateSummary = "It updates a customer.";
+        public const string DeleteSummary = "It removes a customer.";
+        public const string GetByIdSummary = "It gets a specific customer.";
+        public const string GetAllSummary = "It gets all the customers.";
 
-        public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
-        public const string DeleteDescription = "Please, don't call this method. I'm begging you.";
-        public const string UpdateDescription = "Please, don't call this method. I'm begging you.";
-        public const string GetByIdDescription = "If you want to see details of the customer or supplier city, use this method.";
-        public const string GetAllDescription = "If you want to create a search field that allows the user to find their own city, use this method.";
+        public const string CreateDescription = "This method would not be public, because a customer should be added internally when a user is created.";
+        public const string DeleteDescription = "This method would not be public, because a customer should be removed internally when a user account was removed.";
+        public const string UpdateDescription = "Your app will, probably, have a screen that will allow the user to change their own information. This is the method you will call for it.";
+        public const string GetByIdDescription = "This is the method your app will use to show users their own information.";
+        public const string GetAllDescription = "I can't see a scenario where this method should be used.";
     }
 }
