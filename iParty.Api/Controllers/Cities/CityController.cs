@@ -33,6 +33,7 @@ namespace iParty.Api.Controllers.Cities
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Create([FromBody] CityDto dto)
         {
             try
@@ -59,6 +60,7 @@ namespace iParty.Api.Controllers.Cities
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = CityConstant.UpdateSummary, Description = CityConstant.UpdateDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CityDto dto)
         {            
             try
@@ -87,6 +89,7 @@ namespace iParty.Api.Controllers.Cities
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = CityConstant.DeleteSummary, Description = CityConstant.DeleteDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
