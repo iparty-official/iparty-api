@@ -4,15 +4,14 @@
     {
         public const string Tag = "Inventory Statement";
 
-        public const string CreateSummary = "Create an inventory statement entry in the system.";        
-        public const string DeleteSummary = "Remove an inventory statement entry from the system.";
-        public const string GetByIdSummary = "Get a specific inventory statement entry from the system.";
-        public const string GetAllSummary = "Get all the the inventory statement entries from the system.";
+        public const string CreateSummary = "It creates an inventory statement entry";
+        public const string DeleteSummary = "It removes an inventory statement entry";
+        public const string GetByIdSummary = "It gets a specific inventory statement entry";
+        public const string GetAllSummary = "It gets all the inventory statement entries";
 
-        public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
-        public const string DeleteDescription = "Please, don't call this method. I'm begging you.";
-        public const string UpdateDescription = "Please, don't call this method. I'm begging you.";
-        public const string GetByIdDescription = "If you want to see details of the customer or supplier city, use this method.";
-        public const string GetAllDescription = "If you want to create a search field that allows the user to find their own city, use this method.";
+        public const string CreateDescription = "This method shouldn't be public, because an inventory statement entry must be created when an order is shipped.";
+        public const string DeleteDescription = "This method shouldn't be public, because an inventory statement entry must be removed when an order shipping is canceled.";
+        public const string GetByIdDescription = "I can't see a scenario where this method will be used.";
+        public const string GetAllDescription = "If your app wants to show to suppliers their inventory statements, use this method.";
     }
 }

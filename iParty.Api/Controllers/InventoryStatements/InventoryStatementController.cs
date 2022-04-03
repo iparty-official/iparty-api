@@ -30,6 +30,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = InventoryStatementConstant.CreateSummary, Description = InventoryStatementConstant.CreateDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        //TODO: Esse método não deve ser público, pois uma entrada de extrato de estoque deve ser criada quando um pedido é enviado.
         public IActionResult Create([FromBody] InventoryStatementDto dto)
         {
             try
@@ -58,6 +59,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = InventoryStatementConstant.DeleteSummary, Description = InventoryStatementConstant.DeleteDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        //TODO: Esse método não deve ser público, pois uma entrada de extrato de estoque deve ser removida quando o envio de um pedido é cancelado.
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -80,6 +82,7 @@ namespace iParty.Api.Controllers.InventoryStatements
         [ProducesResponseType(typeof(InventoryStatementView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = InventoryStatementConstant.GetByIdSummary, Description = InventoryStatementConstant.GetByIdDescription, Tags = new[] { InventoryStatementConstant.Tag })]
+        //TODO: Não consigo ver um cenário em que esse método será usado.
         public IActionResult Get([FromRoute] Guid id)
         {
             try
