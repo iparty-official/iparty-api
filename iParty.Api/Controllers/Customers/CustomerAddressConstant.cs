@@ -4,14 +4,12 @@
     {
         public const string Tag = "Customer";
 
-        public const string CreateSummary = "Add an address to a customer.";
-        public const string UpdateSummary = "Update a customer's address.";
-        public const string DeleteSummary = "Remove an address from a customer.";
+        public const string CreateSummary = "It adds an address to a customer.";
+        public const string UpdateSummary = "It updates a customer's address.";
+        public const string DeleteSummary = "It removes an address from a customer.";
 
-        public const string CreateDescription = "Typically you will have a star or heart icon in your app that will should this method to save a bookmark for the user.";
-        public const string DeleteDescription = "That same star/heart icon will call this method to remove a user's bookmark.";
-        public const string GetByIdDescription = "Honestly, I don't when should you use this method.";
-        public const string UpdateDescription = "Please, don't call this method. I'm begging you.";
-        public const string GetAllDescription = "Your app must retrieve the bookmark list to show it to the user. Use this method for it.";
+        public const string CreateDescription = "Your app will have a screen where users will inform their own shipping addresses. This screen will use this method to persist those addresses.";
+        public const string UpdateDescription = "Users can make mistakes when typing addresses. Use this method to fix them.";
+        public const string DeleteDescription = "Eventually, the user wants to remove a specific shipping address and your app will call this method for it.";
     }
 }

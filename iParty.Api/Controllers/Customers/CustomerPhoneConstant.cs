@@ -4,14 +4,12 @@
     {
         public const string Tag = "Customer";
 
-        public const string CreateSummary = "Add a phone to a customer.";
-        public const string UpdateSummary = "Update a customer's phone.";
-        public const string DeleteSummary = "Remove a phone from a customer.";
+        public const string CreateSummary = "It adds a phone to a customer.";
+        public const string UpdateSummary = "It updates a customer's phone.";
+        public const string DeleteSummary = "It removes a phone from a customer.";
 
-        public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
-        public const string DeleteDescription = "Please, don't call this method. I'm begging you.";
-        public const string UpdateDescription = "Please, don't call this method. I'm begging you.";
-        public const string GetByIdDescription = "If you want to see details of the customer or supplier city, use this method.";
-        public const string GetAllDescription = "If you want to create a search field that allows the user to find their own city, use this method.";
+        public const string CreateDescription = "Your app will have a screen where users will inform their own phone numbers. This screen will use this method to persist those numbers.";
+        public const string UpdateDescription = "Users can make mistakes when typing phone numbers. Use this method to fix them.";
+        public const string DeleteDescription = "Eventually, the user wants to remove a specific phone number and your app will call this method for it.";
     }
 }
