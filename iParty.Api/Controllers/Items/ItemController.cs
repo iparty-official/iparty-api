@@ -31,6 +31,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = ItemConstant.CreateSummary, Description = ItemConstant.CreateDescription, Tags = new[] { ItemConstant.Tag })]
+        //TODO: O DTO deste método tem o ID do fornecedor, mas o ID do fornecedor deveria ser obtido a partir do usuário que consta no token de autenticação
         public IActionResult Create([FromBody] ItemDto dto)
         {
             try
@@ -59,6 +60,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = ItemConstant.UpdateSummary, Description = ItemConstant.UpdateDescription, Tags = new[] { ItemConstant.Tag })]
+        //TODO: O DTO deste método tem o ID do fornecedor, mas o ID do fornecedor não deveria ser editável.
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ItemDto dto)
         {
             try
@@ -109,6 +111,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(ItemView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = ItemConstant.GetByIdSummary, Description = ItemConstant.GetByIdDescription, Tags = new[] { ItemConstant.Tag })]
+        
         public IActionResult Get([FromRoute] Guid id)
         {
             try
