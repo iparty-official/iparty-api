@@ -60,6 +60,7 @@ namespace iParty.Api.Controllers.Items
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = ScheduleConstant.UpdateSummary, Description = ScheduleConstant.UpdateDescription, Tags = new[] { ScheduleConstant.Tag })]
+        //TODO: Este método não deveria existir, porque você precisa criar e remover um agendamento, não alterá-lo.
         public IActionResult Update([FromRoute] Guid itemId, [FromRoute] Guid id, [FromBody] ScheduleDto dto)
         {
             try

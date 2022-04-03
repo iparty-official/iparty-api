@@ -4,14 +4,13 @@
     {
         public const string Tag = "Item";
 
-        public const string CreateSummary = "Add a schedule to an item.";
-        public const string UpdateSummary = "Update an item's schedule.";
-        public const string DeleteSummary = "Remove a schedule from an item.";        
+        public const string CreateSummary = "It adds a schedule to an item.";
+        public const string UpdateSummary = "It updates an item's schedule.";
+        public const string DeleteSummary = "It removes a schedule from an item.";        
 
-        public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
-        public const string DeleteDescription = "Please, don't call this method. I'm begging you.";
-        public const string UpdateDescription = "Please, don't call this method. I'm begging you.";
-        public const string GetByIdDescription = "If you want to see details of the customer or supplier city, use this method.";
-        public const string GetAllDescription = "If you want to create a search field that allows the user to find their own city, use this method.";
+        public const string CreateDescription = "If you decide to allow rentable items, you will need to create a calendar for suppliers to say the date and time the item is available for rent. Use this method to persist these dates and times.";
+        public const string UpdateDescription = "This method shouldn't exist, because you have to create and remove a schedule, not change it.";
+        public const string DeleteDescription = "Suppliers have the right to remove a schedule and you will use this method for it.";
+        
     }
 }
