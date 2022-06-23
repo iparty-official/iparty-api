@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using AutoMapper;
 using iParty.Api.Dtos.Messages;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
@@ -33,6 +34,10 @@ namespace iParty.Api.Controllers.Messages
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(MessageView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = MessageConstant.CreateSummary, Description = MessageConstant.CreateDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Create([FromBody] MessageDto dto)
         {
             try
@@ -57,6 +62,10 @@ namespace iParty.Api.Controllers.Messages
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(MessageView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = MessageConstant.UpdateSummary, Description = MessageConstant.UpdateDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] MessageDto dto)
         {            
             try
@@ -81,6 +90,10 @@ namespace iParty.Api.Controllers.Messages
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = MessageConstant.DeleteSummary, Description = MessageConstant.DeleteDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -100,6 +113,9 @@ namespace iParty.Api.Controllers.Messages
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(MessageView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = MessageConstant.GetByIdSummary, Description = MessageConstant.GetByIdDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -117,6 +133,9 @@ namespace iParty.Api.Controllers.Messages
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<MessageView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = MessageConstant.GetAllSummary, Description = MessageConstant.GetAllDescription, Tags = new[] { MessageConstant.Tag })]
         public IActionResult Get()
         {
             try

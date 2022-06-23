@@ -1,4 +1,5 @@
-﻿using iParty.Api.Dtos.Bookmarks;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.Bookmarks;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces;
 using iParty.Business.Interfaces.Validations;
@@ -7,7 +8,6 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.Bookmarks;
 using System.Collections.Generic;
 
@@ -35,6 +35,7 @@ namespace iParty.Api.Controllers.Bookmarks
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = BookmarkConstant.CreateSummary, Description = BookmarkConstant.CreateDescription, Tags = new[] { BookmarkConstant.Tag })]
+        //TODO: Esse método recebe um DTO e este DTO possui o ID do cliente. Não deveríamos receber o ID do cliente. Em vez disso deveríamos obter o ID do cliente a partir do usuário que consta no token de autenticação
         public IActionResult Create([FromBody] BookmarkDto dto)
         {
             try
@@ -94,6 +95,7 @@ namespace iParty.Api.Controllers.Bookmarks
         [ProducesResponseType(typeof(BookmarkView), 200)]        
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = BookmarkConstant.GetByIdSummary, Description = BookmarkConstant.GetByIdDescription, Tags = new[] { BookmarkConstant.Tag })]
+        //TODO: Este método me parece inútil e acredito que ele deveria ser removido. Ver texto da constante GetByIdDescription.
         public IActionResult Get([FromRoute] Guid id)
         {
             try

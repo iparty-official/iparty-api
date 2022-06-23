@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using iParty.Api.Dtos.People;
 using iParty.Api.Interfaces.Mappers;
+using iParty.Api.Views.People;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.People;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 
 namespace iParty.Api.Controllers.Suppliers
@@ -28,6 +30,10 @@ namespace iParty.Api.Controllers.Suppliers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(PhoneView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.CreateSummary, Description = SupplierPhoneConstant.CreateDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
         public IActionResult Create([FromRoute] Guid supplierId, [FromBody] PhoneDto dto)
         {
             try
@@ -50,6 +56,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpPut]
+        [ProducesResponseType(typeof(PhoneView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.UpdateSummary, Description = SupplierPhoneConstant.UpdateDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
         public IActionResult Update([FromRoute] Guid supplierId, [FromRoute] Guid id, [FromBody] PhoneDto dto)
         {
             try
@@ -72,6 +82,10 @@ namespace iParty.Api.Controllers.Suppliers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.DeleteSummary, Description = SupplierPhoneConstant.DeleteDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
         {
             try

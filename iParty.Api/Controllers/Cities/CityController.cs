@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using AutoMapper;
 using iParty.Api.Dtos.Cities;
 using iParty.Api.Views.Cities;
 using iParty.Business.Interfaces;
@@ -28,6 +29,11 @@ namespace iParty.Api.Controllers.Cities
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(CityView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CityConstant.CreateSummary, Description = CityConstant.CreateDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Create([FromBody] CityDto dto)
         {
             try
@@ -50,6 +56,11 @@ namespace iParty.Api.Controllers.Cities
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(CityView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CityConstant.UpdateSummary, Description = CityConstant.UpdateDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CityDto dto)
         {            
             try
@@ -74,6 +85,11 @@ namespace iParty.Api.Controllers.Cities
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CityConstant.DeleteSummary, Description = CityConstant.DeleteDescription, Tags = new[] { CityConstant.Tag })]
+        //TODO: Esse método não deveria estar disponível na API pública
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -92,7 +108,10 @@ namespace iParty.Api.Controllers.Cities
         }
 
         [Route("{id}")]
-        [HttpGet]        
+        [HttpGet]
+        [ProducesResponseType(typeof(CityView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CityConstant.GetByIdSummary, Description = CityConstant.GetByIdDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -109,7 +128,10 @@ namespace iParty.Api.Controllers.Cities
             }
         }
         
-        [HttpGet]        
+        [HttpGet]
+        [ProducesResponseType(typeof(List<CityView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CityConstant.GetAllSummary, Description = CityConstant.GetAllDescription, Tags = new[] { CityConstant.Tag })]
         public IActionResult Get()
         {
             try

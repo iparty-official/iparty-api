@@ -1,10 +1,13 @@
-﻿using iParty.Api.Dtos.People;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.People;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.People;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Customers
 {
@@ -24,6 +27,11 @@ namespace iParty.Api.Controllers.Customers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(CustomerView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerConstant.CreateSummary, Description = CustomerConstant.CreateDescription, Tags = new[] { CustomerConstant.Tag })]
+        //TODO: Esse método não seria público, pois um cliente deve ser adicionado internamente quando um usuário fosse criado.
         public IActionResult Create([FromBody] CustomerDto dto)
         {
             try
@@ -48,6 +56,10 @@ namespace iParty.Api.Controllers.Customers
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(CustomerView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerConstant.UpdateSummary, Description = CustomerConstant.UpdateDescription, Tags = new[] { CustomerConstant.Tag })]        
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] CustomerDto dto)
         {
             try
@@ -72,6 +84,11 @@ namespace iParty.Api.Controllers.Customers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerConstant.DeleteSummary, Description = CustomerConstant.DeleteDescription, Tags = new[] { CustomerConstant.Tag })]
+        //TODO: Esse método não seria público, pois um cliente deveria ser removido internamente quando uma conta de usuário fosse removida.
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -91,6 +108,9 @@ namespace iParty.Api.Controllers.Customers
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(CustomerView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerConstant.GetByIdSummary, Description = CustomerConstant.GetByIdDescription, Tags = new[] { CustomerConstant.Tag })]        
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -108,6 +128,10 @@ namespace iParty.Api.Controllers.Customers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<CustomerView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerConstant.GetAllSummary, Description = CustomerConstant.GetAllDescription, Tags = new[] { CustomerConstant.Tag })]
+        //TODO: Não consigo ver um cenário em que esse método deva ser usado.
         public IActionResult Get()
         {
             try

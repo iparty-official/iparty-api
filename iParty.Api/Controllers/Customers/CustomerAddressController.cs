@@ -1,10 +1,12 @@
-﻿using iParty.Api.Dtos.Addresses;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Dtos.Addresses;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.Addresses;
 
 namespace iParty.Api.Controllers.Customers
 {
@@ -27,6 +29,10 @@ namespace iParty.Api.Controllers.Customers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(AddressView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerAddressConstant.CreateSummary, Description = CustomerAddressConstant.CreateDescription, Tags = new[] { CustomerAddressConstant.Tag })]
         public IActionResult Create([FromRoute] Guid customerId, [FromBody] AddressDto dto)
         {
             try
@@ -51,6 +57,10 @@ namespace iParty.Api.Controllers.Customers
 
         [Route("{id}")]
         [HttpPut]
+        [ProducesResponseType(typeof(AddressView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerAddressConstant.UpdateSummary, Description = CustomerAddressConstant.UpdateDescription, Tags = new[] { CustomerAddressConstant.Tag })]
         public IActionResult Update([FromRoute] Guid customerId, [FromRoute] Guid id, [FromBody] AddressDto dto)
         {
             try
@@ -75,6 +85,10 @@ namespace iParty.Api.Controllers.Customers
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerAddressConstant.DeleteSummary, Description = CustomerAddressConstant.DeleteDescription, Tags = new[] { CustomerAddressConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid customerId, [FromRoute] Guid id)
         {
             try

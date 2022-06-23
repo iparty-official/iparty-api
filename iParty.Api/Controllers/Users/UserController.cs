@@ -6,6 +6,7 @@ using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 
@@ -26,6 +27,9 @@ namespace iParty.Api.Controllers.Users
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(UserView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Create([FromBody] UserDto dto)
         {
             try
@@ -48,6 +52,9 @@ namespace iParty.Api.Controllers.Users
 
         [Route("Login")]
         [HttpPost]
+        [ProducesResponseType(typeof(LoginView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Login([FromBody] UserDto dto)
         {
             try
@@ -70,6 +77,9 @@ namespace iParty.Api.Controllers.Users
         [Authorize]
         [Route("{id}/ChangePassword")]
         [HttpPut]
+        [ProducesResponseType(typeof(UserView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult ChangePassword([FromRoute] Guid id, [FromBody] ChangePasswordDto dto)
         {
             try
@@ -97,6 +107,9 @@ namespace iParty.Api.Controllers.Users
         [Authorize]
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]       
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -117,6 +130,8 @@ namespace iParty.Api.Controllers.Users
         [Authorize]
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(UserView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]       
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -135,6 +150,8 @@ namespace iParty.Api.Controllers.Users
 
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(typeof(List<UserView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]        
         public IActionResult Get()
         {
             try

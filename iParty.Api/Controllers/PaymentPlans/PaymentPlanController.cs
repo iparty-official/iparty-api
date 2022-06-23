@@ -8,6 +8,7 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.PaymentPlans
@@ -27,6 +28,10 @@ namespace iParty.Api.Controllers.PaymentPlans
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(PaymentPlanView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = PaymentPlanConstant.CreateSummary, Description = PaymentPlanConstant.CreateDescription, Tags = new[] { PaymentPlanConstant.Tag })]
         public IActionResult Create([FromBody] PaymentPlanDto dto)
         {
             try
@@ -49,6 +54,10 @@ namespace iParty.Api.Controllers.PaymentPlans
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(PaymentPlanView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = PaymentPlanConstant.UpdateSummary, Description = PaymentPlanConstant.UpdateDescription, Tags = new[] { PaymentPlanConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] PaymentPlanDto dto)
         {
             try
@@ -73,6 +82,10 @@ namespace iParty.Api.Controllers.PaymentPlans
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = PaymentPlanConstant.DeleteSummary, Description = PaymentPlanConstant.DeleteDescription, Tags = new[] { PaymentPlanConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -92,6 +105,9 @@ namespace iParty.Api.Controllers.PaymentPlans
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(PaymentPlanView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = PaymentPlanConstant.GetByIdSummary, Description = PaymentPlanConstant.GetByIdDescription, Tags = new[] { PaymentPlanConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -109,6 +125,9 @@ namespace iParty.Api.Controllers.PaymentPlans
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<PaymentPlanView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = PaymentPlanConstant.GetAllSummary, Description = PaymentPlanConstant.GetAllDescription, Tags = new[] { PaymentPlanConstant.Tag })]
         public IActionResult Get()
         {
             try

@@ -8,6 +8,9 @@ using iParty.Business.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Swashbuckle.AspNetCore.Annotations;
+using iParty.Api.Views.Reviews;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Reviews
 {
@@ -26,6 +29,10 @@ namespace iParty.Api.Controllers.Reviews
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ReviewView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReviewConstant.CreateSummary, Description = ReviewConstant.CreateDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Create([FromBody] ReviewDto dto)
         {
             try
@@ -50,6 +57,10 @@ namespace iParty.Api.Controllers.Reviews
 
         [Route("{id}/{version}")]
         [HttpPut]
+        [ProducesResponseType(typeof(ReviewView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReviewConstant.UpdateSummary, Description = ReviewConstant.UpdateDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Update([FromRoute] Guid id, [FromRoute] Guid version, [FromBody] ReviewDto dto)
         {
             try
@@ -74,6 +85,10 @@ namespace iParty.Api.Controllers.Reviews
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReviewConstant.DeleteSummary, Description = ReviewConstant.DeleteDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid id)
         {
             try
@@ -93,6 +108,9 @@ namespace iParty.Api.Controllers.Reviews
 
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(typeof(ReviewView), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReviewConstant.GetByIdSummary, Description = ReviewConstant.GetByIdDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Get([FromRoute] Guid id)
         {
             try
@@ -110,6 +128,9 @@ namespace iParty.Api.Controllers.Reviews
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<ReviewView>), 200)]        
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ReviewConstant.GetAllSummary, Description = ReviewConstant.GetAllDescription, Tags = new[] { ReviewConstant.Tag })]
         public IActionResult Get()
         {
             try

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using AutoMapper;
 using iParty.Api.Dtos.Items;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Business.Interfaces.Services;
@@ -6,6 +7,7 @@ using iParty.Business.Models.Items;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using iParty.Api.Views.Items;
 
 namespace iParty.Api.Controllers.Items
 {
@@ -28,6 +30,10 @@ namespace iParty.Api.Controllers.Items
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ScheduleView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ScheduleConstant.CreateSummary, Description = ScheduleConstant.CreateDescription, Tags = new[] { ScheduleConstant.Tag })]
         public IActionResult Create([FromRoute] Guid itemId, [FromBody] ScheduleDto dto)
         {
             try
@@ -50,6 +56,11 @@ namespace iParty.Api.Controllers.Items
 
         [Route("{id}")]
         [HttpPut]
+        [ProducesResponseType(typeof(ScheduleView), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ScheduleConstant.UpdateSummary, Description = ScheduleConstant.UpdateDescription, Tags = new[] { ScheduleConstant.Tag })]
+        //TODO: Este método não deveria existir, porque você precisa criar e remover um agendamento, não alterá-lo.
         public IActionResult Update([FromRoute] Guid itemId, [FromRoute] Guid id, [FromBody] ScheduleDto dto)
         {
             try
@@ -74,6 +85,10 @@ namespace iParty.Api.Controllers.Items
 
         [Route("{id}")]
         [HttpDelete]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ScheduleConstant.DeleteSummary, Description = ScheduleConstant.DeleteDescription, Tags = new[] { ScheduleConstant.Tag })]
         public IActionResult Delete([FromRoute] Guid itemId, [FromRoute] Guid id)
         {
             try
