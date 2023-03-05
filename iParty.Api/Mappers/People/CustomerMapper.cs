@@ -28,11 +28,9 @@ namespace iParty.Api.Mappers.People
         public MapperResult<Person> Map(CustomerDto dto)
         {            
             var person = new Person
-            (
-                dto.User,
+            (                
                 dto.Name,
-                dto.Document,
-                dto.Photo,
+                dto.Document,                
                 SupplierOrCustomer.Customer,
                 new Customer(dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate),
                 new Supplier(String.Empty, new List<PaymentPlan>())                
@@ -75,11 +73,9 @@ namespace iParty.Api.Mappers.People
             var customerView = new CustomerView()
             {
                 Id = person.Id,
-                Version = person.Version,
-                User = person.User,
+                Version = person.Version,                
                 Name = person.Name,
-                Document = person.Document,
-                Photo = person.Photo,
+                Document = person.Document,                
                 BirthDate = person.CustomerInfo.BirthDate
             };
 

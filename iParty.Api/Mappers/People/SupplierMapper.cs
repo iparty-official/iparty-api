@@ -34,11 +34,9 @@ namespace iParty.Api.Mappers.People
         {            
             var paymentPlans = mapnPaymentPlans(dto);
 
-            var person = new Person(
-                dto.User,
+            var person = new Person(               
                 dto.Name,
-                dto.Document,
-                dto.Photo,
+                dto.Document,                
                 SupplierOrCustomer.Supplier,
                 new Customer(null),
                 new Supplier(dto.BusinessDescription, paymentPlans)
@@ -81,11 +79,9 @@ namespace iParty.Api.Mappers.People
             var supplierView = new SupplierView()
             {
                 Id = person.Id,
-                Version = person.Version,
-                User = person.User,
+                Version = person.Version,                
                 Name = person.Name,
-                Document = person.Document,
-                Photo = person.Photo,
+                Document = person.Document,                
                 BusinessDescription = person.SupplierInfo.BusinessDescription,                
                 PaymentPlanIds = person.SupplierInfo.PaymentPlans.Select(x => x.Id).ToList()
             };
