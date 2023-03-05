@@ -26,9 +26,7 @@ namespace iParty.Api.Mappers.People
         }
 
         public MapperResult<Person> Map(CustomerDto dto)
-        {
-            var addresses = mapAddresses(dto);
-
+        {            
             var person = new Person
             (
                 dto.User,
@@ -37,9 +35,7 @@ namespace iParty.Api.Mappers.People
                 dto.Photo,
                 SupplierOrCustomer.Customer,
                 new Customer(dto.BirthDate == DateTime.MinValue ? null : dto.BirthDate),
-                new Supplier(String.Empty, new List<PaymentPlan>()),
-                addresses,
-                dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList()                
+                new Supplier(String.Empty, new List<PaymentPlan>())                
             );
 
             if (!SuccessResult())
@@ -84,34 +80,10 @@ namespace iParty.Api.Mappers.People
                 Name = person.Name,
                 Document = person.Document,
                 Photo = person.Photo,
-                BirthDate = person.CustomerInfo.BirthDate,
-                Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
-                Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList()
+                BirthDate = person.CustomerInfo.BirthDate
             };
 
             return customerView;
-        }
-
-        private List<Address> mapAddresses(CustomerDto dto)
-        {
-            var mapperResultList = _addressMapper.Map(dto.Addresses);
-
-            if (mapperResultList.Exists(x => !x.Success))
-            {
-                foreach (var mapperResult in mapperResultList)
-                {
-                    foreach (var erro in mapperResult.Errors)
-                    {
-                        AddError(erro);
-                    }
-                }
-
-                return mapperResultList.Select(x => x.Entity).ToList();
-            }
-            else
-            {
-                return mapperResultList.Select(x => x.Entity).ToList();
-            }
-        }
+        }        
     }
 }

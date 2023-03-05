@@ -85,7 +85,7 @@ namespace iParty.Api.Mappers.Orders
             { 
                 Id = orderItem.Id,
                 Version = orderItem.Version,
-                Item = _autoMapper.Map<ItemSummarizedView>(orderItem.Item),
+                ItemId = orderItem.Item.Id,
                 Price = orderItem.Price,
                 Unit = orderItem.Unit,
                 Quantity = orderItem.Quantity,

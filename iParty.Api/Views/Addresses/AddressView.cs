@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Views.Cities;
+using System;
 
 namespace iParty.Api.Views.Addresses
 {
@@ -8,6 +9,6 @@ namespace iParty.Api.Views.Addresses
         public string Street { get; set; }
         public string District { get; set; }
         public int Number { get; set; }
-        public CityView City { get; set; }
+        public Guid CityId { get; set; }
     }
 }

@@ -109,15 +109,11 @@ namespace iParty.Api.Mappers.Orders
 
         private OrderView mapToView(Order order)
         {
-            if (order == null) return null;
+            if (order == null) return null;            
 
-            var customer = _autoMapper.Map<PersonSummarizedView>(order.Customer);
+            var shippingAddress = order.ShippingAddress.Id;
 
-            var supplier = _autoMapper.Map<PersonSummarizedView>(order.Supplier);
-
-            var shippingAddress = _autoMapper.Map<AddressView>(order.ShippingAddress);
-
-            var paymentPlanForOrder = _autoMapper.Map<PaymentPlanForOrderView>(order.PaymentPlan);
+            var paymentPlan = order.PaymentPlan.Id;
 
             var items = _orderItemMapper.Map(order.Items);
 
@@ -126,19 +122,18 @@ namespace iParty.Api.Mappers.Orders
                 Id = order.Id,
                 Version = order.Version,
                 DateTime = order.DateTime,
-                Customer = customer,
-                Supplier = supplier,
-                ShippingAddress = shippingAddress,
+                CustomerId = order.Customer.Id,
+                SupplierId = order.Supplier.Id,
+                ShippingAddressId = order.ShippingAddress.Id,
                 Freight = order.Freight,
                 PaymentPlanFee = order.PaymentPlanFee,
                 ItemsTotal = order.ItemsTotal,
                 OrderTotal = order.OrderTotal,
-                PaymentPlan = paymentPlanForOrder,                
+                PaymentPlanId = order.PaymentPlan.Id,
                 Notes = order.Notes,
                 Status = order.Status,
                 PartyDate = order.PartyDate,
-                ExpirationDate = order.ExpirationDate,
-                Items = items
+                ExpirationDate = order.ExpirationDate,                
             };
 
             return orderView;

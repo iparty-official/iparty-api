@@ -44,7 +44,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _autoMapper.Map<PhoneView>(result.Entity);
 
                 return Ok(view);
             }
@@ -70,7 +70,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _autoMapper.Map<PhoneView>(result.Entity);
 
                 return Ok(view);
             }
@@ -94,7 +94,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _autoMapper.Map<PhoneView>(result.Entity);
 
                 return Ok(view);
             }

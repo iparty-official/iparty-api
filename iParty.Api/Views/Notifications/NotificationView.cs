@@ -6,7 +6,7 @@ namespace iParty.Api.Views.Notifications
     public class NotificationView : View
     {
         public DateTime DateTime { get; set; }
-        public PersonSummarizedView Destination { get; set; }
+        public Guid DestinationId { get; set; }
         public string Text { get; set; }
     }
 }

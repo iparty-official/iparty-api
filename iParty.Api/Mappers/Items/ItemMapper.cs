@@ -71,13 +71,11 @@ namespace iParty.Api.Mappers.Items
         {
             if (item == null) return null;
 
-            var supplier = new PersonSummarizedView() { Id = item.Supplier.Id, Name = item.Supplier.Name };
-
             var itemView = new ItemView()
             {
                 Id = item.Id,
                 Version = item.Version,
-                Supplier = supplier,
+                SupplierId = item.Supplier.Id,
                 SKU = item.SKU,
                 Name = item.Name,
                 Details = item.Details,
@@ -87,7 +85,7 @@ namespace iParty.Api.Mappers.Items
                 ProductOrService = item.ProductOrService,
                 AvailableQuantity = item.ProductInfo.AvailableQuantity,
                 ForRentOrSale = item.ProductInfo.ForRentOrSale,
-                Schedules = item.Schedules.Select(x => _autoMapper.Map<ScheduleView>(x)).ToList()
+                ScheduleIds = item.Schedules.Select(x => x.Id).ToList()
             };
 
             return itemView;            

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using iParty.Api.Views.Addresses;
+using iParty.Api.Views.People;
+using System.Collections.Generic;
+using iParty.Business.Models.Addresses;
 
 namespace iParty.Api.Controllers.Customers
 {
@@ -15,16 +18,13 @@ namespace iParty.Api.Controllers.Customers
     [Route("customer/{customerId}/address")]
     public class CustomerAddressController : ControllerBase
     {
-        private readonly ICustomerService _customerService;        
-
-        private readonly ICustomerMapper _customerMapper;
+        private readonly ICustomerService _customerService;                
 
         private readonly IAddressMapper _addressMapper;
 
-        public CustomerAddressController(ICustomerService customerService, ICustomerMapper customerMapper, IAddressMapper addressMapper)
+        public CustomerAddressController(ICustomerService customerService, IAddressMapper addressMapper)
         {
-            _customerService = customerService;            
-            _customerMapper = customerMapper;
+            _customerService = customerService;                        
             _addressMapper = addressMapper;
         }
 
@@ -45,7 +45,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -73,7 +73,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -97,7 +97,7 @@ namespace iParty.Api.Controllers.Customers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _customerMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -106,6 +106,47 @@ namespace iParty.Api.Controllers.Customers
                 return StatusCode(500, e.Message);
             }
 
-        }        
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(AddressView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerAddressConstant.GetByIdSummary, Description = CustomerAddressConstant.GetByIdDescription, Tags = new[] { CustomerAddressConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid customerId, [FromRoute] Guid addressId)
+        {
+            try
+            {
+                var entity = _customerService.Get(customerId).Addresses.Find(x => x.Id == addressId);
+
+                var view = _addressMapper.Map(entity);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<AddressView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerAddressConstant.GetAllSummary, Description = CustomerAddressConstant.GetAllDescription, Tags = new[] { CustomerAddressConstant.Tag })]        
+        public IActionResult Get([FromRoute] Guid customerId)
+        {
+            try
+            {
+                var entities = _customerService.Get(customerId).Addresses;
+
+                var view = _addressMapper.Map(entities);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

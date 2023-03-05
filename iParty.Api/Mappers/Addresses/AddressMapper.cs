@@ -6,6 +6,8 @@ using iParty.Business.Models.Addresses;
 using iParty.Business.Interfaces;
 using System.Collections.Generic;
 using iParty.Business.Models.Cities;
+using iParty.Api.Views.Addresses;
+using System;
 
 namespace iParty.Api.Mappers.Addresses
 {
@@ -40,6 +42,27 @@ namespace iParty.Api.Mappers.Addresses
             }
 
             return result;
+        }
+
+        public AddressView Map(Address domain)
+        {
+            if (domain == null) return null;
+
+            var view = new AddressView
+            {
+                ZipCode = domain.ZipCode, 
+                Street = domain.Street,
+                District = domain.District,
+                Number = domain.Number,
+                CityId = domain.City.Id
+            };
+
+            return view;
+        }
+
+        public List<AddressView> Map(List<Address> domains)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

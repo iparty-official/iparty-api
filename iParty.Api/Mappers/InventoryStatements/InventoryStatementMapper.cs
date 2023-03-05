@@ -54,9 +54,7 @@ namespace iParty.Api.Mappers.InventoryStatements
 
         private InventoryStatementView mapToView(InventoryStatement inventoryStatement)
         {
-            if (inventoryStatement == null) return null;
-
-            var product = _autoMapper.Map<ItemSummarizedView>(inventoryStatement.Product);
+            if (inventoryStatement == null) return null;            
 
             var inventoryStatementView = new InventoryStatementView()
             {
@@ -64,7 +62,7 @@ namespace iParty.Api.Mappers.InventoryStatements
                 Version = inventoryStatement.Version,
                 DataTime = inventoryStatement.DateTime,
                 InOrOut = inventoryStatement.InOrOut,
-                Product = product,
+                ProductId = inventoryStatement.Product.Id,
                 Quantity = inventoryStatement.Quantity
             };            
 

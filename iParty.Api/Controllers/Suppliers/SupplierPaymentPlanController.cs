@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.PaymentPlans;
+using AutoMapper;
 
 namespace iParty.Api.Controllers.Suppliers
 {
@@ -14,16 +15,19 @@ namespace iParty.Api.Controllers.Suppliers
     [Route("supplier/{supplierId}/paymentplan")]
     public class SupplierPaymentPlanController : ControllerBase
     {
-        private readonly ISupplierService _supplierService;        
+        private readonly ISupplierService _supplierService;
 
-        private readonly ISupplierMapper _supplierMapper;      
+        private readonly ISupplierMapper _supplierMapper;
 
-        public SupplierPaymentPlanController(ISupplierService supplierService, ISupplierMapper supplierMapper)
+        private readonly IMapper _autoMapper;
+
+        public SupplierPaymentPlanController(ISupplierService supplierService, ISupplierMapper supplierMapper, IMapper autoMapper)
         {
-            _supplierService = supplierService;            
-            _supplierMapper = supplierMapper;            
+            _supplierService = supplierService;
+            _supplierMapper = supplierMapper;
+            _autoMapper = autoMapper;
         }
-        
+
         [HttpPost]
         [ProducesResponseType(typeof(PaymentPlanView), 200)]
         [ProducesResponseType(typeof(string), 400)]
@@ -37,7 +41,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
 
                 return Ok(view);
             }
@@ -61,7 +65,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _autoMapper.Map<PaymentPlanView>(result.Entity);
 
                 return Ok(view);
             }

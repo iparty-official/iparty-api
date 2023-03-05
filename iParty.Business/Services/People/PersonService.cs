@@ -77,169 +77,175 @@ namespace iParty.Business.Services.People
             return _basicService.Get();
         }
 
-        public ServiceResult<Person> AddPhone(Guid personId, Phone phone)
+        public ServiceResult<Phone> AddPhone(Guid personId, Phone phone)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<Phone>.FailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _phoneValidation.Validate(phone);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);            
+                return ServiceResult<Phone>.FailureResult(result);            
 
             person.Phones.Add(phone);
 
             result = _personPhoneValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Phone>.FailureResult(result);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Phone>.SuccessResult(phone);
         }
 
-        public ServiceResult<Person> ReplacePhone(Guid personId, Guid phoneId, Phone phone)
+        public ServiceResult<Phone> ReplacePhone(Guid personId, Guid phoneId, Phone phone)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<Phone>.FailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _phoneValidation.Validate(phone);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Phone>.FailureResult(result);            
 
             person.ReplacePhone(phoneId, phone);
 
             result = _personPhoneValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Phone>.FailureResult(result);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Phone>.SuccessResult(phone);
         }
 
-        public ServiceResult<Person> RemovePhone(Guid personId, Guid phoneId)
+        public ServiceResult<Phone> RemovePhone(Guid personId, Guid phoneId)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");                        
+                return ServiceResult<Phone>.FailureResult("Não foi possível localizar a pessoa informada.");
+
+            var phone = person.Phones.Find(x => x.Id.Equals(phoneId));
 
             person.RemovePhone(phoneId);
 
             var result = _personPhoneValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Phone>.FailureResult(result);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Phone>.SuccessResult(phone);
         }        
 
-        public ServiceResult<Person> AddAddress(Guid personId, Address address)
+        public ServiceResult<Address> AddAddress(Guid personId, Address address)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<Address>.FailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _addressValidation.Validate(address);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Address>.FailureResult(result);
 
             result = _personAddressValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Address>.FailureResult(result);
 
             person.Addresses.Add(address);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Address>.SuccessResult(address);
         }
 
-        public ServiceResult<Person> ReplaceAddress(Guid personId, Guid addressId, Address address)
+        public ServiceResult<Address> ReplaceAddress(Guid personId, Guid addressId, Address address)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<Address>.FailureResult("Não foi possível localizar a pessoa informada.");
 
             var result = _addressValidation.Validate(address);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Address>.FailureResult(result);
 
             result = _personAddressValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Person>.FailureResult(result);
+                return ServiceResult<Address>.FailureResult(result);
 
             person.ReplaceAddress(addressId, address);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Address>.SuccessResult(address);
         }
 
-        public ServiceResult<Person> RemoveAddress(Guid personId, Guid addressId)
+        public ServiceResult<Address> RemoveAddress(Guid personId, Guid addressId)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<Address>.FailureResult("Não foi possível localizar a pessoa informada.");
+
+            var address = person.Addresses.Find(x => x.Id.Equals(addressId));
 
             person.RemoveAddress(addressId);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<Address>.SuccessResult(address);
         }
 
-        public ServiceResult<Person> AddPaymentPlan(Guid personId, Guid paymentPlanId)
+        public ServiceResult<PaymentPlan> AddPaymentPlan(Guid personId, Guid paymentPlanId)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<PaymentPlan>.FailureResult("Não foi possível localizar a pessoa informada.");
 
             var paymentPlan = _paymentPlanRepository.RecoverById(paymentPlanId);
 
             if (paymentPlan == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar o plano de pagamento informado.");
+                return ServiceResult<PaymentPlan>.FailureResult("Não foi possível localizar o plano de pagamento informado.");
 
             if (person.SupplierInfo.PaymentPlans.Exists(x => x.Id == paymentPlan.Id))
-                return ServiceResult<Person>.FailureResult("O plano de pagamento informado já está vinculado ao fornecedor.");
+                return ServiceResult<PaymentPlan>.FailureResult("O plano de pagamento informado já está vinculado ao fornecedor.");
 
             person.SupplierInfo.PaymentPlans.Add(paymentPlan);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<PaymentPlan>.SuccessResult(paymentPlan);
         }        
 
-        public ServiceResult<Person> RemovePaymentPlan(Guid personId, Guid paymentPlanId)
+        public ServiceResult<PaymentPlan> RemovePaymentPlan(Guid personId, Guid paymentPlanId)
         {
             var person = Get(personId);
 
             if (person == null)
-                return ServiceResult<Person>.FailureResult("Não foi possível localizar a pessoa informada.");
+                return ServiceResult<PaymentPlan>.FailureResult("Não foi possível localizar a pessoa informada.");
+
+            var paymentPlan = person.SupplierInfo.PaymentPlans.Find(x => x.Id.Equals(paymentPlanId));
 
             person.RemovePaymentPlan(paymentPlanId);
 
             Repository.Update(personId, person);
 
-            return ServiceResult<Person>.SuccessResult(person);
+            return ServiceResult<PaymentPlan>.SuccessResult(paymentPlan);
         }       
     }
 }

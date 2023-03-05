@@ -11,10 +11,6 @@ namespace iParty.Api.Views.People
 
         public string Document { get; set; }
 
-        public object Photo { get; set; }
-
-        public List<AddressView> Addresses { get; set; }
-
-        public List<PhoneView> Phones { get; set; }
+        public object Photo { get; set; }        
     }
 }

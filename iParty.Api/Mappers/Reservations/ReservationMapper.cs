@@ -7,6 +7,7 @@ using iParty.Business.Infra.Extensions;
 using iParty.Business.Interfaces;
 using iParty.Business.Models.Items;
 using iParty.Business.Models.Reservation;
+using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Infra.Reservations
@@ -68,9 +69,9 @@ namespace iParty.Api.Infra.Reservations
                 Date = entity.Date,
                 InitialHour = entity.InitialHour,
                 FinalHour = entity.FinalHour,
-                Item = _autoMapper.Map<ItemSummarizedView>(entity.Item),
+                ItemId = entity.Item.Id,
                 ReservationReason = entity.ReservationReason,
-                OrderItem = null
+                OrderItemId = Guid.Empty
             };
 
             return reservationView;

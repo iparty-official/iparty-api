@@ -1,12 +1,13 @@
 ﻿using iParty.Api.Views.People;
 using iParty.Business.Models.Items;
+using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Views.Items
 {
     public class ItemView : View
     {
-        public PersonSummarizedView Supplier { get; set; }
+        public Guid SupplierId { get; set; }
         public string SKU { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
@@ -16,6 +17,6 @@ namespace iParty.Api.Views.Items
         public ProductOrService ProductOrService { get; set; }
         public decimal AvailableQuantity { get; set; }
         public RentOrSale ForRentOrSale { get; set; }
-        public List<ScheduleView> Schedules { get; set; }
+        public List<Guid> ScheduleIds { get; set; }
     }
 }

@@ -11,10 +11,6 @@ namespace iParty.Api.Dtos.People
 
         public string Document { get; set; }
 
-        public object Photo { get; set; }        
-
-        public List<AddressDto> Addresses { get; set; }
-
-        public List<PhoneDto> Phones { get; set; }
+        public object Photo { get; set; }
     }
 }

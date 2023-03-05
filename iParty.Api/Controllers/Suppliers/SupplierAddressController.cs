@@ -18,14 +18,11 @@ namespace iParty.Api.Controllers.Suppliers
     {
         private readonly ISupplierService _supplierService;        
 
-        private readonly ISupplierMapper _supplierMapper;
-
         private readonly IAddressMapper _addressMapper;
 
-        public SupplierAddressController(ISupplierService supplierService, ISupplierMapper supplierMapper, IAddressMapper addressMapper)
+        public SupplierAddressController(ISupplierService supplierService, IAddressMapper addressMapper)
         {
             _supplierService = supplierService;          
-            _supplierMapper = supplierMapper;
             _addressMapper = addressMapper;
         }
 
@@ -46,7 +43,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -74,7 +71,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }
@@ -98,7 +95,7 @@ namespace iParty.Api.Controllers.Suppliers
 
                 if (!result.Success) return BadRequest(result.Errors);
 
-                var view = _supplierMapper.Map(result.Entity);
+                var view = _addressMapper.Map(result.Entity);
 
                 return Ok(view);
             }

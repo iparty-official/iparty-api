@@ -67,8 +67,8 @@ namespace iParty.Api.Infra.Bookmarks
             {
                 Id = entity.Id,
                 Version = entity.Version,
-                Customer = _autoMapper.Map<PersonSummarizedView>(entity.Customer),
-                Item = _autoMapper.Map<ItemSummarizedView>(entity.Item),
+                CustomerId = entity.Customer.Id,
+                ItemId = entity.Item.Id,
                 DateTime = entity.DateTime
             };
 

@@ -2,19 +2,18 @@
 
 namespace iParty.Business.Models.People
 {
-    public class Phone
+    public class Phone : Entity
     {
-        public Phone() 
+        public Phone() : base()
         {
-            Id = Guid.NewGuid();
         }
-        public Phone(Guid id, string prefix, string number)
-        {
-            Id = id;
+
+        public Phone(Guid id, string prefix, string number) : base(id, Guid.NewGuid(), false)
+        {                     
             Prefix = prefix;
             Number = number;
-        }
-        public Guid Id { get; private set; }
+        }      
+        
         public string Prefix { get; private set; }
         public string Number { get; private set; }
 

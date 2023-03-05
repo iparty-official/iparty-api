@@ -1,4 +1,5 @@
 ﻿using iParty.Api.Views.PaymentPlans;
+using System;
 using System.Collections.Generic;
 
 namespace iParty.Api.Views.People
@@ -7,6 +8,6 @@ namespace iParty.Api.Views.People
     {
         public string BusinessDescription { get; set; }
 
-        public List<PaymentPlanView> PaymentPlans { get; set; }
+        public List<Guid> PaymentPlanIds { get; set; }
     }
 }

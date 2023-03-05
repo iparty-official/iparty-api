@@ -31,9 +31,7 @@ namespace iParty.Api.Mappers.People
         }
 
         public MapperResult<Person> Map(SupplierDto dto)
-        {
-            var addresses = mapAddresses(dto);
-
+        {            
             var paymentPlans = mapnPaymentPlans(dto);
 
             var person = new Person(
@@ -43,9 +41,7 @@ namespace iParty.Api.Mappers.People
                 dto.Photo,
                 SupplierOrCustomer.Supplier,
                 new Customer(null),
-                new Supplier(dto.BusinessDescription, paymentPlans),
-                addresses, 
-                dto.Phones.Select(x => _autoMapper.Map<Phone>(x)).ToList()                                               
+                new Supplier(dto.BusinessDescription, paymentPlans)
             );
 
             if (!SuccessResult())
@@ -90,36 +86,12 @@ namespace iParty.Api.Mappers.People
                 Name = person.Name,
                 Document = person.Document,
                 Photo = person.Photo,
-                BusinessDescription = person.SupplierInfo.BusinessDescription,
-                Addresses = person.Addresses.Select(x => _autoMapper.Map<AddressView>(x)).ToList(),
-                Phones = person.Phones.Select(x => _autoMapper.Map<PhoneView>(x)).ToList(),
-                PaymentPlans = person.SupplierInfo.PaymentPlans.Select(x => _autoMapper.Map<PaymentPlanView>(x)).ToList()
+                BusinessDescription = person.SupplierInfo.BusinessDescription,                
+                PaymentPlanIds = person.SupplierInfo.PaymentPlans.Select(x => x.Id).ToList()
             };
 
             return supplierView;
-        }
-
-        private List<Address> mapAddresses(SupplierDto dto)
-        {
-            var mapperResultList = _addressMapper.Map(dto.Addresses);
-
-            if (mapperResultList.Exists(x => !x.Success))
-            {
-                foreach (var mapperResult in mapperResultList)
-                {
-                    foreach (var erro in mapperResult.Errors)
-                    {
-                        AddError(erro);
-                    }
-                }
-
-                return mapperResultList.Select(x => x.Entity).ToList();
-            }
-            else
-            {
-                return new List<Address>();
-            }
-        }
+        }        
 
         private List<PaymentPlan> mapnPaymentPlans(SupplierDto dto)
         {

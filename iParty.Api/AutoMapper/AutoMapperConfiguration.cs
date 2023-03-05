@@ -49,12 +49,7 @@ namespace iParty.Api.AutoMapper
 
             CreateMap<Person, CustomerDto>().ReverseMap();
             CreateMap<Person, CustomerView>().ReverseMap();
-
-            CreateMap<Person, PersonSummarizedView>().ReverseMap();
-
-            CreateMap<PersonForMessage, PersonSummarizedView>().ReverseMap();
-
-            CreateMap<PersonForOrder, PersonSummarizedView>().ReverseMap();
+            
             CreateMap<PersonForOrder, CustomerDto>().ReverseMap();
             CreateMap<PersonForOrder, SupplierDto>().ReverseMap();
             CreateMap<PersonForOrder, Person>().ReverseMap();
@@ -77,8 +72,6 @@ namespace iParty.Api.AutoMapper
             CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentDto>().ReverseMap();
             CreateMap<PaymentPlanInstalment, PaymentPlanInstalmentView>().ReverseMap();
 
-            CreateMap<PaymentPlanForOrder, PaymentPlanForOrderView>().ReverseMap();
-
             CreateMap<Schedule, ScheduleDto>().ReverseMap();
             CreateMap<Schedule, ScheduleView>().ReverseMap();
 
@@ -89,17 +82,9 @@ namespace iParty.Api.AutoMapper
             CreateMap<Review, ReviewView>().ReverseMap();
 
             CreateMap<OrderItem, OrderItemView>().ReverseMap();
-
-            CreateMap<OrderItemForReview, OrderItemForReviewView>().ReverseMap();
             
-
-            CreateMap<Item, ItemSummarizedView>().ReverseMap();
-
-            CreateMap<ItemForOrder, ItemSummarizedView>().ReverseMap();
             CreateMap<ItemForOrder, ItemDto>().ReverseMap();
             CreateMap<ItemForOrder, Item>().ReverseMap();
-
-            CreateMap<ItemForOrderItemForReview, ItemForOrderItemForReviewView>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, UserView>().ReverseMap();

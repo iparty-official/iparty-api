@@ -7,7 +7,7 @@ namespace iParty.Business.Models.People
     public class Person: Entity
     {
         public Person() : base() { }
-        public Person(object user, string name, string document, object photo, SupplierOrCustomer supplierOrCustomer, Customer customerInfo, Supplier supplierInfo, List<Address> addresses, List<Phone> phones)
+        public Person(object user, string name, string document, object photo, SupplierOrCustomer supplierOrCustomer, Customer customerInfo, Supplier supplierInfo)
         {
             User = user;
             Name = name;
@@ -16,8 +16,6 @@ namespace iParty.Business.Models.People
             SupplierOrCustomer = supplierOrCustomer;
             CustomerInfo = customerInfo;
             SupplierInfo = supplierInfo;
-            Addresses = addresses;
-            Phones = phones;
         }
         public object User { get; private set; }        
         public string Name { get; private set; }        
