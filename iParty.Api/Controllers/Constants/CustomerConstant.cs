@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.Customers
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class CustomerConstant
     {

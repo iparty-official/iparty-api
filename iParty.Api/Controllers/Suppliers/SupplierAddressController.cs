@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using iParty.Api.Controllers.Constants;
 using iParty.Api.Dtos.Addresses;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;

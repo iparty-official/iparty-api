@@ -1,13 +1,14 @@
-﻿namespace iParty.Api.Controllers.Notifications
+﻿namespace iParty.Api.Controllers.Constants
 {
-    public class NotificationConstant
+    public class ReviewConstant
     {
-        public const string Tag = "Notification";
+        public const string Tag = "Review";
 
-        public const string CreateSummary = "Create a notification to a user.";
-        public const string DeleteSummary = "Remove a user's notification.";
-        public const string GetByIdSummary = "Get a specific user's notification.";
-        public const string GetAllSummary = "Get all the notifications from a specific user.";
+        public const string CreateSummary = "Create an order's review.";
+        public const string UpdateSummary = "Update an order's review.";
+        public const string DeleteSummary = "Remove an order's review.";
+        public const string GetByIdSummary = "Get an order's review.";
+        public const string GetAllSummary = "Get all the reviews to an specific supplier.";
 
         public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
         public const string DeleteDescription = "Please, don't call this method. I'm begging you.";

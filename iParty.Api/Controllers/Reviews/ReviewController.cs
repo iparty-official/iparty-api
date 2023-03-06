@@ -11,6 +11,7 @@ using System;
 using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.Reviews;
 using System.Collections.Generic;
+using iParty.Api.Controllers.Constants;
 
 namespace iParty.Api.Controllers.Reviews
 {

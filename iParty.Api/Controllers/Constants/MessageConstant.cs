@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.Messages
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class MessageConstant
     {

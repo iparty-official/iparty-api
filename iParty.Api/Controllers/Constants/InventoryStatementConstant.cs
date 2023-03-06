@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.InventoryStatements
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class InventoryStatementConstant
     {

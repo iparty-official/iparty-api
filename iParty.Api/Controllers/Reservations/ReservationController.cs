@@ -10,6 +10,7 @@ using System;
 using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.Reservations;
 using System.Collections.Generic;
+using iParty.Api.Controllers.Constants;
 
 namespace iParty.Api.Controllers.Reservations
 {

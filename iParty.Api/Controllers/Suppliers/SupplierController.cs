@@ -1,4 +1,5 @@
-﻿using iParty.Api.Dtos.People;
+﻿using iParty.Api.Controllers.Constants;
+using iParty.Api.Dtos.People;
 using iParty.Api.Infra;
 using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.People;

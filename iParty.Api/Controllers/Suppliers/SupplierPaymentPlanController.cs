@@ -7,6 +7,7 @@ using System;
 using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.PaymentPlans;
 using AutoMapper;
+using iParty.Api.Controllers.Constants;
 
 namespace iParty.Api.Controllers.Suppliers
 {

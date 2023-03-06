@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using iParty.Api.Views.Bookmarks;
 using System.Collections.Generic;
+using iParty.Api.Controllers.Constants;
 
 namespace iParty.Api.Controllers.Bookmarks
 {

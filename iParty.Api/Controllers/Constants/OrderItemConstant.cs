@@ -1,12 +1,12 @@
-﻿namespace iParty.Api.Controllers.Suppliers
+﻿namespace iParty.Api.Controllers.Constants
 {
-    public class SupplierPaymentPlanConstant
+    public class OrderItemConstant
     {
-        public const string Tag = "Supplier";
+        public const string Tag = "Order";
 
-        public const string CreateSummary = "Add a payment plan to a supplier.";
-        public const string UpdateSummary = "Update a supplier's payment plan.";
-        public const string DeleteSummary = "Remove a payment plan from a supplier.";
+        public const string CreateSummary = "Add an item to an order.";
+        public const string UpdateSummary = "Update a item's order.";
+        public const string DeleteSummary = "Remove a item from an order.";
 
         public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
         public const string DeleteDescription = "Please, don't call this method. I'm begging you.";

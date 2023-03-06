@@ -1,12 +1,13 @@
-﻿namespace iParty.Api.Controllers.Suppliers
+﻿namespace iParty.Api.Controllers.Constants
 {
-    public class SupplierAddressConstant
+    public class NotificationConstant
     {
-        public const string Tag = "Supplier";
+        public const string Tag = "Notification";
 
-        public const string CreateSummary = "Add an address to a supplier.";
-        public const string UpdateSummary = "Update a supplier's address.";
-        public const string DeleteSummary = "Remove an address from a supplier.";
+        public const string CreateSummary = "Create a notification to a user.";
+        public const string DeleteSummary = "Remove a user's notification.";
+        public const string GetByIdSummary = "Get a specific user's notification.";
+        public const string GetAllSummary = "Get all the notifications from a specific user.";
 
         public const string CreateDescription = "Honestly, this metohod shouldn't exist. Because the cities must be supplied by the internal team of the system.";
         public const string DeleteDescription = "Please, don't call this method. I'm begging you.";

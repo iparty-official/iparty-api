@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.Reservations
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class ReservationConstant
     {

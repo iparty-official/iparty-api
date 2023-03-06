@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.Cities
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class CityConstant
     {
