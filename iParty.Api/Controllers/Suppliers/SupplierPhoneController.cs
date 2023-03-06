@@ -5,10 +5,12 @@ using iParty.Api.Interfaces.Mappers;
 using iParty.Api.Views.People;
 using iParty.Business.Interfaces.Services;
 using iParty.Business.Models.People;
+using iParty.Business.Services.People;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Suppliers
 {
@@ -104,6 +106,51 @@ namespace iParty.Api.Controllers.Suppliers
                 return StatusCode(500, e.Message);
             }
 
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(PhoneView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.GetByIdSummary, Description = SupplierPhoneConstant.GetByIdDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid supplierId, [FromRoute] Guid id)
+        {
+            try
+            {
+                var supplier = _supplierService.Get(supplierId);
+
+                var phone = supplier.Phones.Find(x => x.Id == id);
+
+                var view = _autoMapper.Map<PhoneView>(phone);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PhoneView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPhoneConstant.GetAllSummary, Description = SupplierPhoneConstant.GetAllDescription, Tags = new[] { SupplierPhoneConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid supplierId)
+        {
+            try
+            {
+                var supplier = _supplierService.Get(supplierId);
+
+                var phone = supplier.Phones;
+
+                var view = _autoMapper.Map<List<PhoneView>>(phone);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

@@ -6,8 +6,6 @@ namespace iParty.Api.Views.People
 {
     public class SupplierView : PersonView
     {
-        public string BusinessDescription { get; set; }
-
-        public List<Guid> PaymentPlanIds { get; set; }
+        public string BusinessDescription { get; set; }        
     }
 }

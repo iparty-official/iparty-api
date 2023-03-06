@@ -8,6 +8,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using iParty.Api.Views.PaymentPlans;
 using AutoMapper;
 using iParty.Api.Controllers.Constants;
+using iParty.Api.Views.People;
+using System.Collections.Generic;
+using iParty.Business.Models.People;
 
 namespace iParty.Api.Controllers.Suppliers
 {
@@ -74,7 +77,51 @@ namespace iParty.Api.Controllers.Suppliers
             {
                 return StatusCode(500, e.Message);
             }
+        }
 
-        }        
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(PaymentPlanView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.GetByIdSummary, Description = SupplierPaymentPlanConstant.GetByIdDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid supplierId, [FromRoute] Guid id)
+        {
+            try
+            {
+                var supplier = _supplierService.Get(supplierId);
+
+                var paymentPlan = supplier.SupplierInfo.PaymentPlans.Find(x => x.Id == id);
+
+                var view = _autoMapper.Map<PaymentPlanView>(paymentPlan);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PaymentPlanView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = SupplierPaymentPlanConstant.GetAllSummary, Description = SupplierPaymentPlanConstant.GetAllDescription, Tags = new[] { SupplierPaymentPlanConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid supplierId)
+        {
+            try
+            {
+                var supplier = _supplierService.Get(supplierId);
+
+                var paymentPlans = supplier.SupplierInfo.PaymentPlans;
+
+                var view = _autoMapper.Map<List<PaymentPlanView>>(paymentPlans);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

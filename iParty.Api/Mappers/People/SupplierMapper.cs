@@ -31,15 +31,13 @@ namespace iParty.Api.Mappers.People
         }
 
         public MapperResult<Person> Map(SupplierDto dto)
-        {            
-            var paymentPlans = mapnPaymentPlans(dto);
-
+        {                       
             var person = new Person(               
                 dto.Name,
                 dto.Document,                
                 SupplierOrCustomer.Supplier,
                 new Customer(null),
-                new Supplier(dto.BusinessDescription, paymentPlans)
+                new Supplier(dto.BusinessDescription, new List<PaymentPlan>())
             );
 
             if (!SuccessResult())
@@ -82,21 +80,10 @@ namespace iParty.Api.Mappers.People
                 Version = person.Version,                
                 Name = person.Name,
                 Document = person.Document,                
-                BusinessDescription = person.SupplierInfo.BusinessDescription,                
-                PaymentPlanIds = person.SupplierInfo.PaymentPlans.Select(x => x.Id).ToList()
+                BusinessDescription = person.SupplierInfo.BusinessDescription
             };
 
             return supplierView;
-        }        
-
-        private List<PaymentPlan> mapnPaymentPlans(SupplierDto dto)
-        {
-            return dto.PaymentPlans.Select(x =>
-            {
-                var paymentPlan = _paymentPlanRepository.RecoverById(x).IfNull(() => { AddError("O plano de pagamento informado não foi encontrado."); });
-
-                return paymentPlan;
-            }).ToList();
         }
     }
 }

@@ -5,8 +5,6 @@ namespace iParty.Api.Dtos.People
 {
     public class SupplierDto : PersonDto
     {
-        public string BusinessDescription { get; set; }
-
-        public List<Guid> PaymentPlans { get; set; }
+        public string BusinessDescription { get; set; }        
     }   
 }
