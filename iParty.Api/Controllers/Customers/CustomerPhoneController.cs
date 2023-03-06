@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using iParty.Api.Views.People;
+using iParty.Api.Controllers.Constants;
+using iParty.Api.Mappers.Addresses;
+using iParty.Api.Views.Addresses;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Customers
 {
@@ -103,6 +107,51 @@ namespace iParty.Api.Controllers.Customers
                 return StatusCode(500, e.Message);
             }
 
-        }        
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(PhoneView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerPhoneConstant.GetByIdSummary, Description = CustomerPhoneConstant.GetByIdDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid customerId, [FromRoute] Guid id)
+        {
+            try
+            {
+                var customer = _customerService.Get(customerId);
+
+                var phone = customer.Phones.Find(x => x.Id == id);
+
+                var view = _autoMapper.Map<PhoneView>(phone);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<PhoneView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = CustomerPhoneConstant.GetAllSummary, Description = CustomerPhoneConstant.GetAllDescription, Tags = new[] { CustomerPhoneConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid customerId)
+        {
+            try
+            {
+                var customer = _customerService.Get(customerId);
+
+                var phone = customer.Phones;
+
+                var view = _autoMapper.Map<List<PhoneView>>(phone);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

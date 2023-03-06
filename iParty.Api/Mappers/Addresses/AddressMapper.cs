@@ -44,25 +44,45 @@ namespace iParty.Api.Mappers.Addresses
             return result;
         }
 
-        public AddressView Map(Address domain)
+        public AddressView Map(Address adddress)
         {
-            if (domain == null) return null;
+            if (adddress == null) return null;
 
             var view = new AddressView
             {
-                ZipCode = domain.ZipCode, 
-                Street = domain.Street,
-                District = domain.District,
-                Number = domain.Number,
-                CityId = domain.City.Id
+                Id = adddress.Id,
+                Version = adddress.Version,
+                ZipCode = adddress.ZipCode, 
+                Street = adddress.Street,
+                District = adddress.District,
+                Number = adddress.Number,
+                CityId = adddress.City.Id
             };
 
             return view;
         }
 
-        public List<AddressView> Map(List<Address> domains)
+        public List<AddressView> Map(List<Address> addresses)
         {
-            throw new System.NotImplementedException();
+            var result = new List<AddressView>();
+
+            foreach (var address in addresses)
+            {
+                var addressView = new AddressView
+                {
+                    Id = address.Id,
+                    Version = address.Version,
+                    ZipCode = address.ZipCode,
+                    CityId = address.City.Id,
+                    District = address.District,                    
+                    Street = address.Street,
+                    Number = address.Number,
+                };
+
+                result.Add(addressView);
+            }
+
+            return result;
         }
     }
 }

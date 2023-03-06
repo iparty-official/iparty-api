@@ -6,22 +6,25 @@ namespace iParty.Business.Models.People
 {
     public class Person: Entity
     {
-        public Person() : base() { }
+        public Person() : base() 
+        {             
+        }
+
         public Person(string name, string document, SupplierOrCustomer supplierOrCustomer, Customer customerInfo, Supplier supplierInfo)
         {            
             Name = name;
             Document = document;         
             SupplierOrCustomer = supplierOrCustomer;
             CustomerInfo = customerInfo;
-            SupplierInfo = supplierInfo;
+            SupplierInfo = supplierInfo;            
         }        
         public string Name { get; private set; }        
         public string Document { get; private set; }                
         public SupplierOrCustomer SupplierOrCustomer { get; private set; }        
         public Customer CustomerInfo { get; private set; }        
         public Supplier SupplierInfo { get; private set; }        
-        public List<Address> Addresses { get; private set; }
-        public List<Phone> Phones { get; private set; }
+        public List<Address> Addresses { get; private set; } = new List<Address>();
+        public List<Phone> Phones { get; private set; } = new List<Phone>();
         public void ReplacePhone(Guid phoneId, Phone newPhone)
         {
             var currentPhone = Phones.Find(x => x.Id == phoneId);

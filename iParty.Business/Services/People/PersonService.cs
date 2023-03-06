@@ -158,12 +158,12 @@ namespace iParty.Business.Services.People
             if (!result.IsValid)
                 return ServiceResult<Address>.FailureResult(result);
 
+            person.Addresses.Add(address);
+
             result = _personAddressValidation.Validate(person);
 
             if (!result.IsValid)
-                return ServiceResult<Address>.FailureResult(result);
-
-            person.Addresses.Add(address);
+                return ServiceResult<Address>.FailureResult(result);            
 
             Repository.Update(personId, person);
 

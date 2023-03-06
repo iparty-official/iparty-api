@@ -10,6 +10,7 @@ using iParty.Api.Views.Addresses;
 using iParty.Api.Views.People;
 using System.Collections.Generic;
 using iParty.Business.Models.Addresses;
+using iParty.Api.Controllers.Constants;
 
 namespace iParty.Api.Controllers.Customers
 {
@@ -113,13 +114,15 @@ namespace iParty.Api.Controllers.Customers
         [ProducesResponseType(typeof(AddressView), 200)]
         [ProducesResponseType(typeof(string), 500)]
         [SwaggerOperation(Summary = CustomerAddressConstant.GetByIdSummary, Description = CustomerAddressConstant.GetByIdDescription, Tags = new[] { CustomerAddressConstant.Tag })]
-        public IActionResult Get([FromRoute] Guid customerId, [FromRoute] Guid addressId)
+        public IActionResult Get([FromRoute] Guid customerId, [FromRoute] Guid id)
         {
             try
             {
-                var entity = _customerService.Get(customerId).Addresses.Find(x => x.Id == addressId);
+                var customer = _customerService.Get(customerId);
+                    
+                var address = customer.Addresses.Find(x => x.Id == id);
 
-                var view = _addressMapper.Map(entity);
+                var view = _addressMapper.Map(address);
 
                 return Ok(view);
             }
@@ -137,9 +140,11 @@ namespace iParty.Api.Controllers.Customers
         {
             try
             {
-                var entities = _customerService.Get(customerId).Addresses;
+                var customer = _customerService.Get(customerId);
+                
+                var address = customer.Addresses;
 
-                var view = _addressMapper.Map(entities);
+                var view = _addressMapper.Map(address);
 
                 return Ok(view);
             }
