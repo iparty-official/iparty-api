@@ -1,4 +1,4 @@
-﻿namespace iParty.Api.Controllers.Items
+﻿namespace iParty.Api.Controllers.Constants
 {
     public class ItemConstant
     {

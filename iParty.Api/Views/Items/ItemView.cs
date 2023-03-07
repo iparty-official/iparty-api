@@ -16,7 +16,6 @@ namespace iParty.Api.Views.Items
         public MeasurementUnit Unit { get; set; }
         public ProductOrService ProductOrService { get; set; }
         public decimal AvailableQuantity { get; set; }
-        public RentOrSale ForRentOrSale { get; set; }
-        public List<Guid> ScheduleIds { get; set; }
+        public RentOrSale ForRentOrSale { get; set; }        
     }
 }

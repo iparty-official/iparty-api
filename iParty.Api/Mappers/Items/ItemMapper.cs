@@ -42,7 +42,7 @@ namespace iParty.Api.Mappers.Items
                 dto.Unit,
                 dto.ProductOrService,
                 new Product(dto.AvailableQuantity, dto.ForRentOrSale),
-                dto.Schedules.Select(x => _autoMapper.Map<Schedule>(x)).ToList()
+                new List<Schedule>()
             );            
 
             SetEntity(item);
@@ -84,8 +84,7 @@ namespace iParty.Api.Mappers.Items
                 Unit = item.Unit,
                 ProductOrService = item.ProductOrService,
                 AvailableQuantity = item.ProductInfo.AvailableQuantity,
-                ForRentOrSale = item.ProductInfo.ForRentOrSale,
-                ScheduleIds = item.Schedules.Select(x => x.Id).ToList()
+                ForRentOrSale = item.ProductInfo.ForRentOrSale                
             };
 
             return itemView;            

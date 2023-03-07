@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using iParty.Api.Views.Items;
+using iParty.Api.Controllers.Constants;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Items
 {
@@ -106,6 +108,52 @@ namespace iParty.Api.Controllers.Items
                 return StatusCode(500, e.Message);
             }
 
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ScheduleView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ScheduleConstant.GetByIdSummary, Description = ScheduleConstant.GetByIdDescription, Tags = new[] { ScheduleConstant.Tag })]
+
+        public IActionResult Get([FromRoute] Guid itemId, [FromRoute] Guid id)
+        {
+            try
+            {
+                var item = _itemService.Get(itemId);
+
+                var schedule = item.Schedules.Find(x => x.Id.Equals(id));
+
+                var view = _autoMapper.Map<ScheduleView>(schedule);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<ScheduleView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = ScheduleConstant.GetAllSummary, Description = ScheduleConstant.GetAllDescription, Tags = new[] { ScheduleConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid itemId)
+        {
+            try
+            {
+                var item = _itemService.Get(itemId);
+
+                var schedules = item.Schedules;
+
+                var view = _autoMapper.Map<List<ScheduleView>>(schedules);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

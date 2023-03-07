@@ -15,7 +15,6 @@ namespace iParty.Api.Dtos.Items
         public MeasurementUnit Unit { get; set; }        
         public ProductOrService ProductOrService { get; set; }        
         public RentOrSale ForRentOrSale { get; set; }        
-        public int AvailableQuantity { get; set; }
-        public List<ScheduleDto> Schedules { get; set; }
+        public int AvailableQuantity { get; set; }        
     }
 }
