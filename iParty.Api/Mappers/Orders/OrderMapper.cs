@@ -57,7 +57,7 @@ namespace iParty.Api.Mappers.Orders
 
             var shippingAddress = mapShippingAddress(dto.ShippingAddress);
 
-            var items = mapItems(dto.Items);
+            var items = new List<OrderItem>();
 
             if (!SuccessResult()) return GetResult();
 

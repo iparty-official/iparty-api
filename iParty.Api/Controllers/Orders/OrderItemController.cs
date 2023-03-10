@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using iParty.Api.Views.Orders;
 using iParty.Api.Controllers.Constants;
+using System.Collections.Generic;
 
 namespace iParty.Api.Controllers.Orders
 {
@@ -107,6 +108,49 @@ namespace iParty.Api.Controllers.Orders
                 return StatusCode(500, e.Message);
             }
 
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(OrderItemView), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderItemConstant.GetByIdSummary, Description = OrderItemConstant.GetByIdDescription, Tags = new[] { OrderItemConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid orderId, [FromRoute] Guid id)
+        {
+            try
+            {
+                var entity = _orderService.Get(orderId);
+
+                var item = entity.Items.Find(x => x.Id.Equals(id));
+
+                var view = _orderItemMapper.Map(item);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<OrderItemView>), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        [SwaggerOperation(Summary = OrderItemConstant.GetAllSummary, Description = OrderItemConstant.GetAllDescription, Tags = new[] { OrderItemConstant.Tag })]
+        public IActionResult Get([FromRoute] Guid orderId)
+        {
+            try
+            {
+                var entity = _orderService.Get(orderId);
+
+                var view = _orderItemMapper.Map(entity.Items);
+
+                return Ok(view);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

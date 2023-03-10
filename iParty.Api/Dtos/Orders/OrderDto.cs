@@ -13,7 +13,6 @@ namespace iParty.Api.Dtos.Orders
         public Guid PaymentPlanId { get; set; }
         public int Installments { get; set; }
         public string Notes { get; set; }
-        public DateTime PartyDate { get; set; }
-        public List<OrderItemDto> Items { get; set; }
+        public DateTime PartyDate { get; set; }        
     }
 }
